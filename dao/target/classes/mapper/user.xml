@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyong.dao.mapper.UserMapper">
+    <select id="queryUsers" resultType="userDO">
+        select * from `userDO`
+        <where>
+            <if test="id != null">
+                `id` = #{id}
+            </if>
+            <if test="mail != null and null != ''">
+                and `mail` = #{mail}
+            </if>
+            <if test="password != null and password!= ''">
+                and `password` = #{password}
+            </if>
+            <if test="roleCode != null">
+                and `role_code` = #{roleCode}
+            </if>
+            <if test="userName != null and userName != ''">
+                and `user_name` != #{userName}
+            </if>
+        </where>
+    </select>
+
+</mapper>
