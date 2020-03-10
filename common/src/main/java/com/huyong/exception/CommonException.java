@@ -3,7 +3,7 @@ package com.huyong.exception;
 /**
  * @author huyong
  */
-public class CommonException extends Exception{
+public class CommonException extends RuntimeException{
     /**
      * Comment for &lt;code&gt;serialVersionUID&lt;/code&gt;
      */

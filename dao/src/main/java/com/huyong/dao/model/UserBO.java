@@ -1,5 +1,6 @@
 package com.huyong.dao.model;
 
+import com.sun.tools.javac.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,6 +22,6 @@ public class UserBO {
     private String mail;
     @ApiModelProperty("密码")
     private String password;
-    @ApiModelProperty("角色id")
-    private Integer roleCode;
+    @ApiModelProperty("角色名称集合")
+    private List<String> roleNames;
 }

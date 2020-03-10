@@ -41,7 +41,7 @@ public class UserService {
             return false;
         }
         //加入到当前线程中
-        AuthUtils.setUser(users.get(0));
+       // AuthUtils.setUser(users.get(0));
         return true;
     }
 

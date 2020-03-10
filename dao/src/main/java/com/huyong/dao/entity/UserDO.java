@@ -3,6 +3,7 @@ package com.huyong.dao.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 描述: 用户
@@ -13,9 +14,6 @@ import java.io.Serializable;
 @Data
 public class UserDO implements Serializable {
     private static final long serialVersionUID = 70919679543102411L;
-    /**
-     * 对应数据库id
-     */
     private Long id;
     /**
      * 用户名
@@ -30,7 +28,39 @@ public class UserDO implements Serializable {
      */
     private String password;
     /**
-     * 角色id
+     * 用户/管理员
      */
-    private Integer roleCode;
+    private Integer role;
+    /**
+     * 性别
+     */
+    private Integer gender;
+    /**
+     * 个人简介
+     */
+    private String introduction;
+    /**
+     * 上线/离线
+     */
+    private Integer online;
+    /**
+     * 头像
+     */
+    private String picture;
+    /**
+     * 注册时间
+     */
+    private Date createTime;
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+    /**
+     * 存在/删除
+     */
+    private Integer status;
+    /**
+     * 关注的文章集合id
+     */
+    private String articles;
 }

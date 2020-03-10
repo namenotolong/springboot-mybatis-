@@ -37,7 +37,7 @@ public class UserController {
         if (null != userDO) {
             int time = 7 * 24 * 60 * 60;
             final String encrypt = AlgorithmUtils.encrypt(userDO.getMail() + "-" + userDO.getPassword() + "-" + System.currentTimeMillis() + time * 1000);
-            ServletUtils.addCookie(AuthCheckConstant.AUTH_TICKET, encrypt, time);
+            ServletUtils.addCookie(AuthCheckConstant.TOKEN, encrypt, time);
             return true;
         }
         return false;
