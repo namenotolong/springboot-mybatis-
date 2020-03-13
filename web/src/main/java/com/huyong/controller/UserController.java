@@ -1,14 +1,10 @@
 package com.huyong.controller;
 
 import com.huyong.annotation.ValidationParam;
-import com.huyong.constant.AuthCheckConstant;
-import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.model.UserBO;
 import com.huyong.service.UserService;
-import com.huyong.utils.AlgorithmUtils;
-import com.huyong.utils.AuthUtils;
-import com.huyong.utils.ServletUtils;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,14 +28,7 @@ public class UserController {
     @ResponseBody
     @PostMapping("/login")
     @ApiOperation("用户登录")
-    public boolean login(@ValidationParam("userName,password") @RequestBody UserBO user) throws Exception {
-        final UserDO userDO = userService.getUser(user);
-        if (null != userDO) {
-            int time = 7 * 24 * 60 * 60;
-            final String encrypt = AlgorithmUtils.encrypt(userDO.getMail() + "-" + userDO.getPassword() + "-" + System.currentTimeMillis() + time * 1000);
-            ServletUtils.addCookie(AuthCheckConstant.TOKEN, encrypt, time);
-            return true;
-        }
-        return false;
+    public String login(@ValidationParam("email,password") @RequestBody UserBO user) throws Exception {
+        return userService.login(user);
     }
 }

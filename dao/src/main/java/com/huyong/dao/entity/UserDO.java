@@ -16,13 +16,13 @@ public class UserDO implements Serializable {
     private static final long serialVersionUID = 70919679543102411L;
     private Long id;
     /**
-     * 用户名
+     * 用户   a名
      */
     private String userName;
     /**
      * 邮箱
      */
-    private String mail;
+    private String email;
     /**
      * 密码
      */
@@ -35,6 +35,22 @@ public class UserDO implements Serializable {
      * 性别
      */
     private Integer gender;
+    /**
+     * 年龄
+     */
+    private Integer age;
+    /**
+     * 学校
+     */
+    private String school;
+    /**
+     * 地址
+     */
+    private String address;
+    /**
+     * 工作岗位
+     */
+    private String work;
     /**
      * 个人简介
      */
@@ -63,4 +79,8 @@ public class UserDO implements Serializable {
      * 关注的文章集合id
      */
     private String articles;
+    /**
+     * 浏览量
+     */
+    private Long visitCount;
 }

@@ -41,9 +41,9 @@ public class ArticleDO implements Serializable {
      */
     private Long floorCount;
     /**
-     * 分类
+     * 分类id集合
      */
-    private Long kindId;
+    private String kindIds;
     /**
      * 作者
      */

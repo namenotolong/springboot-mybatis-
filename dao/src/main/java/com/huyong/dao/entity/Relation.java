@@ -19,11 +19,11 @@ public class Relation implements Serializable {
     /**
      * 一
      */
-    private Long one;
+    private Long userId;
     /**
      * 多
      */
-    private String others;
+    private String othersId;
     /**
      * 关系类型
      */

@@ -53,7 +53,7 @@ public class TopicDO implements Serializable {
      */
     private Integer type;
     /**
-     * 删除/正常
+     * 删除/正常c
      */
     private Integer status;
     /**

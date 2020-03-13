@@ -1,15 +1,12 @@
 package com.huyong.service;
 
-import com.huyong.dao.entity.UserDO;
+import com.google.common.collect.Maps;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.model.UserBO;
-import com.huyong.utils.AlgorithmUtils;
-import com.huyong.utils.AuthUtils;
-import com.sun.tools.javac.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 描述: 验证用户
@@ -22,34 +19,22 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public boolean valid(String value) throws Exception {
-        final String decrypt = AlgorithmUtils.decrypt(value);
-        final String[] split = decrypt.split("-");
-        if (split.length != 3) {
-            return false;
-        }
-        final UserBO user = new UserBO();
-        final String s = split[2];
-        //过期
-        if (Long.parseLong(s) < System.currentTimeMillis()) {
-            return false;
-        }
-        user.setMail(split[0]);
-        user.setPassword(split[1]);
-        final List<UserDO> users = userMapper.queryUsers(user);
-        if (CollectionUtils.isEmpty(users)) {
-            return false;
-        }
-        //加入到当前线程中
-       // AuthUtils.setUser(users.get(0));
-        return true;
-    }
+    /**
+     * 登录用户缓存
+     * key : 用户信息
+     * value : 有效时间
+     */
+    static Map<UserBO, Long> users = Maps.newConcurrentMap();
 
-    public UserDO getUser(UserBO user) {
-        final List<UserDO> users = userMapper.queryUsers(user);
-        if (CollectionUtils.isEmpty(users)) {
-            return null;
+
+    public String login(UserBO user) {
+        final Long delayTime = users.get(user);
+        //缓存中没有，读取数据库
+        if (null == delayTime) {
+
+        } else {
+
         }
-        return users.get(0);
+        return null;
     }
 }

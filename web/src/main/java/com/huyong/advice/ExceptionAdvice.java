@@ -51,7 +51,7 @@ public class ExceptionAdvice {
     @ResponseBody
     public Result handle(AuthException e){
         logger.error(ExceptionUtils.getStackTrace(e));
-        return Result.error(e.getMessage());
+        return Result.error(e.getMessage(), 333);
     }
 
     @ExceptionHandler(Exception.class)

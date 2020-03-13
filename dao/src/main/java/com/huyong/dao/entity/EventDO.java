@@ -44,7 +44,7 @@ public class EventDO implements Serializable {
      */
     private Date createTime;
     /**
-     * 删除时间
+     * 更新时间
      */
     private Date updateTime;
 }

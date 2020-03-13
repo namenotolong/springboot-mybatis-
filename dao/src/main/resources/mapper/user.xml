@@ -8,13 +8,13 @@
                 `id` = #{id}
             </if>
             <if test="mail != null and null != ''">
-                and `mail` = #{mail}
+                and `email` = #{email}
             </if>
             <if test="password != null and password!= ''">
                 and `password` = #{password}
             </if>
-            <if test="roleCode != null">
-                and `role_code` = #{roleCode}
+            <if test="role != null">
+                and `role` = #{role}
             </if>
             <if test="userName != null and userName != ''">
                 and `user_name` != #{userName}
