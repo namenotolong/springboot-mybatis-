@@ -1,2 +1,2 @@
-# springboot-mybatis-
-一个基于springboot-mybatis快速开发脚手架
+# springboot-mybatis
+一个基于springboot-mybatis博客论坛

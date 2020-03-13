@@ -55,8 +55,6 @@ public class CheckAuthAspect extends AbstractAspectManager{
             //response.sendRedirect("http://www.baidu.com");
             return;
         }
-        if (value > AuthUtils.getUser().getRoleCode()) {
-            throw new AuthException("权限不足！");
-        }
+
     }
 }

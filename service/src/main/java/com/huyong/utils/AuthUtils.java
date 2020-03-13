@@ -1,6 +1,6 @@
 package com.huyong.utils;
 
-import com.huyong.dao.entity.UserDO;
+import com.huyong.dao.model.UserBO;
 
 
 /**
@@ -10,13 +10,13 @@ import com.huyong.dao.entity.UserDO;
  * @date 2020-02-20 3:49 下午
  */
 public class AuthUtils {
-    private static ThreadLocal<UserDO> threadLocal = new ThreadLocal<>();
+    private static ThreadLocal<UserBO> threadLocal = new ThreadLocal<>();
     private static ThreadLocal<Boolean> ignore = new ThreadLocal<>();
-    public static void setUser(UserDO userDO) {
-        threadLocal.set(userDO);
+    public static void setUser(UserBO user) {
+        threadLocal.set(user);
         ignore.set(false);
     }
-    public static UserDO getUser() {
+    public static UserBO getUser() {
         return threadLocal.get();
     }
     public static void clear() {

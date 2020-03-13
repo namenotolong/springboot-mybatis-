@@ -1,6 +1,6 @@
 package com.huyong.aspect;
 
-import com.huyong.dao.entity.UserDO;
+import com.huyong.dao.model.UserBO;
 import com.huyong.utils.AuthUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class LogAspect extends AbstractAspectManager {
 
     @Override
     protected Object execute(ProceedingJoinPoint pjp, Method method) throws Throwable {
-        final UserDO user = AuthUtils.getUser();
+        final UserBO user = AuthUtils.getUser();
         log.info("用户{}，进入到了{}", user, pjp.getTarget().getClass() + method.getName());
         return null;
     }

@@ -7,8 +7,8 @@ package com.huyong.constant;
  * @date 2020-02-21 10:27 下午
  */
 public class AuthCheckConstant {
-    /**
-     * 权限cookie名称
-     */
-    public static final String AUTH_TICKET = "auth-ticket";
+
+    public static final String TOKEN = "token";
+    public static final String OPTIONS = "OPTIONS";
+    public static final String START = "bearer:";
 }
