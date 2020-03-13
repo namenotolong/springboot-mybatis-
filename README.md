@@ -1,2 +1,6 @@
 # springboot-mybatis
-一个基于springboot-mybatis博客论坛
+一个基于springboot-mybatis的脚手架
+其中内置了mybatis的简单查询，通过继承AbstractGenericMapper类实现<E>
+通过更改CommonConstant.MAPPER_NAME_SPACE值改变mapper的namespace前缀
+使用@Table指定表名
+
