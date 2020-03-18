@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huyong.dao.mapper.UserMapper">
-    <select id="queryUsers" resultType="userDO">
-        select * from `user`
-        <where>
-            <if test="id != null">
-                `id` = #{id}
-            </if>
-            <if test="mail != null and null != ''">
-                and `email` = #{email}
-            </if>
-            <if test="password != null and password!= ''">
-                and `password` = #{password}
-            </if>
-            <if test="role != null">
-                and `role` = #{role}
-            </if>
-            <if test="userName != null and userName != ''">
-                and `user_name` != #{userName}
-            </if>
-        </where>
+    <insert id="myInsert">
+        insert into `user`(id,user_name,email,create_time, update_time) values(#{id}, #{userName}, #{email}, #{createTime}, #{updateTime})
+    </insert>
+    <select id="get" resultType="userDO">
+        select * from `user` where id = 1
     </select>
-
+    <sql id="testsql">
+        user_name
+    </sql>
+    <sql id="testsql1">
+        #{userName}
+    </sql>
+    <insert id="insertTest">
+        insert into `user`(<include refid="testsql"></include>) values (<include refid="testsql1"></include>)
+    </insert>
 </mapper>

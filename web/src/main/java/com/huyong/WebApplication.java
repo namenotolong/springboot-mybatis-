@@ -10,7 +10,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.huyong.mapper")
 public class WebApplication {
 
 	public static void main(String[] args) {

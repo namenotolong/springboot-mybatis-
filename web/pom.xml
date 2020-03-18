@@ -51,6 +51,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>7.2</version>
+            <scope>compile</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

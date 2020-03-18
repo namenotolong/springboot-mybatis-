@@ -1,8 +1,5 @@
 package com.huyong.controller;
 
-import com.huyong.annotation.CheckAuth;
-import com.huyong.annotation.NotBlank;
-import com.huyong.annotation.ParamXssPass;
 import com.huyong.annotation.ValidationParam;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.mapper.UserMapper;
@@ -27,6 +24,9 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private Interf t;
+
 
     @ResponseBody
     @PostMapping("/login")
@@ -35,13 +35,23 @@ public class UserController {
         return userService.login(user);
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseBody
     @ApiOperation("获取用户")
-    @CheckAuth(2)
-    @ParamXssPass
-    public UserDO getUsers(@NotBlank String name) {
-        return userMapper.getByPrimary(1L);
-
+    public UserDO getUsers() {
+        return userMapper.get();
+    }
+    @GetMapping("/test")
+    @ResponseBody
+    @ApiOperation("test")
+    public UserDO test(@RequestParam("id") Integer id) {
+        return userMapper.test(id);
+    }
+    @GetMapping("/count")
+    @ResponseBody
+    @ApiOperation("count")
+    public int count() {
+        userService.count();
+        return 1;
     }
 }
