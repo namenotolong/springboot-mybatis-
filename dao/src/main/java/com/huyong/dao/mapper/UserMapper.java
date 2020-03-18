@@ -2,7 +2,7 @@ package com.huyong.dao.mapper;
 
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.model.UserBO;
-import com.huyong.dao.util.BaseMapper;
+import com.huyong.dao.helper.BaseMapper;
 import com.sun.tools.javac.util.List;
 import org.springframework.stereotype.Repository;
 

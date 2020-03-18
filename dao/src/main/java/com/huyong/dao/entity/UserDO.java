@@ -1,6 +1,6 @@
 package com.huyong.dao.entity;
 
-import com.huyong.dao.util.annotation.Table;
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,7 +18,7 @@ public class UserDO implements Serializable {
     private static final long serialVersionUID = 70919679543102411L;
     private Long id;
     /**
-     * 用户   a名
+     * 用户名
      */
     private String userName;
     /**
