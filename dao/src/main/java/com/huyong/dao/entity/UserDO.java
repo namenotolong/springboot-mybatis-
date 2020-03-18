@@ -1,7 +1,6 @@
 package com.huyong.dao.entity;
 
-import com.huyong.dao.util.annotation.Ignore;
-import com.huyong.dao.util.annotation.Table;
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;

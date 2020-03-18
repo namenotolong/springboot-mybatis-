@@ -4,13 +4,10 @@ import com.google.common.collect.Maps;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.model.UserBO;
-import com.huyong.dao.util.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**

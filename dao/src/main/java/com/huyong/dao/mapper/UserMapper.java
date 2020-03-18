@@ -1,12 +1,8 @@
 package com.huyong.dao.mapper;
 
 import com.huyong.dao.entity.UserDO;
-import com.huyong.dao.util.BaseMapper;
-import com.huyong.dao.util.GenerateMapper;
+import com.huyong.dao.helper.BaseMapper;
 import org.springframework.stereotype.Repository;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * 描述: user表Mapper
