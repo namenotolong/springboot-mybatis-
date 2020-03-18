@@ -1,5 +1,6 @@
 package com.huyong.dao.entity;
 
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @date 2020-03-12 2:35 下午
  */
 @Data
+@Table(tableName = "file")
 public class FileDO implements Serializable {
     private static final long serialVersionUID = -8817375713686827039L;
     private Long id;

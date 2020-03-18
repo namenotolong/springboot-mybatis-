@@ -1,5 +1,6 @@
 package com.huyong.dao.entity;
 
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2020-03-10 9:04 下午
  */
 @Data
+@Table(tableName = "kind")
 public class KindDO implements Serializable {
     private static final long serialVersionUID = 7573523316588926846L;
     private Long id;

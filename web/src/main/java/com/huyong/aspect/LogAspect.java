@@ -1,6 +1,5 @@
 package com.huyong.aspect;
 
-import com.huyong.dao.model.UserBO;
 import com.huyong.utils.AuthUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;

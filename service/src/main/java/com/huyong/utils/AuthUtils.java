@@ -1,7 +1,5 @@
 package com.huyong.utils;
 
-import com.huyong.dao.model.UserBO;
-
 
 /**
  * 描述: 用户工具类

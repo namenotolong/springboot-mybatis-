@@ -1,6 +1,8 @@
 package com.huyong.dao.entity;
 
 import java.util.Date;
+
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +14,8 @@ import java.io.Serializable;
  * @date 2020-03-10 9:40 下午
  */
 @Data
-public class Relation implements Serializable {
+@Table(tableName = "relation")
+public class RelationDO implements Serializable {
 
     private static final long serialVersionUID = -7820153158260303420L;
     private Long id;

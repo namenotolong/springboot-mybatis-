@@ -1,22 +1,22 @@
-package com.huyong.dao.model;
-
+package com.huyong.dao.module;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
- * 描述: 用户信息
+ * 描述: 用户
  *
  * @author huyong
- * @date 2020-02-22 1:49 下午
+ * @date 2020-02-21 10:33 下午
  */
 @Data
-@ApiModel("用户信息")
+@Table(tableName = "user")
+@ApiModel("用户")
 public class UserBO {
-    @ApiModelProperty("对应数据库id")
     private Long id;
     @ApiModelProperty("用户名")
     private String userName;
@@ -24,7 +24,7 @@ public class UserBO {
     private String email;
     @ApiModelProperty("密码")
     private String password;
-    @ApiModelProperty("角色名称集合")
+    @ApiModelProperty("用户/管理员")
     private Integer role;
     @ApiModelProperty("性别")
     private Integer gender;
@@ -52,17 +52,4 @@ public class UserBO {
     private String articles;
     @ApiModelProperty("浏览量")
     private Long visitCount;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserBO)) return false;
-        UserBO userBO = (UserBO) o;
-        return getEmail().equals(userBO.getEmail());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEmail());
-    }
 }

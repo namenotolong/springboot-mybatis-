@@ -1,5 +1,6 @@
 package com.huyong.dao.entity;
 
+import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2020-03-10 9:46 下午
  */
 @Data
+@Table(tableName = "history_chat_user")
 public class HistoryChatUsersDO implements Serializable {
 
     private static final long serialVersionUID = -4477601126207540210L;
