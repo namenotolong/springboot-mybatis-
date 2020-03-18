@@ -1,6 +1,7 @@
 package com.huyong.service;
 
 import com.google.common.collect.Maps;
+import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.model.UserBO;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,9 @@ public class UserService {
     static Map<UserBO, Long> users = Maps.newConcurrentMap();
 
 
-    public String login(UserBO user) {
-        final Long delayTime = users.get(user);
-        //缓存中没有，读取数据库
-        if (null == delayTime) {
-
-        } else {
-
-        }
+    public String login() {
+        final UserDO userDO = userMapper.selectByPrimary(1L);
+        System.out.println(userDO);
         return null;
     }
 }

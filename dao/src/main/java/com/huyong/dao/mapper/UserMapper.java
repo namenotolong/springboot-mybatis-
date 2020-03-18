@@ -2,6 +2,7 @@ package com.huyong.dao.mapper;
 
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.model.UserBO;
+import com.huyong.dao.util.BaseMapper;
 import com.sun.tools.javac.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @date 2020-02-22 1:21 下午
  */
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<UserDO> {
     /**
      * 查找用户
      * @param user

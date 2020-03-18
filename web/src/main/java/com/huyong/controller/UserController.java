@@ -28,7 +28,7 @@ public class UserController {
     @ResponseBody
     @PostMapping("/login")
     @ApiOperation("用户登录")
-    public String login(@ValidationParam("email,password") @RequestBody UserBO user) throws Exception {
-        return userService.login(user);
+    public String login() throws Exception {
+        return userService.login();
     }
 }

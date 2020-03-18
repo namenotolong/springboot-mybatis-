@@ -53,7 +53,7 @@ public class JwtFilter extends GenericFilterBean {
             if (claims == null) {
                 throw new AuthException("身份过期，请重新登录！");
             }
-            AuthUtils.setUser(claims2User(claims));
+            //AuthUtils.setUser(claims2User(claims));
         }
         chain.doFilter(req, res);
     }
