@@ -12,22 +12,14 @@ import java.io.*;
  */
 public class GenerateModules extends AbstractGenerate {
 
-    private static String root = null;
-    static {
-        try {
-            root = new File(".").getCanonicalPath() + "/dao/src/main/java/";
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public GenerateModules(Generate generate) {
         super(generate);
     }
     @Override
     public void generate() {
-        final File file = new File(Constant.DAO_ENTITY_PATH);
-        final File order = new File(root + target.replace('.', '/'));
+        generate.generate();
+        final File file = new File(root + Constant.DAO_ENTITY_PATH);
+        final File order = new File(root + Constant.DAO_MODULE_PATH);
         final File[] files = file.listFiles();
         if (files != null && files.length > 0) {
             try {
@@ -51,7 +43,7 @@ public class GenerateModules extends AbstractGenerate {
                                 len = "@ApiModel(\"" + introduction + "\")" + "\npublic class " + newName + " {";
                                 flag = true;
                             } else if (len.startsWith("package ")) {
-                                len = "package " + target + ";\n" + "import io.swagger.annotations.ApiModel;\n" +
+                                len = "package " + Constant.MODULE_PACKAGE + ";\n" + "\nimport io.swagger.annotations.ApiModel;\n" +
                                         "import io.swagger.annotations.ApiModelProperty;";
                             } else if (flag && (len.contains("static") || len.contains("/**"))) {
                                 continue;
@@ -73,11 +65,5 @@ public class GenerateModules extends AbstractGenerate {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        //final GenerateModules generateModules = new GenerateModules("com.huyong.dao.module", "com.huyong.dao.entity");
-        //generateModules.generate();
-        System.out.println(System.getProperty("user.dir"));
     }
 }

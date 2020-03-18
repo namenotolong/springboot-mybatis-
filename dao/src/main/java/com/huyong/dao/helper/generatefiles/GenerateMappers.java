@@ -1,5 +1,8 @@
 package com.huyong.dao.helper.generatefiles;
 
+import com.huyong.dao.helper.BaseMapper;
+import com.huyong.dao.helper.Constant;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,16 +13,17 @@ import java.time.format.DateTimeFormatter;
  * @author huyong
  * @date 2020-03-18 9:14 下午
  */
-public class GenerateMappers {
-    private String resource;
-    private String target;
-    public GenerateMappers(String resource, String target) {
-        this.resource = resource;
-        this.target = target;
+public class GenerateMappers extends AbstractGenerate {
+
+    public GenerateMappers(Generate generate) {
+        super(generate);
     }
-    public void generate(String root) {
-        final File file = new File(root + resource.replace('.', '/'));
-        final File order = new File(root + target.replace('.', '/'));
+
+    @Override
+    public void generate() {
+        generate.generate();
+        final File file = new File(root + Constant.DAO_ENTITY_PATH);
+        final File order = new File(root + Constant.DAO_MAPPER_PATH);
         final File[] files = file.listFiles();
         if (files != null && files.length > 0) {
             try {
@@ -31,12 +35,16 @@ public class GenerateMappers {
                         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(order + "/" + mapperName + ".java"));
                         StringBuilder sb = new StringBuilder();
                         sb.append("package ")
-                                .append(target)
-                                .append(";\r\n")
-                                .append("import com.huyong.dao.entity.")
+                                .append(Constant.MAPPER_PACKAGE)
+                                .append(";\n")
+                                .append("\nimport ")
+                                .append(Constant.ENTITY_PACKAGE)
+                                .append(".")
                                 .append(className)
                                 .append(";\n" +
-                                        "import com.huyong.dao.helper.BaseMapper;\n" +
+                                        "import ")
+                                .append(BaseMapper.class.getName())
+                                .append(";\n" +
                                         "import org.springframework.stereotype.Repository;\n")
                                 .append("/**\n" +
                                         " * 描述: ")
@@ -64,10 +72,5 @@ public class GenerateMappers {
                 e.printStackTrace();
             }
         }
-    }
-    public static void main(String[] args) throws IOException {
-        String root = new File("").getCanonicalPath() + "/dao/src/main/java/";
-        final GenerateMappers generateMappers = new GenerateMappers("com.huyong.dao.entity", "com.huyong.dao.mapper");
-        generateMappers.generate(root);
     }
 }
