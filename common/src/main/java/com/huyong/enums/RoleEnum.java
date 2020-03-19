@@ -10,11 +10,11 @@ public enum RoleEnum {
     /**
      * 普通用户
      */
-    PRESENT(0, "普通用户"),
+    CUSTOMER(0, "普通用户"),
     /**
      * 管理员
      */
-    DELETE(1, "管理员"),
+    ADMIN(1, "管理员"),
     ;
     private int code;
     private String desc;

@@ -21,4 +21,5 @@ public abstract class AbstractGenerate implements Generate {
         return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 
+
 }

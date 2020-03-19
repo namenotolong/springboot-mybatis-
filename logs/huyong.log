@@ -1,0 +1,405 @@
+2020-03-20 00:13:42,416 [INFO] [http-nio-8081-exec-1] o.a.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [DirectJDKLog.java : 180] Initializing Spring FrameworkServlet 'dispatcherServlet'
+2020-03-20 00:13:42,428 [INFO] [http-nio-8081-exec-1] org.springframework.web.servlet.DispatcherServlet [Jdk14Logger.java : 91] FrameworkServlet 'dispatcherServlet': initialization started
+2020-03-20 00:13:42,485 [INFO] [http-nio-8081-exec-1] org.springframework.web.servlet.DispatcherServlet [Jdk14Logger.java : 91] FrameworkServlet 'dispatcherServlet': initialization completed in 56 ms
+2020-03-20 00:14:51,472 [ERROR] [http-nio-8081-exec-3] com.huyong.advice.ExceptionAdvice [ExceptionAdvice.java : 68] org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:204)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:112)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:124)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:161)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:131)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:866)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.huyong.filter.JwtFilter.doFilter(JwtFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2020-03-20 00:14:51,483 [WARN] [http-nio-8081-exec-3] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present]
+2020-03-20 00:15:08,288 [ERROR] [http-nio-8081-exec-4] com.huyong.advice.ExceptionAdvice [ExceptionAdvice.java : 68] org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:204)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:112)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:124)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:161)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:131)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:866)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.huyong.filter.JwtFilter.doFilter(JwtFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2020-03-20 00:15:08,299 [WARN] [http-nio-8081-exec-4] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present]
+2020-03-20 00:15:31,775 [ERROR] [http-nio-8081-exec-7] com.huyong.advice.ExceptionAdvice [ExceptionAdvice.java : 68] org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:204)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:112)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:124)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:161)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:131)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:866)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.huyong.filter.JwtFilter.doFilter(JwtFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2020-03-20 00:15:31,781 [WARN] [http-nio-8081-exec-7] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'account' is not present]
+2020-03-20 00:15:43,241 [INFO] [http-nio-8081-exec-10] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:15:43,567 [INFO] [http-nio-8081-exec-10] com.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 932] {dataSource-1} inited
+2020-03-20 00:15:55,682 [INFO] [http-nio-8081-exec-1] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:16:04,902 [INFO] [http-nio-8081-exec-2] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='huyong' AND `status`=0]
+2020-03-20 00:16:04,909 [ERROR] [http-nio-8081-exec-2] com.huyong.advice.ExceptionAdvice [ExceptionAdvice.java : 40] com.huyong.exception.CommonException: 该用户名已被注册！
+	at com.huyong.service.UserService.checkUserNameUnique(UserService.java:121)
+	at com.huyong.service.UserService.checkAccountUnique(UserService.java:148)
+	at com.huyong.controller.UserController.checkEmail(UserController.java:55)
+	at com.huyong.controller.UserController$$FastClassBySpringCGLIB$$a4103bb4.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:746)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:100)
+	at com.huyong.config.ControllerAspect.validationPoint(ControllerAspect.java:58)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:185)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:185)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
+	at com.huyong.controller.UserController$$EnhancerBySpringCGLIB$$f07895e9.checkEmail(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:866)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.huyong.filter.JwtFilter.doFilter(JwtFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2020-03-20 00:16:04,911 [WARN] [http-nio-8081-exec-2] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Resolved [com.huyong.exception.CommonException: 该用户名已被注册！]
+2020-03-20 00:20:48,792 [INFO] [Thread-57] com.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 1712] {dataSource-1} closed
+2020-03-20 00:21:29,194 [INFO] [main] com.huyong.WebApplication [Jdk14Logger.java : 91] Starting WebApplication on weidiandeMacBook-Pro.local with PID 7009 (/Users/weidian/Documents/huyong/demo/web/target/classes started by weidian in /Users/weidian/Documents/huyong/demo)
+2020-03-20 00:21:29,199 [INFO] [main] com.huyong.WebApplication [Jdk14Logger.java : 91] No active profile set, falling back to default profiles: default
+2020-03-20 00:21:29,269 [INFO] [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [Jdk14Logger.java : 91] Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5a37d3ed: startup date [Fri Mar 20 00:21:29 CST 2020]; root of context hierarchy
+2020-03-20 00:21:31,038 [WARN] [main] org.mybatis.spring.mapper.ClassPathMapperScanner [Logger.java : 44] No MyBatis mapper was found in '[com.huyong.mapper]' package. Please check your configuration.
+2020-03-20 00:21:31,568 [INFO] [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [Jdk14Logger.java : 91] Bean 'transactionalConfig' of type [com.huyong.config.TransactionalConfig$$EnhancerBySpringCGLIB$$b58a73d0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-03-20 00:21:31,691 [INFO] [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [Jdk14Logger.java : 91] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$e711e67] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-03-20 00:21:31,884 [INFO] [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [Jdk14Logger.java : 91] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$8df16b99] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-03-20 00:21:32,711 [INFO] [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [Jdk14Logger.java : 91] Tomcat initialized with port(s): 8081 (http)
+2020-03-20 00:21:32,738 [INFO] [main] org.apache.catalina.core.StandardService [DirectJDKLog.java : 180] Starting service [Tomcat]
+2020-03-20 00:21:32,739 [INFO] [main] org.apache.catalina.core.StandardEngine [DirectJDKLog.java : 180] Starting Servlet Engine: Apache Tomcat/8.5.34
+2020-03-20 00:21:32,745 [INFO] [localhost-startStop-1] org.apache.catalina.core.AprLifecycleListener [DirectJDKLog.java : 180] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/weidian/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2020-03-20 00:21:32,912 [INFO] [localhost-startStop-1] o.a.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [DirectJDKLog.java : 180] Initializing Spring embedded WebApplicationContext
+2020-03-20 00:21:32,914 [INFO] [localhost-startStop-1] org.springframework.web.context.ContextLoader [Jdk14Logger.java : 91] Root WebApplicationContext: initialization completed in 3644 ms
+2020-03-20 00:21:33,088 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.ServletRegistrationBean [Jdk14Logger.java : 91] Servlet dispatcherServlet mapped to [/]
+2020-03-20 00:21:33,095 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'characterEncodingFilter' to: [/*]
+2020-03-20 00:21:33,096 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2020-03-20 00:21:33,097 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2020-03-20 00:21:33,097 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'requestContextFilter' to: [/*]
+2020-03-20 00:21:33,097 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'jwtFilter' to: [/*]
+2020-03-20 00:21:33,097 [INFO] [localhost-startStop-1] org.springframework.boot.web.servlet.FilterRegistrationBean [Jdk14Logger.java : 91] Mapping filter: 'corsFilter' to: [/*]
+2020-03-20 00:21:34,869 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/user/register],methods=[POST]}" onto public void com.huyong.controller.UserController.register(com.huyong.dao.module.UserBO)
+2020-03-20 00:21:34,871 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/user/getUser],methods=[GET]}" onto public com.huyong.dao.module.UserBO com.huyong.controller.UserController.getUser()
+2020-03-20 00:21:34,874 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/user/login],methods=[POST]}" onto public com.huyong.dao.module.UserBO com.huyong.controller.UserController.login(com.huyong.dao.module.UserBO)
+2020-03-20 00:21:34,875 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/user/checkAccountUnique],methods=[GET]}" onto public boolean com.huyong.controller.UserController.checkEmail(java.lang.String,int)
+2020-03-20 00:21:34,877 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/v2/api-docs],methods=[GET]}" onto public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String)
+2020-03-20 00:21:34,888 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/configuration/security]}" onto org.springframework.http.ResponseEntity<springfox.documentation.swagger.web.SecurityConfiguration> springfox.documentation.swagger.web.ApiResourceController.securityConfiguration()
+2020-03-20 00:21:34,892 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/configuration/ui]}" onto org.springframework.http.ResponseEntity<springfox.documentation.swagger.web.UiConfiguration> springfox.documentation.swagger.web.ApiResourceController.uiConfiguration()
+2020-03-20 00:21:34,893 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/swagger-resources]}" onto org.springframework.http.ResponseEntity<java.util.List<springfox.documentation.swagger.web.SwaggerResource>> springfox.documentation.swagger.web.ApiResourceController.swaggerResources()
+2020-03-20 00:21:34,914 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2020-03-20 00:21:34,917 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerMapping [Jdk14Logger.java : 91] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2020-03-20 00:21:35,388 [INFO] [main] o.s.scheduling.concurrent.ThreadPoolTaskExecutor [Jdk14Logger.java : 91] Initializing ExecutorService 'taskExecutor'
+2020-03-20 00:21:35,927 [INFO] [main] o.s.web.servlet.handler.SimpleUrlHandlerMapping [Jdk14Logger.java : 91] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-03-20 00:21:36,271 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerAdapter [Jdk14Logger.java : 91] Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5a37d3ed: startup date [Fri Mar 20 00:21:29 CST 2020]; root of context hierarchy
+2020-03-20 00:21:36,288 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerAdapter [Jdk14Logger.java : 91] Detected @ModelAttribute methods in exceptionAdvice
+2020-03-20 00:21:36,289 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerAdapter [Jdk14Logger.java : 91] Detected @InitBinder methods in exceptionAdvice
+2020-03-20 00:21:36,291 [INFO] [main] o.s.w.s.mvc.method.annotation.RequestMappingHandlerAdapter [Jdk14Logger.java : 91] Detected ResponseBodyAdvice bean in resultBodyAdvice
+2020-03-20 00:21:36,376 [INFO] [main] o.s.web.servlet.handler.SimpleUrlHandlerMapping [Jdk14Logger.java : 91] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-03-20 00:21:36,378 [INFO] [main] o.s.web.servlet.handler.SimpleUrlHandlerMapping [Jdk14Logger.java : 91] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-03-20 00:21:36,433 [INFO] [main] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Detected @ExceptionHandler methods in exceptionAdvice
+2020-03-20 00:21:36,434 [INFO] [main] o.s.w.s.m.m.annotation.ExceptionHandlerExceptionResolver [Jdk14Logger.java : 91] Detected ResponseBodyAdvice implementation in resultBodyAdvice
+2020-03-20 00:21:37,249 [INFO] [main] o.s.web.socket.server.standard.ServerEndpointExporter [Jdk14Logger.java : 91] Registering @ServerEndpoint class: class com.huyong.config.MyWebSocket
+2020-03-20 00:21:37,263 [INFO] [main] o.s.jmx.export.annotation.AnnotationMBeanExporter [Jdk14Logger.java : 91] Registering beans for JMX exposure on startup
+2020-03-20 00:21:37,268 [INFO] [main] o.s.jmx.export.annotation.AnnotationMBeanExporter [Jdk14Logger.java : 91] Bean with name 'demoDataSource' has been autodetected for JMX exposure
+2020-03-20 00:21:37,280 [INFO] [main] o.s.jmx.export.annotation.AnnotationMBeanExporter [Jdk14Logger.java : 91] Located MBean 'demoDataSource': registering with JMX server as MBean [com.alibaba.druid.pool:name=demoDataSource,type=DruidDataSource]
+2020-03-20 00:21:37,301 [INFO] [main] s.d.spring.web.plugins.DocumentationPluginsBootstrapper [DocumentationPluginsBootstrapper.java : 80] Context refreshed
+2020-03-20 00:21:37,350 [INFO] [main] s.d.spring.web.plugins.DocumentationPluginsBootstrapper [DocumentationPluginsBootstrapper.java : 83] Found {0} custom documentation plugin(s)
+2020-03-20 00:21:37,373 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 53] Scanning for api listing references
+2020-03-20 00:21:37,384 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method checkEmail was user-controller
+2020-03-20 00:21:37,389 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 72] Request mapping: checkEmail belongs to groups: [[ResourceGroup{groupName='user-controller', position=0, controller=com.huyong.controller.UserController}]] 
+2020-03-20 00:21:37,391 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method getUser was user-controller
+2020-03-20 00:21:37,391 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 72] Request mapping: getUser belongs to groups: [[ResourceGroup{groupName='user-controller', position=0, controller=com.huyong.controller.UserController}]] 
+2020-03-20 00:21:37,391 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method login was user-controller
+2020-03-20 00:21:37,392 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 72] Request mapping: login belongs to groups: [[ResourceGroup{groupName='user-controller', position=0, controller=com.huyong.controller.UserController}]] 
+2020-03-20 00:21:37,392 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method register was user-controller
+2020-03-20 00:21:37,392 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 72] Request mapping: register belongs to groups: [[ResourceGroup{groupName='user-controller', position=0, controller=com.huyong.controller.UserController}]] 
+2020-03-20 00:21:37,400 [INFO] [main] s.d.spring.web.scanners.ApiListingReferenceScanner [ApiListingReferenceScanner.java : 84] Created resource listing Path: /v1/user-controller Description: user-controller Position: 0
+2020-03-20 00:21:37,455 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: boolean(true)
+2020-03-20 00:21:37,456 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key boolean(true)
+2020-03-20 00:21:37,497 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: boolean(true)
+2020-03-20 00:21:37,498 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key boolean(true)
+2020-03-20 00:21:37,531 [INFO] [main] springfox.documentation.spring.web.OperationsKeyGenerator [OperationsKeyGenerator.java : 51] Cache key generated: /user/checkAccountUnique.com.huyong.controller.UserController.checkEmail.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,537 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache operations with key /user/checkAccountUnique.com.huyong.controller.UserController.checkEmail.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,620 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method checkEmail was user-controller
+2020-03-20 00:21:37,638 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method checkEmail was user-controller
+2020-03-20 00:21:37,665 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,670 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,676 [INFO] [main] s.documentation.schema.property.ModelPropertiesKeyGenerator [ModelPropertiesKeyGenerator.java : 48] Cache key generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,677 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache modelProperties with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,842 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,847 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,848 [INFO] [main] s.documentation.schema.property.ModelPropertiesKeyGenerator [ModelPropertiesKeyGenerator.java : 48] Cache key generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,849 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache modelProperties with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,856 [INFO] [main] springfox.documentation.spring.web.OperationsKeyGenerator [OperationsKeyGenerator.java : 51] Cache key generated: /user/getUser.com.huyong.controller.UserController.getUser.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,858 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache operations with key /user/getUser.com.huyong.controller.UserController.getUser.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,862 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method getUser was user-controller
+2020-03-20 00:21:37,867 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method getUser was user-controller
+2020-03-20 00:21:37,881 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,881 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,882 [INFO] [main] s.documentation.schema.property.ModelPropertiesKeyGenerator [ModelPropertiesKeyGenerator.java : 48] Cache key generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,883 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache modelProperties with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,958 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,962 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,963 [INFO] [main] s.documentation.schema.property.ModelPropertiesKeyGenerator [ModelPropertiesKeyGenerator.java : 48] Cache key generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,963 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache modelProperties with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,964 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,964 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,965 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,966 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key com.huyong.dao.module.UserBO(true)
+2020-03-20 00:21:37,971 [INFO] [main] springfox.documentation.spring.web.OperationsKeyGenerator [OperationsKeyGenerator.java : 51] Cache key generated: /user/login.com.huyong.controller.UserController.login.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,971 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache operations with key /user/login.com.huyong.controller.UserController.login.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,977 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method login was user-controller
+2020-03-20 00:21:37,979 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method login was user-controller
+2020-03-20 00:21:37,983 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,985 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,986 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,987 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key com.huyong.dao.module.UserBO(false)
+2020-03-20 00:21:37,988 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: java.lang.Void(true)
+2020-03-20 00:21:37,988 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache models with key java.lang.Void(true)
+2020-03-20 00:21:37,989 [INFO] [main] springfox.documentation.schema.ModelContextKeyGenerator [ModelContextKeyGenerator.java : 46] Cache Key Generated: java.lang.Void(true)
+2020-03-20 00:21:37,989 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 79] Caching aspect applied for cache modelDependencies with key java.lang.Void(true)
+2020-03-20 00:21:37,994 [INFO] [main] springfox.documentation.spring.web.OperationsKeyGenerator [OperationsKeyGenerator.java : 51] Cache key generated: /user/register.com.huyong.controller.UserController.register.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:37,995 [INFO] [main] springfox.documentation.spring.web.caching.CachingAspect [CachingAspect.java : 68] Caching aspect applied for cache operations with key /user/register.com.huyong.controller.UserController.register.DefaultGenericTypeNamingStrategy
+2020-03-20 00:21:38,000 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method register was user-controller
+2020-03-20 00:21:38,005 [INFO] [main] s.d.swagger.web.ClassOrApiAnnotationResourceGrouping [ClassOrApiAnnotationResourceGrouping.java : 100] Group for method register was user-controller
+2020-03-20 00:21:38,223 [INFO] [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [Jdk14Logger.java : 91] Tomcat started on port(s): 8081 (http) with context path ''
+2020-03-20 00:21:38,231 [INFO] [main] com.huyong.WebApplication [Jdk14Logger.java : 91] Started WebApplication in 29.692 seconds (JVM running for 36.323)
+2020-03-20 00:21:52,115 [INFO] [http-nio-8081-exec-1] o.a.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [DirectJDKLog.java : 180] Initializing Spring FrameworkServlet 'dispatcherServlet'
+2020-03-20 00:21:52,116 [INFO] [http-nio-8081-exec-1] org.springframework.web.servlet.DispatcherServlet [Jdk14Logger.java : 91] FrameworkServlet 'dispatcherServlet': initialization started
+2020-03-20 00:21:52,174 [INFO] [http-nio-8081-exec-1] org.springframework.web.servlet.DispatcherServlet [Jdk14Logger.java : 91] FrameworkServlet 'dispatcherServlet': initialization completed in 57 ms
+2020-03-20 00:22:02,907 [INFO] [http-nio-8081-exec-5] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='huyong' AND `status`=0]
+2020-03-20 00:22:03,220 [INFO] [http-nio-8081-exec-5] com.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 932] {dataSource-1} inited
+2020-03-20 00:22:24,620 [INFO] [http-nio-8081-exec-6] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:22:31,274 [INFO] [http-nio-8081-exec-7] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:23:44,561 [INFO] [http-nio-8081-exec-1] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:23:53,152 [INFO] [http-nio-8081-exec-2] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:23:58,688 [INFO] [http-nio-8081-exec-4] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:24:05,069 [INFO] [http-nio-8081-exec-3] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='huyong' AND `status`=0]
+2020-03-20 00:24:12,789 [INFO] [http-nio-8081-exec-6] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='huyong' AND `status`=0]
+2020-03-20 00:32:15,614 [INFO] [http-nio-8081-exec-10] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1' AND `status`=0]
+2020-03-20 00:35:46,101 [INFO] [http-nio-8081-exec-4] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='1212' AND `status`=0]
+2020-03-20 00:36:09,801 [INFO] [http-nio-8081-exec-3] com.huyong.interceptor.SqlLogInterceptor [SqlLogInterceptor.java : 53] execute sql is [com.huyong.dao.mapper.UserMapper.queryByCondition:select `id`,`user_name`,`email`,`password`,`role`,`gender`,`age`,`school`,`address`,`work`,`introduction`,`online`,`picture`,`create_time`,`update_time`,`status`,`articles`,`visit_count` from `user` WHERE `user_name`='12' AND `status`=0]
+2020-03-20 00:48:06,838 [INFO] [Thread-61] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [Jdk14Logger.java : 91] Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5a37d3ed: startup date [Fri Mar 20 00:21:29 CST 2020]; root of context hierarchy
+2020-03-20 00:48:06,861 [INFO] [Thread-61] com.alibaba.druid.pool.DruidDataSource [DruidDataSource.java : 1712] {dataSource-1} closed

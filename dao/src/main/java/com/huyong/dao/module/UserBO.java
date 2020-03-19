@@ -23,8 +23,12 @@ public class UserBO {
     private String userName;
     @ApiModelProperty("邮箱")
     private String email;
+    @ApiModelProperty("登录账号")
+    private String account;
     @ApiModelProperty("密码")
     private String password;
+    @ApiModelProperty("token")
+    private String token;
     @ApiModelProperty("用户/管理员")
     private Integer role;
     @ApiModelProperty("性别")

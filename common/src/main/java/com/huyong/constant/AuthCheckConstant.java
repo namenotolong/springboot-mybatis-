@@ -8,7 +8,7 @@ package com.huyong.constant;
  */
 public class AuthCheckConstant {
 
-    public static final String TOKEN = "token";
+    public static final String TOKEN = "authorization";
     public static final String OPTIONS = "OPTIONS";
     public static final String START = "bearer:";
 }

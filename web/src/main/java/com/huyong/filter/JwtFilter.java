@@ -2,6 +2,7 @@ package com.huyong.filter;
 
 import com.huyong.constant.AuthCheckConstant;
 import com.huyong.dao.entity.UserDO;
+import com.huyong.dao.module.UserBO;
 import com.huyong.exception.AuthException;
 import com.huyong.utils.AuthUtils;
 import com.huyong.utils.JwtHelper;
@@ -20,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Set;
 
 /**
@@ -43,7 +46,7 @@ public class JwtFilter extends GenericFilterBean {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
         //等到请求头信息authorization信息
-        final String authHeader = request.getHeader("authorization");
+        final String authHeader = request.getHeader(AuthCheckConstant.TOKEN);
         if (StringUtils.isNotEmpty(authHeader)) {
             if (!authHeader.startsWith(AuthCheckConstant.START)) {
                 throw new AuthException("登录异常，请重新登录！");
@@ -53,27 +56,27 @@ public class JwtFilter extends GenericFilterBean {
             if (claims == null) {
                 throw new AuthException("身份过期，请重新登录！");
             }
-            //AuthUtils.setUser(claims2User(claims));
+            AuthUtils.setUser(claims2User(claims));
         }
         chain.doFilter(req, res);
     }
 
-    private UserDO claims2User(Claims claims) {
-        UserDO userDO = new UserDO();
+    private UserBO claims2User(Claims claims) {
+        UserBO user = new UserBO();
         final Set<String> strings = claims.keySet();
         strings.remove("exp");
         strings.remove("nbf");
         for (String field : strings) {
             try {
-                final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field, userDO.getClass());
+                final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field, user.getClass());
                 final Method writeMethod = propertyDescriptor.getWriteMethod();
                 if (writeMethod != null) {
-                    writeMethod.invoke(userDO, claims.get(field));
+                    writeMethod.invoke(user, claims.get(field));
                 }
             } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
-        return userDO;
+        return user;
     }
 }

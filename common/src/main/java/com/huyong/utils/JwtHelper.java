@@ -20,6 +20,12 @@ import java.util.Set;
  */
 public class JwtHelper {
 
+    private static final String  BASE_64_SECURITY= "MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=";
+    /**
+     * 一周有效时间
+     */
+    private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
+
     /**
      * 解析jwt
      */
@@ -33,10 +39,14 @@ public class JwtHelper {
         }
     }
 
+    public static String createJWT(Long id, String name, String email, int role) {
+        return createJWT(id, name, email, role, EXPIRE_TIME, BASE_64_SECURITY);
+    }
+
     /**
      * 构建jwt
      */
-    public static String createJWT(Long id, String name, String email, int role, long TTLMillis, String base64Security) {
+    private static String createJWT(Long id, String name, String email, int role, long TTLMillis, String base64Security) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
@@ -59,15 +69,6 @@ public class JwtHelper {
         }
         //生成JWT
         return builder.compact();
-    }
-
-    public static void main(String[] args) {
-        final String jwt = createJWT(1L, "1", "1", 1, 2000,"hello");
-        final Claims claims = parseJWT(jwt, "hello");
-        final Set<String> strings = claims.keySet();
-        strings.remove("exp");
-        strings.remove("nbf");
-        System.out.println(strings);
     }
 }
 
