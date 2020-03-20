@@ -262,7 +262,7 @@ export default {
   methods : {
     //路由跳转
     go(view) {
-      this.$router.push({path : view})
+      this.router.push()
     },
     //获取左边的导航
     getLeftBars() {

@@ -6,17 +6,35 @@
       </div>
     <div class="nav-middle">
       <div class="nav-text">
-        <div class="nav-text-content" v-for="bar in leftBars" v-bind:key="bar.id">
+        <div class="">
+          <div class="nav-text-content">
+            <a href="#">
+              <span class="menu-text">
+              发现
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="nav-text-content">
+          <a href="#">
+            <span class="menu-text">
+            关注
+            </span>
+          </a>
+        </div>
+        <div class="nav-text-content">
           <el-row>
             <el-col class="menu-text">
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <a :href="bar.url">{{bar.content}}</a>
+                  消息
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :icon="child.icon" v-for="child in bar.children" v-bind:key="child.id">
-                    <a :href="bar.url">{{child.content}}</a>
-                  </el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -58,16 +76,15 @@
             <el-col>
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <img v-if="user.picture" :src="'http://localhost:8081' + user.picture" class="icon-img">
-                  <img v-else src="../img/1.png" class="icon-img">
+                  <img src="../img/2.png" class="icon-img">
+                    <i class="el-icon-caret-bottom" />
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="el-icon-circle-plus">
-                    <span @click='loginout'>退出</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-plus" v-for="bar in rightBars" :key=bar.id>
-                    <a @click="go(bar.url)">{{bar.content}}</a>
-                  </el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -100,13 +117,13 @@
           <el-form-item prop="email">
             <el-input placeholder="邮箱" type="email" v-model="ruleForm.email" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="code" v-if="(/^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/).test(ruleForm.email.trim()) != ''">
+          <el-form-item prop="code">
             <div style="display:flex;justify-content:space-between">
               <div>
-                <el-input placeholder="验证码" type="text" v-model="ruleForm.code" autocomplete="off"></el-input>
+                <el-input placeholder="验证码" type="text" v-model="ruleForm.validateCode" autocomplete="off"></el-input>
               </div>
               <div>
-                <span @click="getcode('ruleForm.code')" v-if="!sendcode">获取验证码</span>
+                <span @click="getcode" v-if="!sendcode">获取验证码</span>
                 <span v-if="sendcode">{{lastNumber}}s</span>
               </div>
            </div>
@@ -127,7 +144,7 @@
   </div>
 </template>
 <script>
-import {clearInput,encrypt,decrypt,setStore,getStore,removeStore,converObjToUrl} from '../utils/utils'
+import {encrypt,decrypt,setStore,getStore,removeStore,converObjToUrl} from '../utils/utils'
 export default {
   data() {
     var validateUserName = (rule, value, callback) => {
@@ -137,16 +154,12 @@ export default {
         } else if (reg.test(value)) {
           callback(new Error('用户名不能是邮箱格式'));
         } else {
-          this.checkAccountUnique(value, 1).then(response => {
-            if (!response.data.data) {
-              callback('该用户名已被注册');
-            } else {
-              callback();
-            }
-          })
+          let flag = this.checkAccountUnique(value, 1)
+          console.log(flag)
+          callback();
         }
       };
-    var validateAccount = (rule, value, callback) => {
+   var validateAccount = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入邮箱或用户名！'));
         } else {
@@ -161,13 +174,7 @@ export default {
         } else if (!reg.test(value)) {
           callback(new Error('邮箱格式不正确'));
         } else {
-          this.checkAccountUnique(value, 0).then(response => {
-            if (!response.data.data) {
-              callback('该邮箱已被注册');
-            } else {
-              callback();
-            }
-          })
+          callback();
         }
       };
     var validatePass = (rule, value, callback) => {
@@ -248,41 +255,26 @@ export default {
       sendcode: false,
       //当前登录用户
       user: {},
-      //左侧导航
-      leftBars: [],
-      //右侧导航
-      rightBars: [],
     }
   },
   mounted() {
     this.getUser();
-    this.getLeftBars();
-    this.getRightBars();
   },
   methods : {
-    //路由跳转
-    go(view) {
-      this.$router.push({path : view})
-    },
-    //获取左边的导航
-    getLeftBars() {
-      this.$axios.get('/bar/getLeft').then(response => {
-        this.leftBars = response.data.data
-      })
-    },
-    //获取右边的导航
-    getRightBars() {
-      this.$axios.get('/bar/getRight').then(response => {
-        this.rightBars = response.data.data
-        //console.log(this.rightBars)
-      })
-    },
     //验证账号唯一性
     async checkAccountUnique(account,ops) {
       let obj = {}
       obj.account = account;
       obj.ops = ops;
-      return await this.$axios.get("/user/checkAccountUnique" + converObjToUrl(obj))
+      let flag = true;
+      await this.$axios.get("/user/checkAccountUnique" + converObjToUrl(obj)).then(response => {
+        let data = response.data.data
+        console.log('data' + '->' + data)
+        if(!flag) {
+          console.log(this.rules.userName)
+        }
+      })
+      return flag;
     },
     //获取当前登录用户
     getUser() {
@@ -290,10 +282,6 @@ export default {
       if(token) {
         this.$axios.get("/user/getUser").then(response => {
           this.user = response.data.data;
-          if(this.user) {
-            this.sign = true
-            console.log(this.user)
-          }
         })
       }
     },
@@ -331,18 +319,14 @@ export default {
             let user = {};
             user.account = this.ruleForm.account;
             user.password = encrypt(this.ruleForm.password);
-            this.ruleForm.password = ''
             this.$axios.post("/user/login", user).then(response => {
-              this.$message({
-                message: '登录成功',
-                type: 'success'
-              });
               this.logindialog = false;
               this.sign = true;
-              setStore("token", response.data.data.token);
+              setStore("token", user.token);
               this.user = response.data.data;
             })
           } else {
+            console.log('error submit!!');
             return false;
         }
       });
@@ -354,17 +338,13 @@ export default {
           if (valid) {
             //开始登录
             let user = {};
-            user.email = this.ruleForm.email;
-            user.userName = this.ruleForm.userName;
+            user.account = this.ruleForm.account;
             user.password = encrypt(this.ruleForm.password);
-            user.code = this.ruleForm.code
-            clearInput(this.ruleForm)
-            this.$axios.post("/user/register", user).then(response => {
-              this.registerdialog = false;
-              this.$message({
-                message: '注册成功，请登录',
-                type: 'success'
-              });
+            this.$axios.post("/user/login", user).then(response => {
+              this.logindialog = false;
+              this.sign = true;
+              setStore("token", user.token);
+              this.user = response.data.data;
             })
           } else {
             console.log('error submit!!');
@@ -374,17 +354,10 @@ export default {
     },
     //发送验证码
     getcode() {
-      if(this.ruleForm.email.trim() === '') {
-        this.$message({
-            message: '请填写邮箱',
-            type: 'error'
-        });
-        return;
-      }
       this.$message({
-              message: '验证码已发送到了邮箱中，请查收',
-              type: 'success'
-          });
+          message: '验证码已发送到了邮箱中，请查收',
+          type: 'success'
+        });
       this.sendcode = true;
       let timer = setInterval(() => {
         if(this.lastNumber > 0) {
@@ -395,16 +368,6 @@ export default {
         clearInterval(timer);
       }
       }, 1000);
-      this.$axios.get("/user/send", {
-        params : {
-          email: this.ruleForm.email
-        }
-      })
-    },
-    //注销
-    loginout() {
-      removeStore('token')
-      history.go(0)
     }
   }
 }
@@ -454,6 +417,7 @@ export default {
 }
 a{
   text-decoration: none;
+  color: black
 }
 .nav-container{
   display: flex;

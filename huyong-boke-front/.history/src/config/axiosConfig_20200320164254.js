@@ -22,7 +22,6 @@ class AxiosConfig{
     this.axiosService.interceptors.response.use(response => {
       if (!response.data.success) {
         Message.error({message: response.data.message})
-        console.log(response.data.data)
         //身份认证异常
         if(response.data.code === 333) {
           removeStore("token")

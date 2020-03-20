@@ -58,7 +58,7 @@
             <el-col>
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <img v-if="user.picture" :src="'http://localhost:8081' + user.picture" class="icon-img">
+                  <img v-if="userBar !== ''" :src="userBar" class="icon-img">
                   <img v-else src="../img/1.png" class="icon-img">
                 </span>
                 <el-dropdown-menu slot="dropdown">
@@ -66,7 +66,7 @@
                     <span @click='loginout'>退出</span>
                   </el-dropdown-item>
                   <el-dropdown-item icon="el-icon-plus" v-for="bar in rightBars" :key=bar.id>
-                    <a @click="go(bar.url)">{{bar.content}}</a>
+                    <a :href="bar.url">{{bar.content}}</a>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -252,6 +252,8 @@ export default {
       leftBars: [],
       //右侧导航
       rightBars: [],
+      //用户头像
+      userBar: ''
     }
   },
   mounted() {
@@ -260,10 +262,6 @@ export default {
     this.getRightBars();
   },
   methods : {
-    //路由跳转
-    go(view) {
-      this.$router.push({path : view})
-    },
     //获取左边的导航
     getLeftBars() {
       this.$axios.get('/bar/getLeft').then(response => {

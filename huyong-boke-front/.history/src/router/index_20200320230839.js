@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import myhome from '@/view/myhome'
-import own from '@/view/own'
 
 Vue.use(Router)
 
@@ -13,9 +12,9 @@ export default new Router({
       component: myhome,
     },
     {
-      path: '/own',
-      name: 'own',
-      component: own,
+      path: '/myhome',
+      name: 'myhome',
+      component: myhome,
     }
   ]
 })

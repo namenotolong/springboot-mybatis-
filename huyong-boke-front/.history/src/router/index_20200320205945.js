@@ -1,21 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import myhome from '@/view/myhome'
-import own from '@/view/own'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'myhome',
       component: myhome,
+      meta: {
+        requiredAuth: false
+      }
     },
     {
-      path: '/own',
-      name: 'own',
-      component: own,
+      path: '/myhome',
+      name: 'myhome',
+      component: myhome,
+
     }
   ]
 })

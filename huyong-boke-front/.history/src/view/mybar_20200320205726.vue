@@ -11,7 +11,7 @@
             <el-col class="menu-text">
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <a :href="bar.url">{{bar.content}}</a>
+                  {{bar.content}}
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item :icon="child.icon" v-for="child in bar.children" v-bind:key="child.id">
@@ -58,16 +58,14 @@
             <el-col>
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <img v-if="user.picture" :src="'http://localhost:8081' + user.picture" class="icon-img">
-                  <img v-else src="../img/1.png" class="icon-img">
+                  <img src="../img/2.png" class="icon-img">
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="el-icon-circle-plus">
-                    <span @click='loginout'>退出</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-plus" v-for="bar in rightBars" :key=bar.id>
-                    <a @click="go(bar.url)">{{bar.content}}</a>
-                  </el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-plus"><span @click='loginout'>退出</span></el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+                  <el-dropdown-item :icon="icon">螺蛳粉</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -194,6 +192,7 @@ export default {
       }
     };
     return {
+      icon: 'el-icon-check',
       //搜索内容
       searchContent : '',
       //邮箱倒计时
@@ -260,10 +259,6 @@ export default {
     this.getRightBars();
   },
   methods : {
-    //路由跳转
-    go(view) {
-      this.$router.push({path : view})
-    },
     //获取左边的导航
     getLeftBars() {
       this.$axios.get('/bar/getLeft').then(response => {
@@ -292,7 +287,6 @@ export default {
           this.user = response.data.data;
           if(this.user) {
             this.sign = true
-            console.log(this.user)
           }
         })
       }
