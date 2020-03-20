@@ -29,10 +29,10 @@ public class JwtHelper {
     /**
      * 解析jwt
      */
-    public static Claims parseJWT(String jsonWebToken, String base64Security){
+    public static Claims parseJWT(String jsonWebToken){
         try {
             return Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(BASE_64_SECURITY))
                     .parseClaimsJws(jsonWebToken).getBody();
         } catch(Exception ex) {
             return null;

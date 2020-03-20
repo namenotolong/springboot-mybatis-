@@ -43,7 +43,7 @@ public class UserController {
     @ResponseBody
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public void register(@ApiParam("用户信息") @ValidationParam("email,userName,password") @RequestBody UserBO userBO) {
+    public void register(@ApiParam("用户信息") @ValidationParam("email,userName,password,code") @RequestBody UserBO userBO) {
         userService.register(userBO);
     }
 
@@ -53,6 +53,13 @@ public class UserController {
     public boolean checkEmail(@ApiParam("账号") @NotBlank @RequestParam("account") String account,
                            @ApiParam("邮箱：0，用户名：1") @NotBlank @RequestParam("ops") int ops) {
         return userService.checkAccountUnique(account, ops);
+    }
+
+    @ResponseBody
+    @GetMapping("/send")
+    @ApiParam("/发送验证码")
+    public void sendCode(@ApiParam("邮箱") @NotBlank @RequestParam("email") String email) {
+        userService.sendCode(email);
     }
 
 }

@@ -29,6 +29,8 @@ public class UserBO {
     private String password;
     @ApiModelProperty("token")
     private String token;
+    @ApiModelProperty("code")
+    private String code;
     @ApiModelProperty("用户/管理员")
     private Integer role;
     @ApiModelProperty("性别")

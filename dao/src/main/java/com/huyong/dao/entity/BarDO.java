@@ -32,7 +32,7 @@ public class BarDO implements Serializable {
     /**
      * 图片地址
      */
-    private String pictureUrl;
+    private String icon;
     /**
      * 创建用户
      */
@@ -49,4 +49,8 @@ public class BarDO implements Serializable {
      * 删除/存在
      */
     private Integer status;
+    /**
+     * 左边导航/右边导航
+     */
+    private Integer type;
 }

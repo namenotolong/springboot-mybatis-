@@ -7,6 +7,7 @@ import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 描述: 头部功能
@@ -26,7 +27,7 @@ public class BarBO {
     @ApiModelProperty("地址")
     private String url;
     @ApiModelProperty("图片地址")
-    private String pictureUrl;
+    private String icon;
     @ApiModelProperty("创建用户")
     private Long userId;
     @ApiModelProperty("创建时间")
@@ -35,4 +36,8 @@ public class BarBO {
     private Date updateTime;
     @ApiModelProperty("删除/存在")
     private Integer status;
+    @ApiModelProperty("左边导航/右边导航")
+    private Integer type;
+    @ApiModelProperty("二级目录")
+    private List<BarBO> children;
 }

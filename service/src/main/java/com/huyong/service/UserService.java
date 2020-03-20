@@ -1,11 +1,12 @@
 package com.huyong.service;
 
+import com.huyong.constant.AuthCheckConstant;
+import com.huyong.constant.CommonConstant;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.module.UserBO;
 import com.huyong.enums.RoleEnum;
 import com.huyong.enums.StatusEnum;
 import com.huyong.exception.AuthException;
-import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
 import com.huyong.utils.JwtHelper;
 import org.apache.commons.collections.CollectionUtils;
@@ -26,8 +27,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserService {
+    private static final String EMAIL_REX = "^\\w+((.\\w+)|(-\\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$";
+
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private EmailAdviceService emailAdviceService;
 
     public UserDO convertBo2Do(UserBO user) {
         UserDO userDO = new UserDO();
@@ -71,7 +76,7 @@ public class UserService {
         final UserDO userDO = modifyUserDO(convertBo2Do(user));
         //判断登录账号是邮箱还是用户名
         final String account = user.getAccount();
-        if (account.contains("@")) {
+        if (account.matches(EMAIL_REX)) {
             userDO.setEmail(account);
         } else {
             userDO.setUserName(account);
@@ -83,7 +88,7 @@ public class UserService {
         final UserDO customer = userDOS.get(0);
         user = convertDo2Bo(customer);
         String token = JwtHelper.createJWT(customer.getId(), customer.getUserName(), customer.getEmail(), customer.getRole());
-        user.setToken(token);
+        user.setToken(AuthCheckConstant.START + token);
         return user;
     }
 
@@ -100,11 +105,13 @@ public class UserService {
      * @param userBO
      */
     public void register(UserBO userBO) {
+        emailAdviceService.checkCode(userBO.getEmail(), userBO.getCode());
         checkUserNameUnique(userBO.getUserName());
         checkEmailUnique(userBO.getEmail());
         UserDO userDO = convertBo2Do(userBO);
         userDO.setRole(RoleEnum.CUSTOMER.getCode());
         userDO.setStatus(StatusEnum.PRESENT.getCode());
+        userDO.setPicture(CommonConstant.DEFAULT_BAR_IMG);
         userMapper.insert(userDO);
     }
 
@@ -144,4 +151,13 @@ public class UserService {
             return checkUserNameUnique(account);
         }
     }
+
+    /**
+     * 发送验证码
+     * @param email
+     */
+    public void sendCode(String email) {
+        emailAdviceService.sendCode(email);
+    }
+
 }
