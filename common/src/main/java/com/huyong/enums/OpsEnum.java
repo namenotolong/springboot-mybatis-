@@ -1,32 +1,24 @@
 package com.huyong.enums;
 
 /**
- * 描述: 引用文件实体枚举
+ * 描述: 操作枚举
  *
  * @author huyong
- * @date 2020-03-10 8:55 下午
+ * @date 2020-03-10 9:00 下午
  */
-public enum FileRefEnum {
+public enum OpsEnum {
     /**
-     * 博客
+     * insert
      */
-    ARTICLE(0, "ARTICLE"),
+    INSERT(0, "新增"),
     /**
-     * 聊天
+     * update
      */
-    CHAT(1, "CHAT"),
-    /**
-     * 评论回复
-     */
-    TOPIC(2, "TOPIC"),
-    /**
-     * 头像
-     */
-    BAR(3, "BAR"),
+    UPDATE(1, "更新"),
     ;
     private int code;
     private String desc;
-    FileRefEnum(int code, String desc) {
+    OpsEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -44,5 +36,10 @@ public enum FileRefEnum {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return desc;
     }
 }

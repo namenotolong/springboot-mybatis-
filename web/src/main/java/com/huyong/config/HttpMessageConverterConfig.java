@@ -33,7 +33,7 @@ public class HttpMessageConverterConfig {
                 //    是否输出为null的字段,若为null 则显示该字段
                 SerializerFeature.WriteMapNullValue,
                 //    数值字段如果为null，则输出为0
-                SerializerFeature.WriteNullNumberAsZero,
+                //SerializerFeature.WriteNullNumberAsZero,
                 //     List字段如果为null,输出为[],而非null
                 SerializerFeature.WriteNullListAsEmpty,
                 //    字符类型字段如果为null,输出为"",而非null

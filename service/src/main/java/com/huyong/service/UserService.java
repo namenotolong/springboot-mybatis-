@@ -4,9 +4,12 @@ import com.huyong.constant.AuthCheckConstant;
 import com.huyong.constant.CommonConstant;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.module.UserBO;
+import com.huyong.enums.GenderEnum;
+import com.huyong.enums.OpsEnum;
 import com.huyong.enums.RoleEnum;
 import com.huyong.enums.StatusEnum;
 import com.huyong.exception.AuthException;
+import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
 import com.huyong.utils.JwtHelper;
 import org.apache.commons.collections.CollectionUtils;
@@ -37,6 +40,33 @@ public class UserService {
     public UserDO convertBo2Do(UserBO user) {
         UserDO userDO = new UserDO();
         BeanUtils.copyProperties(user, userDO);
+        for (GenderEnum value : GenderEnum.values()) {
+            if (value.getDesc().equals(user.getSex())) {
+                userDO.setGender(value.getCode());
+            }
+        }
+        return userDO;
+    }
+
+    /**
+     * 返回更新指定字段的userDO
+     * @param user
+     * @return
+     */
+    public UserDO convertBo2UpdateDo(UserBO user) {
+        UserDO userDO = new UserDO();
+        userDO.setId(user.getId());
+        userDO.setUserName(user.getUserName());
+        userDO.setAddress(user.getAddress());
+        userDO.setAge(user.getAge());
+        for (GenderEnum value : GenderEnum.values()) {
+            if (value.getDesc().equals(user.getSex())) {
+                userDO.setGender(value.getCode());
+            }
+        }
+        userDO.setIntroduction(user.getIntroduction());
+        userDO.setSchool(user.getSchool());
+        userDO.setWork(user.getWork());
         return userDO;
     }
     public List<UserDO> convertBos2Dos(List<UserBO> users) {
@@ -49,6 +79,14 @@ public class UserService {
     public UserBO convertDo2Bo(UserDO user) {
         UserBO userBO = new UserBO();
         BeanUtils.copyProperties(user, userBO);
+        if (userBO.getGender() != null) {
+            GenderEnum[] values = GenderEnum.values();
+            for (GenderEnum value : values) {
+                if (value.getCode().equals(userBO.getGender())) {
+                    userBO.setSex(value.getDesc());
+                }
+            }
+        }
         return userBO;
     }
     public List<UserBO> convertDos2Bos(List<UserDO> users) {
@@ -126,6 +164,13 @@ public class UserService {
         List<UserDO> userDOS = userMapper.queryByCondition(userDO);
         return CollectionUtils.isEmpty(userDOS);
     }
+    private boolean checkUserNameUnique(String userName, Long id) {
+        UserDO userDO = modifyUserDO();
+        //验证用户名唯一性
+        userDO.setUserName(userName);
+        List<UserDO> userDOS = userMapper.queryByCondition(userDO);
+        return CollectionUtils.isEmpty(userDOS) || (userDOS.size() == 1 && userDOS.get(0).getId().equals(id));
+    }
     /**
      * 验证邮箱唯一性
      * @param email
@@ -158,6 +203,40 @@ public class UserService {
      */
     public void sendCode(String email) {
         emailAdviceService.sendCode(email);
+    }
+
+    /**
+     * 新增或者更新一个用户
+     * @param userBO
+     */
+    public void updateOrInsert(UserBO userBO) {
+        if (userBO.getOps().equals(OpsEnum.UPDATE.getCode())) {
+            if (userBO.getId() == null) {
+                throw new CommonException("id参数为空");
+            }
+            boolean unique = checkUserNameUnique(userBO.getUserName(), userBO.getId());
+            if (!unique) {
+                throw new CommonException("更改昵称已被他人使用");
+            }
+            //如果是管理员 直接更新，否则只能更新指定字段
+            UserDO userDO;
+            if (AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode())) {
+                userDO = convertBo2Do(userBO);
+            } else {
+                userDO = convertBo2UpdateDo(userBO);
+            }
+            userMapper.updateByPrimary(userDO);
+        } else {
+            //只有管理员能够插入
+            if (!AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode())) {
+                throw new CommonException("权限不足！");
+            }
+            boolean unique = checkUserNameUnique(userBO.getUserName(), userBO.getId());
+            if (!unique) {
+                throw new CommonException("更改昵称已被他人使用");
+            }
+            userMapper.insert(convertBo2Do(userBO));
+        }
     }
 
 }

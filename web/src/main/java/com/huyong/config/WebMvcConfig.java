@@ -1,5 +1,6 @@
 package com.huyong.config;
 
+import com.huyong.constant.CommonConstant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,8 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String url = "/Users/weidian/Documents/huyong/huyong-boke-front/springboot-mybatis-/huyong-boke-front/src/img/";
-        registry.addResourceHandler("/img/**")
-                .addResourceLocations("file://" + url);
+        registry.addResourceHandler(CommonConstant.VISIT_FILE_LOCATION + "**")
+                .addResourceLocations("file://" + CommonConstant.FILE_LOCATION);
     }
 }

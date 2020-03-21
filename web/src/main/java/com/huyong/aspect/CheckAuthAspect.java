@@ -1,11 +1,16 @@
 package com.huyong.aspect;
 
 import com.huyong.annotation.CheckAuth;
+import com.huyong.constant.AuthCheckConstant;
+import com.huyong.dao.module.UserBO;
 import com.huyong.enums.RoleEnum;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
+import com.huyong.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
@@ -24,8 +29,14 @@ public class CheckAuthAspect extends AbstractAspectManager{
     protected Object execute(ProceedingJoinPoint pjp, Method method) throws Throwable {
         CheckAuth annotation = method.getAnnotation(CheckAuth.class);
         if (annotation != null) {
-            boolean valid = AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode());
-            if (!valid) {
+            HttpServletRequest request = ServletUtils.getRequest();
+            boolean ignore = request.getMethod().equalsIgnoreCase(AuthCheckConstant.OPTIONS);
+            if (ignore) {
+                return null;
+            }
+            final UserBO user = AuthUtils.getUser();
+            boolean valid = user == null || user.getRole() < annotation.value();
+            if (valid) {
                 throw new CommonException("权限不足！");
             }
         }

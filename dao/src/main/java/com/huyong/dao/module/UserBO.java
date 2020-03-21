@@ -1,5 +1,6 @@
 package com.huyong.dao.module;
 
+import com.huyong.enums.GenderEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -35,6 +36,8 @@ public class UserBO {
     private Integer role;
     @ApiModelProperty("性别")
     private Integer gender;
+    @ApiModelProperty("性别")
+    private String sex;
     @ApiModelProperty("年龄")
     private Integer age;
     @ApiModelProperty("学校")
@@ -59,4 +62,6 @@ public class UserBO {
     private String articles;
     @ApiModelProperty("浏览量")
     private Long visitCount;
+    @ApiModelProperty("新增0 更新1")
+    private Integer ops;
 }

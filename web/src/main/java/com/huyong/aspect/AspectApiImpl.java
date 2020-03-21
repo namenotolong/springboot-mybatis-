@@ -39,6 +39,10 @@ public class AspectApiImpl implements AspectApi {
     @Override
     public Object doHandlerAspect(ProceedingJoinPoint pjp, Method method) throws Throwable {
         HttpServletRequest request = ServletUtils.getRequest();
+        boolean ignore = request.getMethod().equalsIgnoreCase(AuthCheckConstant.OPTIONS);
+        if (ignore) {
+            return null;
+        }
         //等到请求头信息authorization信息
         String authHeader = request.getHeader(AuthCheckConstant.TOKEN);
         if (StringUtils.isNotEmpty(authHeader)) {

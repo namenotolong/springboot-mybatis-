@@ -1,12 +1,24 @@
 package com.huyong.service;
 
+import com.huyong.constant.CommonConstant;
 import com.huyong.dao.entity.FileDO;
+import com.huyong.dao.entity.UserDO;
+import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.FileBO;
+import com.huyong.dao.module.UserBO;
+import com.huyong.enums.FileRefEnum;
+import com.huyong.enums.FileTypeEnum;
+import com.huyong.exception.CommonException;
+import com.huyong.utils.AuthUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.huyong.dao.mapper.FileMapper;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +33,8 @@ import java.util.stream.Collectors;
 public class FileService {
     @Resource
     private FileMapper fileMapper;
+    @Resource
+    private UserMapper userMapper;
 
     public FileDO convertBo2Do(FileBO file) {
         FileDO fileDO = new FileDO();
@@ -44,5 +58,34 @@ public class FileService {
             return new ArrayList<>();
         }
         return files.stream().map(this::convertDo2Bo).collect(Collectors.toList());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void uploadBar(MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new CommonException("上传文件为空！");
+        }
+        UserBO user = AuthUtils.getUser();
+        Long id = user.getId();
+        //命名为id + 事件戳
+        String fileName = id + "+" + System.currentTimeMillis() + ".jpg";
+        File dest = new File(CommonConstant.FILE_LOCATION  + fileName);
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            throw new CommonException("上传失败！");
+        }
+        //存储上传文件日志
+        FileDO log = new FileDO();
+        log.setRef(FileRefEnum.BAR.getCode());
+        log.setType(FileTypeEnum.JPG.getCode());
+        log.setUrl(CommonConstant.VISIT_FILE_LOCATION + fileName);
+        log.setRefId(id);
+        fileMapper.insert(log);
+        //更改用户头像
+        UserDO condition = new UserDO();
+        condition.setId(id);
+        condition.setPicture(CommonConstant.VISIT_FILE_LOCATION + fileName);
+        userMapper.updateByPrimary(condition);
     }
 }

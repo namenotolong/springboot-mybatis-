@@ -4,6 +4,7 @@ import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 描述: 文件
@@ -32,4 +33,8 @@ public class FileDO implements Serializable {
      * 引用对用数据库的id
      */
     private Long refId;
+    /**
+     * 创建事件
+     */
+    private Date createTime;
 }

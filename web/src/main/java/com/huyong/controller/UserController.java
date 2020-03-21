@@ -1,5 +1,6 @@
 package com.huyong.controller;
 
+import com.huyong.annotation.CheckAuth;
 import com.huyong.annotation.NotBlank;
 import com.huyong.annotation.ValidationParam;
 import com.huyong.dao.module.UserBO;
@@ -36,6 +37,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/getUser")
     @ApiOperation("获取当前用户")
+    @CheckAuth
     public UserBO getUser() {
         return userService.getUser();
     }
@@ -60,6 +62,14 @@ public class UserController {
     @ApiParam("/发送验证码")
     public void sendCode(@ApiParam("邮箱") @NotBlank @RequestParam("email") String email) {
         userService.sendCode(email);
+    }
+
+    @ResponseBody
+    @PostMapping("/updateOrInsert")
+    @ApiParam("/发送验证码")
+    @CheckAuth
+    public void updateOrInsert(@ApiParam("用户信息") @ValidationParam("userName,ops") @RequestBody UserBO userBO) {
+        userService.updateOrInsert(userBO);
     }
 
 }

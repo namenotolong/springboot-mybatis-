@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 描述: 文件
@@ -26,4 +28,6 @@ public class FileBO {
     private Integer ref;
     @ApiModelProperty("引用对用数据库的id")
     private Long refId;
+    @ApiModelProperty("创建事件")
+    private Date createTime;
 }
