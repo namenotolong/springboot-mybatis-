@@ -23,6 +23,10 @@ public class ArticleDO implements Serializable {
      */
     private String title;
     /**
+     * 文章类型 草稿、正文
+     */
+    private Integer type;
+    /**
      * 内容
      */
     private String content;

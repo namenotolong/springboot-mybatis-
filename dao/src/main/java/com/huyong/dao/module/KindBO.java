@@ -7,6 +7,7 @@ import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 描述: 分类
@@ -33,4 +34,6 @@ public class KindBO {
     private Date updateTime;
     @ApiModelProperty("删除/存在")
     private Integer status;
+    @ApiModelProperty("二级目录")
+    private List<KindBO> children;
 }

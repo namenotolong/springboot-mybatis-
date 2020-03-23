@@ -2,7 +2,6 @@ package com.huyong.dao.module;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
 import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
@@ -22,6 +21,8 @@ public class ArticleBO {
     private Long id;
     @ApiModelProperty("标题")
     private String title;
+    @ApiModelProperty("文章类型")
+    private Integer type;
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("话题数目")
@@ -42,6 +43,6 @@ public class ArticleBO {
     private Date createTime;
     @ApiModelProperty("修改时间")
     private Date updateTime;
-
-
+    @ApiModelProperty("操作类型")
+    private Integer ops;
 }

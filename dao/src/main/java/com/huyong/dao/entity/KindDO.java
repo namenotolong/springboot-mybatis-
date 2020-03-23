@@ -1,5 +1,6 @@
 package com.huyong.dao.entity;
 
+import com.huyong.dao.helper.annotation.Ignore;
 import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
@@ -36,10 +37,12 @@ public class KindDO implements Serializable {
     /**
      * 创建时间
      */
+    @Ignore
     private Date createTime;
     /**
      * 更新时间
      */
+    @Ignore
     private Date updateTime;
     /**
      * 删除/存在
