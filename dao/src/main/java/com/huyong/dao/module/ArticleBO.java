@@ -35,8 +35,10 @@ public class ArticleBO {
     private Long floorCount;
     @ApiModelProperty("分类id集合")
     private String kindIds;
-    @ApiModelProperty("作者")
+    @ApiModelProperty("作者id")
     private Long userId;
+    @ApiModelProperty("作者")
+    private UserBO user;
     @ApiModelProperty("删除/存在")
     private Integer status;
     @ApiModelProperty("创建时间")

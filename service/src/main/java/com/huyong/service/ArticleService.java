@@ -3,6 +3,7 @@ package com.huyong.service;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.dao.module.UserBO;
+import com.huyong.enums.ArticleTypeEnum;
 import com.huyong.enums.OpsEnum;
 import com.huyong.enums.RoleEnum;
 import com.huyong.enums.StatusEnum;
@@ -103,5 +104,19 @@ public class ArticleService {
             }
         }
 
+    }
+
+    public List<ArticleBO> getArticles(Long pageSize, Long pageNum, Integer kindId, Long userId, Integer type) {
+        if (pageSize < 1) {
+            pageSize = 1L;
+        }
+        if (pageNum < 1) {
+            pageNum = 1L;
+        }
+        Long offset = (pageNum - 1) * pageSize;
+        if (type == null) {
+            type = ArticleTypeEnum.TEXT.getCode();
+        }
+        return articleMapper.getArticles(offset, pageSize, kindId, userId, type);
     }
 }

@@ -42,6 +42,7 @@ public class DalConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(demoJdbcTemplate);
         sqlSessionFactoryBean.setTypeAliasesPackage("com.huyong.dao.entity");
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.huyong.dao.module");
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
         sqlSessionFactoryBean.setPlugins(sqlLogInterceptor);
         sqlSessionFactoryBean.setConfiguration(configuration);

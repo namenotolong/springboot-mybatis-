@@ -8,12 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 描述: ArticleController
@@ -35,5 +33,16 @@ public class ArticleController {
     @ApiOperation("发布或者修改文章")
     public void publishOrModify(@ApiParam("文章") @RequestBody @ValidationParam("title,ops,type") ArticleBO articleBO) {
         articleService.publishOrModify(articleBO);
+    }
+
+    @ResponseBody
+    @GetMapping("/getArticles")
+    @ApiOperation("获取文章")
+    public List<ArticleBO> getArticles(@ApiParam("每页显示数量")@RequestParam("pageSize") Long pageSize,
+                                       @ApiParam("页码")@RequestParam("pageNum") Long pageNum,
+                                       @ApiParam("分类Id") @RequestParam(value = "kindId",required = false) Integer kindId,
+                                       @ApiParam("关注者id") @RequestParam(value = "userId", required = false) Long userId,
+                                       @ApiParam("文章类型，草稿还是正文") @RequestParam(value = "type", required = false) Integer type) {
+        return articleService.getArticles(pageSize, pageNum, kindId, userId, type);
     }
 }
