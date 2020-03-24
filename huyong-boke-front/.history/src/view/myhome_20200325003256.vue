@@ -4,11 +4,11 @@
       <mybar></mybar>
     </div>
     <div>
-      <el-container style="height: 650px; border: 1px solid #eee">
+      <el-container style="height: 500px; border: 1px solid #eee">
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
          <el-menu>
             <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
-              <template slot="title"><i class="el-icon-monitor"></i>{{item.kindName}}</template>
+              <template slot="title"><i class="el-icon-message"></i>{{item.kindName}}</template>
               <el-menu-item :index="kind.kindName" v-for="kind in item.children" :key="kind.id">
                 {{kind.kindName}}
               </el-menu-item>
@@ -17,12 +17,12 @@
         </el-aside>
       <el-container>
           <el-main>
-            <div class="infinite-list-wrapper main-content" style="overflow:auto" >
+            <div class="infinite-list-wrapper" style="overflow:auto">
             <div
               class="list"
               v-infinite-scroll="load"
               infinite-scroll-disabled="disabled">
-               <div v-for="item in articles" :key="item.id" class="segment">
+               <div v-for="item in articles" :key="item.id">
                 <div class="content">
                   <div class="title">
                     <h2>{{item.title}}</h2>
@@ -43,29 +43,13 @@
                     </div>
                   </div>
                   <div class="detail">
-                    <div class="user myflex">
-                      <div>
-                        <el-avatar :size="30">
+                    <div class="user">
+                      <el-avatar :size="50">
                         <img :src="baseUrl + item.user.picture"/>
                       </el-avatar>
-                      </div>
-                      <div style="margin-left: 15%">
-                        <span>{{item.user.userName}}</span>
-                      </div>
                     </div>
-                    <div class="myflex">
-                      <div>
-                        <i class="el-icon-view"></i>
-                        <span>{{item.readCount}}</span>
-                      </div>
-                      <div>
-                        <i class="el-icon-chat-round"></i>
-                        <span>{{item.topicCount}}</span>
-                      </div>
-                      <div>
-                        <i class="el-icon-thumb"></i>
-                        <span>{{item.praiseCount}}</span>
-                      </div>
+                    <div>
+
                     </div>
                   </div>
                 </div>
@@ -154,21 +138,13 @@ export default {
 }
 </script>
 <style scoped>
-.segment{
-  border-bottom: 1px solid gray;
-}
-.segment:hover{
-  background-color: #fafafa;
-}
-.main-content{
-  width: 70%;
-}
 .detail{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
   .content{
+    margin: 10px;
   }
  .el-header {
     background-color: #B3C0D1;
