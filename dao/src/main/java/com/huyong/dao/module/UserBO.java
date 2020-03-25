@@ -1,6 +1,5 @@
 package com.huyong.dao.module;
 
-import com.huyong.enums.GenderEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -58,8 +57,6 @@ public class UserBO {
     private Date updateTime;
     @ApiModelProperty("存在/删除")
     private Integer status;
-    @ApiModelProperty("关注的文章集合id")
-    private String articles;
     @ApiModelProperty("浏览量")
     private Long visitCount;
     @ApiModelProperty("新增0 更新1")

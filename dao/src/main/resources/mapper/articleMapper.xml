@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huyong.dao.mapper.ArticleMapper">
     <sql id="base_column_list">
-        a.`id` as `article_id`,a.`title` as `title`,a.`topic_count` as `topic_count`,
-        a.`praise_count` as `praise_count`,
-        a.`read_count` as `read_count`,a.`floor_count` as `floor_count`,a.`user_id` as `user_id`
+        a.`id` as `article_id`,a.`title` as `title`,a.`topic_count` as `topic_count`,a.`update_time` as article_update_time,
+        a.`read_count` as `read_count`,a.`floor_count` as `floor_count`,a.`user_id` as `user_id`,a.`kind_ids` as `kind_ids`
     </sql>
     <resultMap id="getArticlesMap" type="articleBO">
         <id property="id" column="article_id"></id>
         <result property="title" column="title"></result>
+        <result property="updateTime" column="article_update_time"></result>
         <result property="content" column="content"></result>
         <result property="topicCount" column="topic_count"></result>
-        <result property="praiseCount" column="praise_count"></result>
         <result property="readCount" column="read_count"></result>
         <result property="floorCount" column="floor_count"></result>
         <result property="userId" column="user_id"></result>
+        <result property="kindIds" column="kind_ids"></result>
         <association property="user" column="user_id" javaType="userBO" resultMap="userMap"></association>
     </resultMap>
     <resultMap id="userMap" type="userBO">
@@ -27,7 +27,7 @@
         <result property="work" column="work"></result>
         <result property="online" column="online"></result>
         <result property="picture" column="picture"></result>
-        <result property="visitCount" column="visitCount"></result>
+        <result property="visitCount" column="visit_count"></result>
     </resultMap>
     <select id="getArticles" resultMap="getArticlesMap">
         select <include refid="base_column_list"/>, SUBSTRING(a.`content`, 1, 30) as `content`, b.*
@@ -45,7 +45,18 @@
                 and find_in_set(#{kindId}, a.`kind_ids`)
             </if>
         </where>
-        order by a.`topic_count` desc, a.`praise_count` desc, a.`read_count` desc, a.`floor_count` desc,a.`create_time` desc,a.`update_time` desc
+        order by a.`topic_count` desc, a.`read_count` desc, a.`floor_count` desc,a.`create_time` desc,a.`update_time` desc
         limit #{offset}, #{pageNum}
+    </select>
+    <select id="detail" resultMap="getArticlesMap">
+        select <include refid="base_column_list"/>, a.`content` as `content`, b.*
+        from `article` a inner join `user` b
+        on a.user_id = b.id
+        <where>
+            a.`status` = 0 and b.`status` = 0
+            <if test="id != null">
+                and a.id = #{id}
+            </if>
+        </where>
     </select>
 </mapper>

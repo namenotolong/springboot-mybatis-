@@ -6,6 +6,7 @@ import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 描述: 文章
@@ -27,14 +28,13 @@ public class ArticleBO {
     private String content;
     @ApiModelProperty("话题数目")
     private Long topicCount;
-    @ApiModelProperty("点赞数")
-    private Long praiseCount;
     @ApiModelProperty("阅读数")
     private Long readCount;
     @ApiModelProperty("楼层数")
     private Long floorCount;
     @ApiModelProperty("分类id集合")
     private String kindIds;
+    private List<KindBO> kinds;
     @ApiModelProperty("作者id")
     private Long userId;
     @ApiModelProperty("作者")

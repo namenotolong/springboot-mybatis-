@@ -78,10 +78,6 @@ public class UserDO implements Serializable {
      */
     private Integer status;
     /**
-     * 关注的文章集合id
-     */
-    private String articles;
-    /**
      * 浏览量
      */
     private Long visitCount;

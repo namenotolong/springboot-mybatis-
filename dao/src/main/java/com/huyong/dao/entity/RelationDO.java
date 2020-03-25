@@ -8,7 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 描述: 用户之间的关系
+ * 描述: 用户之间、用户与博客之间的关系
  *
  * @author huyong
  * @date 2020-03-10 9:40 下午
@@ -22,7 +22,7 @@ public class RelationDO implements Serializable {
     /**
      * 一
      */
-    private Long userId;
+    private Long oneId;
     /**
      * 多
      */

@@ -36,4 +36,6 @@ public class KindBO {
     private Integer status;
     @ApiModelProperty("二级目录")
     private List<KindBO> children;
+    @ApiModelProperty("显示图标")
+    private String bar;
 }

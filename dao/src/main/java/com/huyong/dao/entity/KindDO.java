@@ -48,4 +48,8 @@ public class KindDO implements Serializable {
      * 删除/存在
      */
     private Integer status;
+    /**
+     * 显示图标
+     */
+    private String bar;
 }

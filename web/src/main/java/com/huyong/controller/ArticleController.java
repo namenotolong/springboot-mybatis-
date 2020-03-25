@@ -45,4 +45,12 @@ public class ArticleController {
                                        @ApiParam("文章类型，草稿还是正文") @RequestParam(value = "type", required = false) Integer type) {
         return articleService.getArticles(pageSize, pageNum, kindId, userId, type);
     }
+
+    @ResponseBody
+    @GetMapping("/detail")
+    @ApiOperation("获取文章")
+    public ArticleBO detail(@ApiParam("文章id")@RequestParam("id") Long id) {
+        return articleService.detail(id);
+    }
+
 }

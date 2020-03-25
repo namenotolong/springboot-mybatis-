@@ -10,11 +10,11 @@ public enum RelationEnum {
     /**
      * 关注
      */
-    MAN(0, "关注"),
+    FOLLOW(0, "关注"),
     /**
      * 粉丝
      */
-    WOMAN(1, "粉丝"),
+    FAN(1, "粉丝"),
     /**
      * 黑名单
      */
@@ -23,6 +23,22 @@ public enum RelationEnum {
      * 好友
      */
     FRIEND(3, "好友"),
+    /**
+     * 收藏文章
+     */
+    STORE(4, "收藏"),
+    /**
+     * 被用户收藏文章
+     */
+    BY_STORE(5, "被收藏"),
+    /**
+     * 点赞用户
+     */
+    PRAISE(6, "点赞"),
+    /**
+     * 被用户点赞
+     */
+    BY_PRAISE(7, "被点赞"),
     ;
     private int code;
     private String desc;

@@ -1,7 +1,11 @@
 package com.huyong.service;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.huyong.dao.entity.ArticleDO;
+import com.huyong.dao.mapper.KindMapper;
 import com.huyong.dao.module.ArticleBO;
+import com.huyong.dao.module.KindBO;
 import com.huyong.dao.module.UserBO;
 import com.huyong.enums.ArticleTypeEnum;
 import com.huyong.enums.OpsEnum;
@@ -9,6 +13,7 @@ import com.huyong.enums.RoleEnum;
 import com.huyong.enums.StatusEnum;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -28,6 +33,8 @@ import java.util.stream.Collectors;
 public class ArticleService {
     @Resource
     private ArticleMapper articleMapper;
+    @Resource
+    private KindMapper kindMapper;
 
     public ArticleDO convertBo2Do(ArticleBO article) {
         ArticleDO articleDO = new ArticleDO();
@@ -106,6 +113,15 @@ public class ArticleService {
 
     }
 
+    /**
+     * 获取文章列表
+     * @param pageSize
+     * @param pageNum
+     * @param kindId
+     * @param userId
+     * @param type
+     * @return
+     */
     public List<ArticleBO> getArticles(Long pageSize, Long pageNum, Integer kindId, Long userId, Integer type) {
         if (pageSize < 1) {
             pageSize = 1L;
@@ -118,5 +134,27 @@ public class ArticleService {
             type = ArticleTypeEnum.TEXT.getCode();
         }
         return articleMapper.getArticles(offset, pageSize, kindId, userId, type);
+    }
+
+    /**
+     * 获取文章详细信息，包括用户信息、分类信息
+     * @param id
+     * @return
+     */
+    public ArticleBO detail(Long id) {
+        ArticleBO detail = articleMapper.detail(id);
+        String kindIds = detail.getKindIds();
+        if (StringUtils.isNotBlank(kindIds)) {
+            final Iterable<String> split = Splitter
+                    .on(',')
+                    .omitEmptyStrings()
+                    .trimResults()
+                    .split(kindIds);
+            List<String> kindIdList = Lists.newArrayList();
+            split.forEach(kindIdList :: add);
+            List<KindBO> kinds = kindMapper.getKindsByIds(kindIdList);
+            detail.setKinds(kinds);
+        }
+        return detail;
     }
 }

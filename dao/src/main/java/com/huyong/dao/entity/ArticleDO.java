@@ -35,10 +35,6 @@ public class ArticleDO implements Serializable {
      */
     private Long topicCount;
     /**
-     * 点赞数
-     */
-    private Long praiseCount;
-    /**
      * 阅读数
      */
     private Long readCount;
@@ -66,6 +62,4 @@ public class ArticleDO implements Serializable {
      * 修改时间
      */
     private Date updateTime;
-
-
 }
