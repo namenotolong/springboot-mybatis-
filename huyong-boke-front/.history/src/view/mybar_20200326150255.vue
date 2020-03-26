@@ -3,7 +3,10 @@
     <div class="nav-container">
       <div class="nav-left nav-text">
         <div>
-          <svg @click="go('/')" style="width: 30%;margin-left: 3%" t="1585206233475" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3799" width="200" height="200"><path d="M555.541333 117.994667l312.874667 224.565333A117.333333 117.333333 0 0 1 917.333333 437.866667V800c0 64.8-52.533333 117.333333-117.333333 117.333333H640V746.666667c0-70.688-57.312-128-128-128s-128 57.312-128 128v170.666666H224c-64.8 0-117.333333-52.533333-117.333333-117.333333V437.877333a117.333333 117.333333 0 0 1 48.917333-95.317333l312.874667-224.565333a74.666667 74.666667 0 0 1 87.082666 0z" p-id="3800" fill="#515151"></path></svg>
+          <a href="/"><img src="../files/bar.png" class="nav-img" style="width: 30%;margin-left: 3%"></a>
+        </div>
+        <div class="nav-text-content">
+           <span class="menu-text">发现</span>
         </div>
         <div class="nav-text-content">
            <span class="menu-text">关注</span>
@@ -16,8 +19,7 @@
                   <a >消息</a>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>
-                    <svg style="width: 20px;height:20px;margin-top:20px" t="1585206404365" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4219" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="4220" fill="#707070"></path></svg>
+                  <el-dropdown-item icon="el-icon-check">
                     <a>私信</a>
                   </el-dropdown-item>
                   <el-dropdown-item icon="el-icon-check">
@@ -44,7 +46,7 @@
       </div>
       <div class="nav-right">
         <div class="right-content" style="width: 10%">
-          <a @click="go('/customer/write')" ><img src="../files/bar.png" class="nav-img" style="width: 80%;"></a>
+          <a @click="go('/customer/write')" ><img src="../files/bar.png" class="nav-img" style="width: 25%;"></a>
         </div>
         <div class="right-content" v-if="!sign">
           <el-button circle type="warning" @click="logindialog = true">登录</el-button>

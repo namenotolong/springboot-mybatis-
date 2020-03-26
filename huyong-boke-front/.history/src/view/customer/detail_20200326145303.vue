@@ -178,9 +178,9 @@ export default {
           flag = this.store;
           this.store = !this.store;
           if(this.store) {
-            this.article.storeCount++;
+            this.storeCount++;
           } else{
-            this.article.storeCount--;
+            this.storeCount--;
           }
         } else if(type === 3) {
           //关注用户
@@ -196,9 +196,9 @@ export default {
           flag = this.praiseArticle;
           this.praiseArticle = !this.praiseArticle;
           if(this.praiseArticle) {
-            this.article.praiseCount++;
+            this.praiseArticleCount++;
           } else{
-            this.article.praiseCount--;
+            this.praiseArticleCount--;
           }
         }
         if(flag) {
