@@ -77,8 +77,4 @@ public class UserDO implements Serializable {
      * 存在/删除
      */
     private Integer status;
-    /**
-     * 浏览量
-     */
-    private Long visitCount;
 }

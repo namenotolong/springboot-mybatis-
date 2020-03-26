@@ -41,7 +41,7 @@ public class RelationController {
     public void modifyRelation(@ApiParam("用户id") @RequestParam("userId") Long userId,
                                @ApiParam("文章id") @RequestParam(value = "articleId", required = false) Long articleId,
                                @ApiParam("增加 0 删除 1") @RequestParam("ops") Integer ops,
-                               @ApiParam("点赞用户 1 收藏文章 2 关注用户 3") @RequestParam("type") Integer type) {
+                               @ApiParam("点赞用户 1 收藏文章 2 关注用户 3 点赞文章 4") @RequestParam("type") Integer type) {
         relationService.modifyRelation(userId, articleId, ops, type);
     }
 
@@ -50,6 +50,6 @@ public class RelationController {
     @ApiOperation("获取用户id或者文章id的关系数目map")
     public Map<String, Long> getRelationCount(@ApiParam("用户id") @RequestParam("userId") Long userId,
                                               @ApiParam("文章id") @RequestParam("articleId") Long articleId) {
-        return relationService.getRelationCount(userId, articleId);
+        return relationService.getRelationMapCount(userId, articleId);
     }
 }

@@ -43,14 +43,6 @@ public class TopicDO implements Serializable {
      */
     private Long toUserId;
     /**
-     * 点赞数，只有评论有
-     */
-    private Long praiseCount;
-    /**
-     * 所属的话题总数，只有评论有
-     */
-    private Long topicCount;
-    /**
      * 评论/回复
      */
     private Integer type;

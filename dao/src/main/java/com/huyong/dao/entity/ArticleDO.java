@@ -31,18 +31,6 @@ public class ArticleDO implements Serializable {
      */
     private String content;
     /**
-     * 话题数目
-     */
-    private Long topicCount;
-    /**
-     * 阅读数
-     */
-    private Long readCount;
-    /**
-     * 楼层数
-     */
-    private Long floorCount;
-    /**
      * 分类id集合
      */
     private String kindIds;
@@ -62,4 +50,8 @@ public class ArticleDO implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+    /**
+     * 流量量
+     */
+    private Long visitCount;
 }

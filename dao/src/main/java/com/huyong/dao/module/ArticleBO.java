@@ -28,10 +28,16 @@ public class ArticleBO {
     private String content;
     @ApiModelProperty("话题数目")
     private Long topicCount;
+    @ApiModelProperty("点赞数目")
+    private Long praiseCount;
+    @ApiModelProperty("收藏数目")
+    private Long storeCount;
     @ApiModelProperty("阅读数")
     private Long readCount;
     @ApiModelProperty("楼层数")
     private Long floorCount;
+    @ApiModelProperty("流量量")
+    private Long visitCount;
     @ApiModelProperty("分类id集合")
     private String kindIds;
     private List<KindBO> kinds;

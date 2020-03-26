@@ -57,8 +57,6 @@ public class UserBO {
     private Date updateTime;
     @ApiModelProperty("存在/删除")
     private Integer status;
-    @ApiModelProperty("浏览量")
-    private Long visitCount;
     @ApiModelProperty("新增0 更新1")
     private Integer ops;
 }

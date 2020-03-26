@@ -3,16 +3,16 @@ package com.huyong.service;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.huyong.dao.entity.ArticleDO;
+import com.huyong.dao.entity.TopicDO;
 import com.huyong.dao.mapper.KindMapper;
+import com.huyong.dao.mapper.TopicMapper;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.dao.module.KindBO;
 import com.huyong.dao.module.UserBO;
-import com.huyong.enums.ArticleTypeEnum;
-import com.huyong.enums.OpsEnum;
-import com.huyong.enums.RoleEnum;
-import com.huyong.enums.StatusEnum;
+import com.huyong.enums.*;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,12 @@ public class ArticleService {
     private ArticleMapper articleMapper;
     @Resource
     private KindMapper kindMapper;
+    @Resource
+    private RelationService relationService;
+    @Resource
+    private TopicService topicService;
+    @Resource
+    private TopicMapper topicMapper;
 
     public ArticleDO convertBo2Do(ArticleBO article) {
         ArticleDO articleDO = new ArticleDO();
@@ -133,7 +139,22 @@ public class ArticleService {
         if (type == null) {
             type = ArticleTypeEnum.TEXT.getCode();
         }
-        return articleMapper.getArticles(offset, pageSize, kindId, userId, type);
+        final List<ArticleBO> articles = articleMapper.getArticles(offset, pageSize, kindId, userId, type);
+        articles.forEach(this :: addParameter);
+        return articles;
+    }
+
+    /**
+     * 添加各项count
+     * @param articleBO
+     */
+    private void addParameter(ArticleBO articleBO) {
+        Long id = articleBO.getId();
+        articleBO.setPraiseCount(relationService.getRelationCount(id, RelationEnum.BY_PRAISE_ARTICLE.getCode()));
+        articleBO.setStoreCount(relationService.getRelationCount(id, RelationEnum.BY_STORE.getCode()));
+        TopicDO condition = new TopicDO();
+        condition.setArticleId(id);
+        articleBO.setTopicCount((long) topicMapper.count(condition));
     }
 
     /**
@@ -144,6 +165,7 @@ public class ArticleService {
     public ArticleBO detail(Long id) {
         ArticleBO detail = articleMapper.detail(id);
         String kindIds = detail.getKindIds();
+        //添加分类信息
         if (StringUtils.isNotBlank(kindIds)) {
             final Iterable<String> split = Splitter
                     .on(',')
@@ -155,6 +177,8 @@ public class ArticleService {
             List<KindBO> kinds = kindMapper.getKindsByIds(kindIdList);
             detail.setKinds(kinds);
         }
+        //添加各项count
+        addParameter(detail);
         return detail;
     }
 }

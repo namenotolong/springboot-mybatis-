@@ -64,6 +64,7 @@ public class RelationService {
         relations.put("praise", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.PRAISE.getCode()));
         relations.put("store", checkRelation(AuthUtils.getUser().getId(), articleId, RelationEnum.STORE.getCode()));
         relations.put("follow", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.FOLLOW.getCode()));
+        relations.put("praiseArticle", checkRelation(AuthUtils.getUser().getId(), articleId, RelationEnum.PRAISE_ARTICLE.getCode()));
         return relations;
     }
     /**
@@ -141,6 +142,16 @@ public class RelationService {
         opsRelation(two, one, ops, RelationEnum.BY_PRAISE.getCode());
     }
     @Transactional(rollbackFor = Exception.class)
+    public synchronized void praiseArticle(Long one, Long two, Integer ops) {
+        if (null == two) {
+            throw new CommonException("文章id为空！");
+        }
+        //在one的点赞表中操作two
+        opsRelation(one, two, ops, RelationEnum.PRAISE_ARTICLE.getCode());
+        //在two的被点赞表中操作one
+        opsRelation(two, one, ops, RelationEnum.BY_PRAISE_ARTICLE.getCode());
+    }
+    @Transactional(rollbackFor = Exception.class)
     public synchronized void store(Long one, Long two, Integer ops) {
         if (null == two) {
             throw new CommonException("文章id为空！");
@@ -208,7 +219,7 @@ public class RelationService {
      * 获取各个关系的数量
      * @return
      */
-    public Map<String, Long> getRelationCount(Long userId, Long articleId) {
+    public Map<String, Long> getRelationMapCount(Long userId, Long articleId) {
         Map<String, Long> relations = Maps.newHashMap();
         relations.put("byPraise", getRelationCount(userId, RelationEnum.BY_PRAISE.getCode()));
         relations.put("byStore", getRelationCount(articleId, RelationEnum.BY_STORE.getCode()));
@@ -222,7 +233,7 @@ public class RelationService {
      * @param type
      * @return
      */
-    private Long getRelationCount(Long id, Integer type) {
+    public Long getRelationCount(Long id, Integer type) {
         RelationDO relationDO = new RelationDO();
         relationDO.setOneId(id);
         relationDO.setType(type);
@@ -234,7 +245,7 @@ public class RelationService {
      * 更改关系状态 -> 当前登陆用户
      * @param userId
      * @param articleId
-     * @param ops
+     * @param ops  0：添加  1：删除
      * @param type
      */
     public void modifyRelation(Long userId, Long articleId, Integer ops, Integer type) {
@@ -245,6 +256,8 @@ public class RelationService {
             case 2 : store(AuthUtils.getUser().getId(), articleId, ops);break;
             //关注用户
             case 3 : follow(AuthUtils.getUser().getId(), userId, ops);break;
+            //点赞文章
+            case 4 : praiseArticle(AuthUtils.getUser().getId(), articleId, ops);break;
             default:break;
         }
     }
