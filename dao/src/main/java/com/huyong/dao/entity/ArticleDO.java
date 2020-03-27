@@ -51,7 +51,11 @@ public class ArticleDO implements Serializable {
      */
     private Date updateTime;
     /**
-     * 流量量
+     * 浏览量
      */
     private Long visitCount;
+    /**
+     * 楼层数
+     */
+    private Long floorCount;
 }

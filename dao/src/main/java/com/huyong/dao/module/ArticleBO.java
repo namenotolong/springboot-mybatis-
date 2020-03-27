@@ -36,7 +36,7 @@ public class ArticleBO {
     private Long readCount;
     @ApiModelProperty("楼层数")
     private Long floorCount;
-    @ApiModelProperty("流量量")
+    @ApiModelProperty("浏览量")
     private Long visitCount;
     @ApiModelProperty("分类id集合")
     private String kindIds;

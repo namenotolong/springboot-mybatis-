@@ -62,4 +62,8 @@ public class TopicDO implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+    /**
+     * 楼层数
+     */
+    private Long floor;
 }

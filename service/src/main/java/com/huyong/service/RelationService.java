@@ -61,6 +61,13 @@ public class RelationService {
      */
     public Map<String, Boolean> getRelations(Long id, Long articleId) {
         Map<String, Boolean> relations = Maps.newHashMap();
+        if (AuthUtils.getUser() == null) {
+            relations.put("praise", false);
+            relations.put("store", false);
+            relations.put("follow", false);
+            relations.put("praiseArticle", false);
+            return relations;
+        }
         relations.put("praise", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.PRAISE.getCode()));
         relations.put("store", checkRelation(AuthUtils.getUser().getId(), articleId, RelationEnum.STORE.getCode()));
         relations.put("follow", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.FOLLOW.getCode()));
@@ -74,7 +81,7 @@ public class RelationService {
      * @param type
      * @return
      */
-    private boolean checkRelation(Long one, Long two, Integer type) {
+    public boolean checkRelation(Long one, Long two, Integer type) {
         RelationDO relation = new RelationDO();
         relation.setType(type);
         relation.setOneId(one);
@@ -150,6 +157,16 @@ public class RelationService {
         opsRelation(one, two, ops, RelationEnum.PRAISE_ARTICLE.getCode());
         //在two的被点赞表中操作one
         opsRelation(two, one, ops, RelationEnum.BY_PRAISE_ARTICLE.getCode());
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public synchronized void praiseTopic(Long one, Long two, Integer ops) {
+        if (null == two) {
+            throw new CommonException("topic id为空！");
+        }
+        //在one的点赞表中操作two
+        opsRelation(one, two, ops, RelationEnum.PRAISE_TOPIC.getCode());
+        //在two的被点赞表中操作one
+        opsRelation(two, one, ops, RelationEnum.BY_PRAISE_TOPIC.getCode());
     }
     @Transactional(rollbackFor = Exception.class)
     public synchronized void store(Long one, Long two, Integer ops) {
@@ -245,10 +262,11 @@ public class RelationService {
      * 更改关系状态 -> 当前登陆用户
      * @param userId
      * @param articleId
+     * @param topicId
      * @param ops  0：添加  1：删除
      * @param type
      */
-    public void modifyRelation(Long userId, Long articleId, Integer ops, Integer type) {
+    public void modifyRelation(Long userId, Long articleId, Long topicId, Integer ops, Integer type) {
         switch (type) {
             //点赞用户
             case 1 : praise(AuthUtils.getUser().getId(), userId, ops);break;
@@ -258,6 +276,8 @@ public class RelationService {
             case 3 : follow(AuthUtils.getUser().getId(), userId, ops);break;
             //点赞文章
             case 4 : praiseArticle(AuthUtils.getUser().getId(), articleId, ops);break;
+            //点赞topic
+            case 5 : praiseTopic(AuthUtils.getUser().getId(), topicId, ops);break;
             default:break;
         }
     }

@@ -69,6 +69,30 @@ public class UserService {
         userDO.setWork(user.getWork());
         return userDO;
     }
+
+    /**
+     * 可供可见的属性userBO
+     * @param user
+     * @return
+     */
+    public UserBO convertDo2BoOnlySee(UserDO user) {
+        UserBO result = new UserBO();
+        result.setId(user.getId());
+        result.setUserName(user.getUserName());
+        result.setAddress(user.getAddress());
+        result.setAge(user.getAge());
+        for (GenderEnum value : GenderEnum.values()) {
+            if (value.getCode().equals(user.getGender())) {
+                result.setSex(value.getDesc());
+            }
+        }
+        result.setIntroduction(user.getIntroduction());
+        result.setSchool(user.getSchool());
+        result.setWork(user.getWork());
+        result.setPicture(user.getPicture());
+        return result;
+    }
+
     public List<UserDO> convertBos2Dos(List<UserBO> users) {
         if (null == users || users.isEmpty()) {
             return new ArrayList<>();
@@ -89,6 +113,9 @@ public class UserService {
         }
         return userBO;
     }
+
+
+
     public List<UserBO> convertDos2Bos(List<UserDO> users) {
         if (null == users || users.isEmpty()) {
             return new ArrayList<>();

@@ -152,9 +152,10 @@ public class ArticleService {
         Long id = articleBO.getId();
         articleBO.setPraiseCount(relationService.getRelationCount(id, RelationEnum.BY_PRAISE_ARTICLE.getCode()));
         articleBO.setStoreCount(relationService.getRelationCount(id, RelationEnum.BY_STORE.getCode()));
-        TopicDO condition = new TopicDO();
+        //由于可以用评论获取回复总数 所以这里可以不用从数据中查找
+        /*TopicDO condition = new TopicDO();
         condition.setArticleId(id);
-        articleBO.setTopicCount((long) topicMapper.count(condition));
+        articleBO.setTopicCount((long) topicMapper.count(condition));*/
     }
 
     /**

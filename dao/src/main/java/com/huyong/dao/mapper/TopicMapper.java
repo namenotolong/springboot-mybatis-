@@ -2,7 +2,12 @@ package com.huyong.dao.mapper;
 
 import com.huyong.dao.entity.TopicDO;
 import com.huyong.dao.helper.BaseMapper;
+import com.huyong.dao.module.TopicBO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  * 描述: TopicDO对应的Mapper
  *
@@ -11,4 +16,19 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TopicMapper extends BaseMapper<TopicDO> {
+    /**
+     * 获取评论列表的回复
+     * @param commonsId
+     * @return
+     */
+    List<TopicBO> getReplies(@Param("commonsId") List<Long> commonsId);
+
+    /**
+     * 获取评论携带用户信息并分页
+     * @param condition
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<TopicBO> getCommonsPageWithUser(@Param("condition") TopicDO condition,@Param("offset") int offset,@Param("pageSize") Integer pageSize);
 }
