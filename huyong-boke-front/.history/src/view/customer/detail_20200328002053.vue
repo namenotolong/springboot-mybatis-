@@ -147,9 +147,8 @@
                             <span v-if="item.replies.length - 3 > 0 && !item.type">
                               <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                               还有{{item.replies.length - 3}}条评论，
-                              <span style="color: red" @click="item.type = 1" v-if="!item.type">查看更多</span>
+                              <span style="color: red" @click="item.type = 1">查看更多</span>
                             </span>
-                              <span style="color: red" @click="item.type = 0" v-if="item.type">收起</span>
                           </span>
                         </div>
                       </div>
@@ -496,6 +495,8 @@ export default {
 }
 .user-common > div {
   margin-right: 1%
+}
+.common{
 }
 .content{
   margin-top: 5%;

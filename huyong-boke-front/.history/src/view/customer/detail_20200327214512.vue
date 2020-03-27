@@ -48,15 +48,15 @@
           </div>
         </el-header>
         <el-main class="content">
-          <div v-html="article.content" class="my-border">
+          <div v-html="article.content" style="border-bottom: 1px solid #f5f6f7;padding-bottom: 1%;">
           </div>
           <div class="common">
             <div>
-              <h4>全部评论&nbsp;({{commons.length}})</h4>
+              <h4>全部评论</h4>
             </div>
             <div class="infinite-list-wrapper" style="overflow:auto" v-if="article.id">
               <div  class="list" v-infinite-scroll="load">
-                <div v-for="item in commons" :key="item.floor" class="common-border">
+                <div v-for="item in commons" :key="item.floor">
                   <div class="common-out">
                     <div class="common-bar">
                       <el-avatar :size="30">
@@ -85,89 +85,26 @@
                           <svg style="width: 20px;height:20px" t="1585199681019" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3235" width="200" height="200"><path d="M621.674667 408.021333c16.618667-74.24 28.224-127.936 34.837333-161.194666C673.152 163.093333 629.941333 85.333333 544.298667 85.333333c-77.226667 0-116.010667 38.378667-138.88 115.093334l-0.586667 2.24c-13.728 62.058667-34.72 110.165333-62.506667 144.586666a158.261333 158.261333 0 0 1-119.733333 58.965334l-21.909333 0.469333C148.437333 407.808 106.666667 450.816 106.666667 503.498667V821.333333c0 64.8 52.106667 117.333333 116.394666 117.333334h412.522667c84.736 0 160.373333-53.568 189.12-133.92l85.696-239.584c21.802667-60.96-9.536-128.202667-70.005333-150.186667a115.552 115.552 0 0 0-39.488-6.954667H621.674667zM544.256 149.333333c39.253333 0 59.498667 36.48 49.888 84.928-7.573333 38.144-21.984 104.426667-43.221333 198.666667-4.512 20.021333 10.56 39.093333 30.912 39.093333h218.666666c6.101333 0 12.16 1.066667 17.909334 3.168 27.445333 9.984 41.674667 40.554667 31.776 68.266667l-85.568 239.573333C744.981333 838.026667 693.301333 874.666667 635.402667 874.666667H223.498667C194.314667 874.666667 170.666667 850.784 170.666667 821.333333V503.498667c0-17.866667 14.144-32.448 31.829333-32.821334l21.866667-0.469333a221.12 221.12 0 0 0 167.381333-82.56c34.346667-42.602667 59.146667-99.306667 74.869333-169.877333C482.101333 166.336 499.552 149.333333 544.266667 149.333333z" p-id="3236" fill="#8a8a8a"></path></svg>
                           <span style="color: #969696;fontSize:4px">赞</span>
                         </span>
-                        <span style="margin-left: 30px" @click="item.status = 1">
+                        <span style="margin-left: 10%" @click="item.status = 1">
                           <svg style="width: 20px;height:20px" t="1585199866320" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3565" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="3566" fill="#8a8a8a"></path></svg>
                           <span style="color: #969696;fontSize:50%">回复</span>
                         </span>
                       </div>
-                      <div>
-                        <div v-for="(reply, key) in item.replies" :key="reply.id">
-                          <div class="common-out" v-show="key < 3 || item.type">
-                            <div class="common-reply">
-                              <el-avatar :size="30">
-                                <img :src="baseUrl + reply.user.picture"/>
-                              </el-avatar>
-                            </div>
-                            <div class="common-content">
-                              <div class="common-content-detail">
-                                <div style="color: ##7e7e7e">
-                                  <b>{{reply.user.userName}}</b>
-                                </div>
-                                <div style="color: #969696;fontSize:50%;width: 200%">
-                                  <span>{{reply.updateTime}}</span>
-                                </div>
-                              </div>
-                              <div>
-                                <span style="color: #404040">
-                                  <!-- 如果是回复评论  则会出现@  点击进入用户主页 -->
-                                  <a href="#" v-if="reply.parentId != reply.topicId"><span style="color: #1783cd">@{{reply.user.userName}}</span></a>
-                                  {{reply.content}}
-                                </span>
-                              </div>
-                              <div>
-                                <span @click="reply.status = 1">
-                                  <svg style="width: 20px;height:20px" t="1585199866320" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3565" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="3566" fill="#8a8a8a"></path></svg>
-                                  <span style="color: #969696;fontSize:50%">回复</span>
-                                </span>
-                              </div>
-                              <div v-if="reply.status" class="reply-flex">
-                                <div style="width: 200%">
-                                  <el-input
-                                  style="width: 600px"
-                                  type="text"
-                                  :rows="2"
-                                  placeholder="请输入内容"
-                                  v-model="reply.reply">
-                                </el-input>
-                                </div>
-                                <div>
-                                  <el-button @click="replyCommon(reply, item)" :disabled="!reply.reply || reply.reply.trim().length === 0" type="danger">回复</el-button>
-                                </div>
-                                <div>
-                                  <el-button @click="reply.status = 0" type="info">取消</el-button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div v-if="item.replies.length !== 0">
-                          <span style="color:  #969696;fontSize: 8px">
-                            <svg style="width: 20px;height: 20px" t="1585324407641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2809" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="2810" fill="#8a8a8a"></path></svg>
-                            <span @click="item.status = 1">添加新评论……</span>
-                            <span v-if="item.replies.length - 3 > 0 && !item.type">
-                              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                              还有{{item.replies.length - 3}}条评论，
-                              <span style="color: red" @click="item.type = 1" v-if="!item.type">查看更多</span>
-                            </span>
-                              <span style="color: red" @click="item.type = 0" v-if="item.type">收起</span>
-                          </span>
-                        </div>
-                      </div>
                       <div v-if="item.status" class="reply-flex">
                         <div style="width: 200%">
                           <el-input
-                          style="width: 600px"
+                          style="width: 200%"
                           type="text"
                           :rows="2"
                           placeholder="请输入内容"
-                          v-model="item.reply">
+                          v-model="textarea">
                         </el-input>
                         </div>
                         <div>
-                          <el-button @click="reply(item)" :disabled="!item.reply || item.reply.trim().length === 0" type="danger">发表</el-button>
+                          <el-button type="danger">发表</el-button>
                         </div>
                         <div>
-                          <el-button @click="item.status = 0" type="info">取消</el-button>
+                          <el-button type="info">取消</el-button>
                         </div>
                       </div>
                     </div>
@@ -220,7 +157,7 @@
             <div>
               <svg style="width: 50%;height:50%" t="1585199866320" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3565" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="3566" fill="#8a8a8a"></path></svg>
               <div class="word">
-                {{commons.length}}评论
+                {{article.topicCount}}评论
               </div>
             </div>
           </div>
@@ -253,46 +190,6 @@ export default {
     }
   },
   methods: {
-    //回复 回复
-    replyCommon(reply, topic) {
-      console.log(reply)
-      let obj = {};
-      obj.type = 1;
-      obj.articleId = this.article.id;
-      obj.topicId = topic.id;
-      obj.parentId = reply.id;
-      obj.content = reply.reply;
-      obj.toUserId = reply.userId;
-      reply.reply = '';
-      this.$axios.post("/topic/publishTopic", obj).then(response => {
-        //在尾部添加该回复
-        let temp = response.data.data;
-        let arr = [];
-        arr.push(temp);
-        topic.replies = topic.replies.concat(arr)
-        this.$message.success("回复成功！")
-      })
-    },
-    //回复评论
-    reply(topic) {
-      console.log(topic)
-      let obj = {};
-      obj.type = 1;
-      obj.articleId = this.article.id;
-      obj.topicId = topic.id;
-      obj.parentId = topic.id;
-      obj.content = topic.reply;
-      obj.toUserId = topic.userId;
-      topic.reply = '';
-      this.$axios.post("/topic/publishTopic", obj).then(response => {
-        //在尾部添加该回复
-        let temp = response.data.data;
-        let arr = [];
-        arr.push(temp);
-        topic.replies = topic.replies.concat(arr)
-        this.$message.success("回复成功！")
-      })
-    },
     //点赞评论
     praiseCommon(item) {
       this.modifyRelation(5,item.id, item.praised);
@@ -457,34 +354,23 @@ export default {
 }
 </script>
 <style scoped>
-.common-border{
-  border-bottom: 1px solid #f5f6f7;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.my-border{
-  border-bottom: 1px solid #f5f6f7;
-  padding-bottom: 10px;
-}
-.common-reply{
-  margin-right: 10px;
-}
 .common-out{
   display: flex;
+  margin-bottom: 2%;
 }
 .common-content{
   display: flex;
   flex-direction: column;
 }
 .common-content > div{
-  margin-bottom: 20px;
+  margin-bottom: 10%;
 }
 .common-content-detail{
   display: flex;
   flex-direction: column;
 }
 .common-bar{
-  margin: 10px;
+  margin: 1%
 }
 .word{
   color: gray
@@ -496,6 +382,9 @@ export default {
 }
 .user-common > div {
   margin-right: 1%
+}
+.common{
+  margin-top: 3%;
 }
 .content{
   margin-top: 5%;
@@ -513,9 +402,6 @@ export default {
 .reply-flex{
   display: flex;
   align-items: center;
-}
-.reply-flex > div{
-  margin-right : 1%
 }
 .out-container{
   margin: 10%;

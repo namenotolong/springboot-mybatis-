@@ -91,8 +91,8 @@
                         </span>
                       </div>
                       <div>
-                        <div v-for="(reply, key) in item.replies" :key="reply.id">
-                          <div class="common-out" v-show="key < 3 || item.type">
+                        <div v-for="reply in item.replies" :key="reply.id">
+                          <div class="common-out" >
                             <div class="common-reply">
                               <el-avatar :size="30">
                                 <img :src="baseUrl + reply.user.picture"/>
@@ -131,7 +131,7 @@
                                 </el-input>
                                 </div>
                                 <div>
-                                  <el-button @click="replyCommon(reply, item)" :disabled="!reply.reply || reply.reply.trim().length === 0" type="danger">回复</el-button>
+                                  <el-button @click="reply(item)" :disabled="!reply.reply || reply.reply.trim().length === 0" type="danger">回复</el-button>
                                 </div>
                                 <div>
                                   <el-button @click="reply.status = 0" type="info">取消</el-button>
@@ -139,18 +139,6 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div v-if="item.replies.length !== 0">
-                          <span style="color:  #969696;fontSize: 8px">
-                            <svg style="width: 20px;height: 20px" t="1585324407641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2809" width="200" height="200"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z" p-id="2810" fill="#8a8a8a"></path></svg>
-                            <span @click="item.status = 1">添加新评论……</span>
-                            <span v-if="item.replies.length - 3 > 0 && !item.type">
-                              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                              还有{{item.replies.length - 3}}条评论，
-                              <span style="color: red" @click="item.type = 1" v-if="!item.type">查看更多</span>
-                            </span>
-                              <span style="color: red" @click="item.type = 0" v-if="item.type">收起</span>
-                          </span>
                         </div>
                       </div>
                       <div v-if="item.status" class="reply-flex">
@@ -253,26 +241,6 @@ export default {
     }
   },
   methods: {
-    //回复 回复
-    replyCommon(reply, topic) {
-      console.log(reply)
-      let obj = {};
-      obj.type = 1;
-      obj.articleId = this.article.id;
-      obj.topicId = topic.id;
-      obj.parentId = reply.id;
-      obj.content = reply.reply;
-      obj.toUserId = reply.userId;
-      reply.reply = '';
-      this.$axios.post("/topic/publishTopic", obj).then(response => {
-        //在尾部添加该回复
-        let temp = response.data.data;
-        let arr = [];
-        arr.push(temp);
-        topic.replies = topic.replies.concat(arr)
-        this.$message.success("回复成功！")
-      })
-    },
     //回复评论
     reply(topic) {
       console.log(topic)
@@ -496,6 +464,8 @@ export default {
 }
 .user-common > div {
   margin-right: 1%
+}
+.common{
 }
 .content{
   margin-top: 5%;

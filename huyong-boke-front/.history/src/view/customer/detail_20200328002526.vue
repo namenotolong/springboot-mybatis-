@@ -497,6 +497,8 @@ export default {
 .user-common > div {
   margin-right: 1%
 }
+.common{
+}
 .content{
   margin-top: 5%;
 }
