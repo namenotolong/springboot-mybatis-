@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.huyong.dao.entity.RelationDO;
+import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.RelationBO;
+import com.huyong.dao.module.UserBO;
 import com.huyong.enums.RelationEnum;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 public class RelationService {
     @Resource
     private RelationMapper relationMapper;
+    @Resource
+    private UserMapper userMapper;
 
     public RelationDO convertBo2Do(RelationBO relation) {
         RelationDO relationDO = new RelationDO();
@@ -136,6 +140,12 @@ public class RelationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public synchronized void follow(Long one, Long two, Integer ops) {
+        if (two == null) {
+            throw new CommonException("userId参数为空！");
+        }
+        if (one.equals(two)) {
+            throw new CommonException("不能关注自己");
+        }
         //在one的关注表中操作two
         opsRelation(one, two, ops, RelationEnum.FOLLOW.getCode());
         //在two的粉丝表中操作one
@@ -143,6 +153,9 @@ public class RelationService {
     }
     @Transactional(rollbackFor = Exception.class)
     public synchronized void praise(Long one, Long two, Integer ops) {
+        if (two == null) {
+            throw new CommonException("userId参数为空！");
+        }
         //在one的点赞表中操作two
         opsRelation(one, two, ops, RelationEnum.PRAISE.getCode());
         //在two的被点赞表中操作one
@@ -280,5 +293,52 @@ public class RelationService {
             case 5 : praiseTopic(AuthUtils.getUser().getId(), topicId, ops);break;
             default:break;
         }
+    }
+
+    /**
+     * 获取粉丝或者关注,如果当前存在登录用户，则会附带每个用户和当前的关注情况
+     * @param userId
+     * @param type
+     * @return
+     */
+    public List<UserBO> getFansOrFollows(Long userId, Integer type) {
+        if (RelationEnum.FAN.getCode().equals(type) || RelationEnum.FOLLOW.getCode().equals(type)) {
+            RelationDO condition = new RelationDO();
+            condition.setOneId(userId);
+            condition.setType(type);
+            final List<RelationDO> relationDOS = relationMapper.queryByCondition(condition);
+            if (CollectionUtils.isNotEmpty(relationDOS)) {
+                final String othersId = relationDOS.get(0).getOthersId();
+                if (StringUtils.isNotBlank(othersId)) {
+                    List list = JSONObject.parseObject(othersId, List.class);
+                    List<UserBO> users = userMapper.getListUserByIds(list);
+                    if (AuthUtils.getUser() != null && CollectionUtils.isNotEmpty(users)) {
+                        //如果是进入的个人主页  默认是全部都是关注的
+                        if (AuthUtils.getUser().getId().equals(userId)) {
+                            for (UserBO user : users) {
+                                user.setFollow(true);
+                            }
+                            return users;
+                        }
+                        //获取当前登录用户关注的用户
+                        condition.setOneId(AuthUtils.getUser().getId());
+                        condition.setType(RelationEnum.FOLLOW.getCode());
+                        List<UserBO> temp = userMapper.getListUserByIds(list);
+                        if (CollectionUtils.isNotEmpty(temp)) {
+                            for (UserBO user : users) {
+                                for (UserBO userBO : temp) {
+                                    if (user.getId().equals(userBO.getId())) {
+                                        user.setFollow(true);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return users;
+                }
+            }
+        }
+        return Lists.newArrayList();
     }
 }

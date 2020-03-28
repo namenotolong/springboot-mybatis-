@@ -4,10 +4,7 @@ import com.huyong.constant.AuthCheckConstant;
 import com.huyong.constant.CommonConstant;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.module.UserBO;
-import com.huyong.enums.GenderEnum;
-import com.huyong.enums.OpsEnum;
-import com.huyong.enums.RoleEnum;
-import com.huyong.enums.StatusEnum;
+import com.huyong.enums.*;
 import com.huyong.exception.AuthException;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
@@ -36,6 +33,8 @@ public class UserService {
     private UserMapper userMapper;
     @Resource
     private EmailAdviceService emailAdviceService;
+    @Resource
+    private RelationService relationService;
 
     public UserDO convertBo2Do(UserBO user) {
         UserDO userDO = new UserDO();
@@ -266,4 +265,22 @@ public class UserService {
         }
     }
 
+    /**
+     * 个人主页中获取用户信息
+     * @param id
+     * @return
+     */
+    public UserBO getOther(Long id) {
+        UserDO userDO = userMapper.selectByPrimary(id);
+        if (null != userDO) {
+            final UserBO userBO = convertDo2BoOnlySee(userDO);
+            //如果当前存在登录用户，则附带关注情况
+            if (AuthUtils.getUser() != null) {
+                boolean present = relationService.checkRelation(AuthUtils.getUser().getId(), userBO.getId(), RelationEnum.FOLLOW.getCode());
+                userBO.setFollow(present);
+            }
+            return userBO;
+        }
+        return new UserBO();
+    }
 }

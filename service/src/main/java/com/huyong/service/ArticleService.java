@@ -1,10 +1,12 @@
 package com.huyong.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.huyong.dao.entity.ArticleDO;
-import com.huyong.dao.entity.TopicDO;
+import com.huyong.dao.entity.RelationDO;
 import com.huyong.dao.mapper.KindMapper;
+import com.huyong.dao.mapper.RelationMapper;
 import com.huyong.dao.mapper.TopicMapper;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.dao.module.KindBO;
@@ -14,9 +16,14 @@ import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import javax.management.relation.Relation;
+import javax.management.relation.Role;
+
 import com.huyong.dao.mapper.ArticleMapper;
 
 import java.util.ArrayList;
@@ -38,9 +45,11 @@ public class ArticleService {
     @Resource
     private RelationService relationService;
     @Resource
-    private TopicService topicService;
+    private RelationMapper relationMapper;
     @Resource
     private TopicMapper topicMapper;
+
+    private static final Logger log = LoggerFactory.getLogger(ArticleService.class);
 
     public ArticleDO convertBo2Do(ArticleBO article) {
         ArticleDO articleDO = new ArticleDO();
@@ -152,10 +161,8 @@ public class ArticleService {
         Long id = articleBO.getId();
         articleBO.setPraiseCount(relationService.getRelationCount(id, RelationEnum.BY_PRAISE_ARTICLE.getCode()));
         articleBO.setStoreCount(relationService.getRelationCount(id, RelationEnum.BY_STORE.getCode()));
-        //由于可以用评论获取回复总数 所以这里可以不用从数据中查找
-        /*TopicDO condition = new TopicDO();
-        condition.setArticleId(id);
-        articleBO.setTopicCount((long) topicMapper.count(condition));*/
+        Long count = topicMapper.getTopicCount(id);
+        articleBO.setTopicCount(count);
     }
 
     /**
@@ -165,6 +172,9 @@ public class ArticleService {
      */
     public ArticleBO detail(Long id) {
         ArticleBO detail = articleMapper.detail(id);
+        if (detail == null) {
+            return new ArticleBO();
+        }
         String kindIds = detail.getKindIds();
         //添加分类信息
         if (StringUtils.isNotBlank(kindIds)) {
@@ -181,5 +191,57 @@ public class ArticleService {
         //添加各项count
         addParameter(detail);
         return detail;
+    }
+
+    public void addVisit(Long id) {
+        Long userId = AuthUtils.getUser() == null ? null : AuthUtils.getUser().getId();
+        log.info("[{}]浏览了[{}]文章", userId, id);
+        final ArticleDO articleDO = articleMapper.selectByPrimary(id);
+        if (articleDO == null) {
+            throw new CommonException("该文章不存在！");
+        }
+        articleDO.setVisitCount(articleDO.getVisitCount() + 1);
+        articleMapper.updateByPrimary(articleDO);
+    }
+
+    public List<ArticleBO> getStoreArticles() {
+        //获取关注的文章id集合
+        RelationDO condition = new RelationDO();
+        condition.setOneId(AuthUtils.getUser().getId());
+        condition.setType(RelationEnum.STORE.getCode());
+        List<RelationDO> relationDOS = relationMapper.queryByCondition(condition);
+        if (CollectionUtils.isNotEmpty(relationDOS)) {
+            final String othersId = relationDOS.get(0).getOthersId();
+            if (StringUtils.isNotBlank(othersId)) {
+                final List list = JSONObject.parseObject(othersId, List.class);
+                if (CollectionUtils.isNotEmpty(list)) {
+                    List<ArticleBO> articles = articleMapper.getArticlesByIds(list);
+                    if (CollectionUtils.isNotEmpty(articles)) {
+                        articles.forEach(this::addParameter);
+                    }
+                    return articles;
+                }
+            }
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 删除一个文章
+     * @param id
+     */
+    public void deleteArticle(Long id) {
+        boolean admin = AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode());
+        ArticleDO condition = new ArticleDO();
+        condition.setId(id);
+        condition.setStatus(StatusEnum.DELETE.getCode());
+        if (admin) {
+            articleMapper.updateByPrimary(condition);
+        } else {
+            final ArticleDO articleDO = articleMapper.selectByPrimary(id);
+            if (null != articleDO && articleDO.getUserId().equals(AuthUtils.getUser().getId())) {
+                articleMapper.updateByPrimary(condition);
+            }
+        }
     }
 }

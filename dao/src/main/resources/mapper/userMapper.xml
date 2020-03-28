@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huyong.dao.mapper.UserMapper">
-
+    <sql id="Base_Can_See">
+        id,user_name,email,gender,age,school,address,picture,`work`
+    </sql>
+    <select id="getListUserByIds" resultType="userBO">
+        select <include refid="Base_Can_See"></include> from `user` where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

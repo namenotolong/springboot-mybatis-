@@ -33,4 +33,11 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @return
      */
     ArticleBO detail(@Param("id") Long id);
+
+    /**
+     * 通过id集合批量获取文章
+     * @param list
+     * @return
+     */
+    List<ArticleBO> getArticlesByIds(@Param("list") List list);
 }

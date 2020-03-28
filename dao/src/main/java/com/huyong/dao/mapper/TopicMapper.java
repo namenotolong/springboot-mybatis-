@@ -31,4 +31,11 @@ public interface TopicMapper extends BaseMapper<TopicDO> {
      * @return
      */
     List<TopicBO> getCommonsPageWithUser(@Param("condition") TopicDO condition,@Param("offset") int offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * 获取一个文章下的topicCount
+     * @param id
+     * @return
+     */
+    Long getTopicCount(@Param("id") Long id);
 }

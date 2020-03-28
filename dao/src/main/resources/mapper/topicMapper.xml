@@ -28,6 +28,9 @@
             <if test="condition.articleId != null">
                 and a.`article_id` = #{condition.articleId}
             </if>
+            <if test="condition.userId != null">
+                and a.`user_id` = #{condition.userId}
+            </if>
         </where>
         order by a.`update_time` desc
         limit #{offset}, #{pageSize}
@@ -55,4 +58,29 @@
         <result property="online" column="online"></result>
         <result property="picture" column="picture"></result>
     </resultMap>
+    <select id="getTopicCount" resultType="Long">
+        SELECT
+            sum( num )
+        FROM
+            (
+        SELECT
+            count( 1 ) AS num
+        FROM
+            `topic`
+        WHERE
+            `status` = 0
+            AND `type` = 0
+            AND article_id = #{id} UNION
+        SELECT
+            count( 1 ) AS num
+        FROM
+            `topic` a
+            INNER JOIN `topic` b ON a.`topic_id` = b.`id`
+            AND a.`article_id` = b.`article_id`
+            AND a.`status` = b.`status`
+        WHERE
+            a.STATUS = 0
+            AND a.article_id = #{id}
+            ) AS temp
+    </select>
 </mapper>

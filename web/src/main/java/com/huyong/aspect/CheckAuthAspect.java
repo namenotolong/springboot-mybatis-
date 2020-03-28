@@ -4,6 +4,7 @@ import com.huyong.annotation.CheckAuth;
 import com.huyong.constant.AuthCheckConstant;
 import com.huyong.dao.module.UserBO;
 import com.huyong.enums.RoleEnum;
+import com.huyong.exception.AuthException;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
 import com.huyong.utils.ServletUtils;
@@ -37,7 +38,7 @@ public class CheckAuthAspect extends AbstractAspectManager{
             final UserBO user = AuthUtils.getUser();
             boolean valid = user == null || user.getRole() < annotation.value();
             if (valid) {
-                throw new CommonException("权限不足！");
+                throw new AuthException("您还未登录……");
             }
         }
         return null;

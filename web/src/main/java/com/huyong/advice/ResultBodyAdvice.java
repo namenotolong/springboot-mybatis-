@@ -1,6 +1,7 @@
 package com.huyong.advice;
 
 import com.huyong.common.Result;
+import com.huyong.utils.AuthUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -24,6 +25,7 @@ public class ResultBodyAdvice implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        AuthUtils.clear();
         if (o instanceof Result){
             return o;
         }

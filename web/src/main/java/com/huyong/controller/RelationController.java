@@ -1,6 +1,7 @@
 package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
+import com.huyong.dao.module.UserBO;
 import com.huyong.service.RelationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +42,7 @@ public class RelationController {
     @GetMapping("/modifyRelation")
     @ApiOperation("更改用户id或者文章id和当前用户的关系")
     @CheckAuth
-    public void modifyRelation(@ApiParam("用户id") @RequestParam("userId") Long userId,
+    public void modifyRelation(@ApiParam("用户id") @RequestParam(value = "userId",required = false) Long userId,
                                @ApiParam("文章id") @RequestParam(value = "articleId", required = false) Long articleId,
                                @ApiParam("topicId") @RequestParam(value = "topicId", required = false) Long topicId,
                                @ApiParam("增加 0 删除 1") @RequestParam("ops") Integer ops,
@@ -54,5 +56,12 @@ public class RelationController {
     public Map<String, Long> getRelationCount(@ApiParam("用户id") @RequestParam("userId") Long userId,
                                               @ApiParam("文章id") @RequestParam("articleId") Long articleId) {
         return relationService.getRelationMapCount(userId, articleId);
+    }
+    @ResponseBody
+    @GetMapping("/getFansOrFollows")
+    @ApiOperation("获取用户id的所有粉丝、关注")
+    public List<UserBO> getFansOrFollows(@ApiParam("用户id") @RequestParam("userId") Long userId,
+                                @ApiParam("1：粉丝 0： 关注")@RequestParam("type") Integer type) {
+        return relationService.getFansOrFollows(userId, type);
     }
 }

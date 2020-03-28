@@ -59,4 +59,6 @@ public class UserBO {
     private Integer status;
     @ApiModelProperty("新增0 更新1")
     private Integer ops;
+    @ApiModelProperty("当前登录用户是否关注")
+    private Boolean follow;
 }

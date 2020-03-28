@@ -1,10 +1,8 @@
 package com.huyong.advice;
 
 import com.huyong.common.Result;
-import com.huyong.exception.AuthException;
-import com.huyong.exception.CommonException;
-import com.huyong.exception.DAOException;
-import com.huyong.exception.ParamBlankException;
+import com.huyong.exception.*;
+import com.huyong.utils.AuthUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +35,23 @@ public class ExceptionAdvice {
     @ExceptionHandler(CommonException.class)
     @ResponseBody
     public Result<?> handle(CommonException e){
+        AuthUtils.clear();
         logger.error(ExceptionUtils.getStackTrace(e));
         return Result.error(e.getMessage());
+    }
+
+    @ExceptionHandler(ContinueException.class)
+    @ResponseBody
+    public Result<?> handle(ContinueException e){
+        AuthUtils.clear();
+        logger.error(ExceptionUtils.getStackTrace(e));
+        return Result.error(e.getMessage(), 334);
     }
 
     @ExceptionHandler(ParamBlankException.class)
     @ResponseBody
     public Result<?> handle(ParamBlankException e){
+        AuthUtils.clear();
         logger.error(ExceptionUtils.getStackTrace(e));
         return Result.error(e.getMessage());
     }
@@ -51,6 +59,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(DAOException.class)
     @ResponseBody
     public Result<?> handle(DAOException e){
+        AuthUtils.clear();
         logger.error(ExceptionUtils.getStackTrace(e));
         return Result.error(e.getMessage());
     }
@@ -58,6 +67,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(AuthException.class)
     @ResponseBody
     public Result<?> handle(AuthException e){
+        AuthUtils.clear();
         logger.error(ExceptionUtils.getStackTrace(e));
         return Result.error(e.getMessage(), 333);
     }
@@ -65,6 +75,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result<?> handle(Exception e){
+        AuthUtils.clear();
         logger.error(ExceptionUtils.getStackTrace(e));
         return Result.error(ExceptionUtils.getStackTrace(e));
     }

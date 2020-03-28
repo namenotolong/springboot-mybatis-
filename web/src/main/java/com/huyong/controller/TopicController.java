@@ -30,11 +30,20 @@ public class TopicController {
 
     @ResponseBody
     @GetMapping("/getCommons")
-    @ApiOperation("获取所有评论以及回复")
+    @ApiOperation("获取文章评论以及回复")
     public List<TopicBO> getCommons(@ApiParam("文章id")@RequestParam("articleId") Long articleId,
                                     @ApiParam("每页显示数量")@RequestParam("pageSize") Integer pageSize,
                                     @ApiParam("页码")@RequestParam("pageNum") Integer pageNum) {
         return topicService.getCommons(articleId, pageSize, pageNum);
+    }
+
+    @ResponseBody
+    @GetMapping("/getUserTopics")
+    @ApiOperation("获取用户的评论以及回复")
+    public List<TopicBO> getUserTopics(@ApiParam("用户id")@RequestParam("userId") Long userId,
+                                    @ApiParam("每页显示数量")@RequestParam("pageSize") Integer pageSize,
+                                    @ApiParam("页码")@RequestParam("pageNum") Integer pageNum) {
+        return topicService.getUserTopics(userId, pageSize, pageNum);
     }
 
     @ResponseBody

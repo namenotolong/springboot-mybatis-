@@ -43,6 +43,13 @@ public class UserController {
     }
 
     @ResponseBody
+    @GetMapping("/getOther")
+    @ApiOperation("获取其他用户信息")
+    public UserBO getOther(@RequestParam("id") @ApiParam("用户id") Long id) {
+        return userService.getOther(id);
+    }
+
+    @ResponseBody
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public void register(@ApiParam("用户信息") @ValidationParam("email,userName,password,code") @RequestBody UserBO userBO) {

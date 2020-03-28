@@ -47,10 +47,33 @@ public class ArticleController {
     }
 
     @ResponseBody
+    @GetMapping("/getStoreArticles")
+    @ApiOperation("获取自己收藏的文章")
+    @CheckAuth
+    public List<ArticleBO> getStoreArticles() {
+        return articleService.getStoreArticles();
+    }
+
+    @ResponseBody
     @GetMapping("/detail")
     @ApiOperation("获取文章")
     public ArticleBO detail(@ApiParam("文章id")@RequestParam("id") Long id) {
         return articleService.detail(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/addVisit")
+    @ApiOperation("增加浏览量")
+    public void addVisit(@ApiParam("文章id")@RequestParam("id") Long id) {
+        articleService.addVisit(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/deleteArticle")
+    @ApiOperation("删除文章")
+    @CheckAuth
+    public void deleteArticle(@ApiParam("文章id")@RequestParam("id") Long id) {
+        articleService.deleteArticle(id);
     }
 
 }

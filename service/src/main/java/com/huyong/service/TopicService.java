@@ -211,7 +211,8 @@ public class TopicService {
     }
 
     /**
-     * 删除一个评论或者回复
+     * 删除一个评论或者回复,这个文章是当前登录者写的、评论是当前登陆者、
+     * 评论的回复是当前登陆者、回复所属评论是当前登陆者
      * @param topicId
      */
     public void delete(Long topicId) {
@@ -220,16 +221,28 @@ public class TopicService {
         condition.setId(topicId);
         condition.setUpdateUserId(AuthUtils.getUser().getId());
         if (RoleEnum.ADMIN.getCode().equals(AuthUtils.getUser().getRole())) {
-            condition.setUpdateUserId(AuthUtils.getUser().getId());
             topicMapper.updateByPrimary(condition);
-        }
-        TopicDO topicDO = topicMapper.selectByPrimary(topicId);
-        if (topicDO != null) {
-            if (!topicDO.getUserId().equals(AuthUtils.getUser().getId())) {
-                throw new CommonException("您不能删除别人的言论！");
+        } else {
+            TopicDO topicDO = topicMapper.selectByPrimary(topicId);
+            if (topicDO != null) {
+                if (!topicDO.getUserId().equals(AuthUtils.getUser().getId())) {
+                    //获取回复的评论
+                    Long id = topicDO.getTopicId();
+                    if (id != null) {
+                        TopicDO topic = topicMapper.selectByPrimary(topicId);
+                        if (topic.getUserId().equals(AuthUtils.getUser().getId())) {
+                            topicMapper.updateByPrimary(condition);
+                            return;
+                        }
+                    }
+                    //获取文章
+                    ArticleDO articleDO = articleMapper.selectByPrimary(topicDO.getArticleId());
+                    if (!articleDO.getUserId().equals(AuthUtils.getUser().getId())) {
+                        throw new CommonException("您不能删除别人的言论！");
+                    }
+                }
+                topicMapper.updateByPrimary(condition);
             }
-            condition.setUpdateUserId(AuthUtils.getUser().getId());
-            topicMapper.updateByPrimary(condition);
         }
     }
 
@@ -239,5 +252,19 @@ public class TopicService {
      */
     public void modifyTopic(TopicBO topicBO) {
         topicMapper.updateByPrimary(convertBo2Do(topicBO));
+    }
+
+    public List<TopicBO> getUserTopics(Long userId, Integer pageSize, Integer pageNum) {
+        if (pageSize < 1) {
+            pageSize = 1;
+        }
+        if (pageNum < 1) {
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * pageSize;
+        TopicDO condition = new TopicDO();
+        condition.setStatus(StatusEnum.PRESENT.getCode());
+        condition.setUserId(userId);
+        return topicMapper.getCommonsPageWithUser(condition, offset, pageSize);
     }
 }
