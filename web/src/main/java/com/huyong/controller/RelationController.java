@@ -33,9 +33,18 @@ public class RelationController {
     @ResponseBody
     @GetMapping("/getRelations")
     @ApiOperation("获取用户id与当前用户之间的关系map")
+    @CheckAuth
     public Map<String, Boolean> getRelations(@ApiParam("用户id") @RequestParam("id") Long id,
                                              @ApiParam("文章id") @RequestParam("articleId") Long articleId) {
         return relationService.getRelations(id, articleId);
+    }
+
+    @ResponseBody
+    @GetMapping("/getPraised")
+    @ApiOperation("获取用户id是否被当前用户关注，并携带数量")
+    @CheckAuth
+    public Map<String, Object> getPraised(@ApiParam("用户id") @RequestParam("id") Long id) {
+        return relationService.getPraised(id);
     }
 
     @ResponseBody

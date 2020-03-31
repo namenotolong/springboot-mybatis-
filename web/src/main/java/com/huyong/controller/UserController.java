@@ -75,8 +75,8 @@ public class UserController {
     @PostMapping("/updateOrInsert")
     @ApiParam("/发送验证码")
     @CheckAuth
-    public void updateOrInsert(@ApiParam("用户信息") @ValidationParam("userName,ops") @RequestBody UserBO userBO) {
-        userService.updateOrInsert(userBO);
+    public String updateOrInsert(@ApiParam("用户信息") @ValidationParam("userName,ops") @RequestBody UserBO userBO) {
+        return userService.updateOrInsert(userBO);
     }
 
 }

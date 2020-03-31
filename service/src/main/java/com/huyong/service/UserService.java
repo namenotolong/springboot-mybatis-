@@ -235,7 +235,7 @@ public class UserService {
      * 新增或者更新一个用户
      * @param userBO
      */
-    public void updateOrInsert(UserBO userBO) {
+    public String updateOrInsert(UserBO userBO) {
         if (userBO.getOps().equals(OpsEnum.UPDATE.getCode())) {
             if (userBO.getId() == null) {
                 throw new CommonException("id参数为空");
@@ -249,9 +249,13 @@ public class UserService {
             if (AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode())) {
                 userDO = convertBo2Do(userBO);
             } else {
+                if (!AuthUtils.getUser().getId().equals(userBO.getId())){
+                    throw new CommonException("您不能修改别人的资料！");
+                }
                 userDO = convertBo2UpdateDo(userBO);
             }
             userMapper.updateByPrimary(userDO);
+            return AuthCheckConstant.START + JwtHelper.createJWT(userDO.getId(), userDO.getUserName(), AuthUtils.getUser().getEmail(), AuthUtils.getUser().getRole());
         } else {
             //只有管理员能够插入
             if (!AuthUtils.getUser().getRole().equals(RoleEnum.ADMIN.getCode())) {
@@ -262,6 +266,7 @@ public class UserService {
                 throw new CommonException("更改昵称已被他人使用");
             }
             userMapper.insert(convertBo2Do(userBO));
+            return null;
         }
     }
 

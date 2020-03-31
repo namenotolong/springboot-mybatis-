@@ -2,6 +2,7 @@ package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
 import com.huyong.annotation.ValidationParam;
+import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -31,8 +32,8 @@ public class ArticleController {
     @PostMapping("/publishOrModify")
     @CheckAuth
     @ApiOperation("发布或者修改文章")
-    public void publishOrModify(@ApiParam("文章") @RequestBody @ValidationParam("title,ops,type") ArticleBO articleBO) {
-        articleService.publishOrModify(articleBO);
+    public ArticleDO publishOrModify(@ApiParam("文章") @RequestBody @ValidationParam("title,ops,type") ArticleBO articleBO) {
+        return articleService.publishOrModify(articleBO);
     }
 
     @ResponseBody
@@ -41,7 +42,7 @@ public class ArticleController {
     public List<ArticleBO> getArticles(@ApiParam("每页显示数量")@RequestParam("pageSize") Long pageSize,
                                        @ApiParam("页码")@RequestParam("pageNum") Long pageNum,
                                        @ApiParam("分类Id") @RequestParam(value = "kindId",required = false) Integer kindId,
-                                       @ApiParam("关注者id") @RequestParam(value = "userId", required = false) Long userId,
+                                       @ApiParam("用户id") @RequestParam(value = "userId", required = false) Long userId,
                                        @ApiParam("文章类型，草稿还是正文") @RequestParam(value = "type", required = false) Integer type) {
         return articleService.getArticles(pageSize, pageNum, kindId, userId, type);
     }
@@ -52,6 +53,14 @@ public class ArticleController {
     @CheckAuth
     public List<ArticleBO> getStoreArticles() {
         return articleService.getStoreArticles();
+    }
+
+    @ResponseBody
+    @GetMapping("/getFollowsArticles")
+    @ApiOperation("获取自己关注的文章")
+    @CheckAuth
+    public List<ArticleBO> getFollowsArticles() {
+        return articleService.getFollowsArticles();
     }
 
     @ResponseBody

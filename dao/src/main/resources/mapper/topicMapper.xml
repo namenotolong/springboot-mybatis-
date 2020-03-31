@@ -8,9 +8,10 @@
         a.`type` as `type`,a.`content` as `content`,a.`floor` as floor,
     </sql>
     <select id="getReplies" resultMap="commonsMap">
-        select <include refid="base_column_list"/> b.*
+        select <include refid="base_column_list"/> b.*,c.user_name as to_user_name
         from `topic` a
         inner join `user` b on a.user_id = b.id
+        inner join `user` c on a.to_user_id = c.id
           where a.`topic_id` in
         <foreach collection="commonsId" separator="," close=")" open="(" item="item">
             #{item}
@@ -41,6 +42,7 @@
         <result property="updateTime" column="topic_update_time"></result>
         <result property="content" column="content"></result>
         <result property="userId" column="user_id"></result>
+        <result property="toUserName" column="to_user_name"></result>
         <result property="topicId" column="common_id"></result>
         <result property="floor" column="floor"></result>
         <result property="type" column="type"></result>

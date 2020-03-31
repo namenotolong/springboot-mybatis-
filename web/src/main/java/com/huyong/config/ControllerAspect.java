@@ -2,6 +2,7 @@ package com.huyong.config;
 
 import com.huyong.annotation.*;
 import com.huyong.aspect.*;
+import com.huyong.utils.AuthUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -58,7 +59,7 @@ public class ControllerAspect {
             aspectApi = new NotBlankAspect(aspectApi);
         }
         aspectApi.doHandlerAspect(pjp, method);
-        return  pjp.proceed(pjp.getArgs());
+        return pjp.proceed(pjp.getArgs());
     }
 
     public boolean checkParamAnnotation(Method method, Class clazz) {

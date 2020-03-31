@@ -1,5 +1,7 @@
 package com.huyong.config;
 
+import com.huyong.dao.module.UserBO;
+import com.huyong.utils.AuthUtils;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import javax.websocket.OnClose;
@@ -24,11 +26,12 @@ public class MyWebSocket {
      */
     public static int onlineNumber = 0;
     private Session session;
+    private UserBO user;
 
     /**
      * 所有的对象
      */
-    public static List<MyWebSocket> webSockets = new CopyOnWriteArrayList<MyWebSocket>();
+    public static List<MyWebSocket> webSockets = new CopyOnWriteArrayList<>();
 
 
     /**
@@ -39,6 +42,7 @@ public class MyWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        this.user = AuthUtils.getUser();
         onlineNumber++;
         webSockets.add(this);
         System.out.println("有新连接加入！ 当前在线人数" + onlineNumber);

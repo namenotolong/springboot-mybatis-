@@ -66,4 +66,14 @@
         </foreach>
         order by a.`update_time` desc
     </select>
+    <select id="getArticlesByUserIds" resultMap="getArticlesMap">
+        select <include refid="base_column_list"/>, b.*
+        from `article` a
+        inner join `user` b on a.user_id = b.id
+        where a.`status` = 0 and b.`status` = 0 and a.`user_id` in
+        <foreach collection="list" separator="," close=")" open="(" item="item">
+            #{item}
+        </foreach>
+        order by a.`update_time` desc
+    </select>
 </mapper>

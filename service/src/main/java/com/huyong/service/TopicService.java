@@ -7,10 +7,7 @@ import com.huyong.dao.helper.Sort;
 import com.huyong.dao.mapper.ArticleMapper;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.TopicBO;
-import com.huyong.enums.RelationEnum;
-import com.huyong.enums.RoleEnum;
-import com.huyong.enums.StatusEnum;
-import com.huyong.enums.TopicEnum;
+import com.huyong.enums.*;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -44,6 +41,8 @@ public class TopicService {
     private UserService userService;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private EventService eventService;
 
     public TopicDO convertBo2Do(TopicBO topic) {
         TopicDO topicDO = new TopicDO();
@@ -181,6 +180,8 @@ public class TopicService {
                 articleMapper.updateByPrimary(articleDO);
             }
             topicMapper.insert(topic);
+            //发通知,评论不存储topicId
+            eventService.advice(AuthUtils.getUser().getId(), topicBO.getToUserId(), topicBO.getArticleId(), null, topicBO.getContent(), EventTypeEnum.REPLY.getCode(), topic.getId());
         } else if (TopicEnum.REPLY.getCode().equals(type)) {
             //回复
             if (topicBO.getParentId() == null || topic.getTopicId() == null) {
@@ -188,6 +189,7 @@ public class TopicService {
             }
             topic.setParentId(topicBO.getParentId());
             topic.setTopicId(topicBO.getTopicId());
+            eventService.advice(AuthUtils.getUser().getId(), topicBO.getToUserId(), topicBO.getArticleId(), topicBO.getParentId(), topicBO.getContent(), EventTypeEnum.REPLY.getCode(), topic.getTopicId());
             topicMapper.insert(topic);
         }
         return addUserParameter(topic);

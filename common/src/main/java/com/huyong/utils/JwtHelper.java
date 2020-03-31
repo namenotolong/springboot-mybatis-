@@ -39,14 +39,14 @@ public class JwtHelper {
         }
     }
 
-    public static String createJWT(Long id, String name, String email, int role) {
+    public static String createJWT(Long id, String name, String email, Integer role) {
         return createJWT(id, name, email, role, EXPIRE_TIME, BASE_64_SECURITY);
     }
 
     /**
      * 构建jwt
      */
-    private static String createJWT(Long id, String name, String email, int role, long TTLMillis, String base64Security) {
+    private static String createJWT(Long id, String name, String email, Integer role, long TTLMillis, String base64Security) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);

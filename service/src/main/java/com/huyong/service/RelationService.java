@@ -3,10 +3,15 @@ package com.huyong.service;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.entity.RelationDO;
+import com.huyong.dao.entity.TopicDO;
+import com.huyong.dao.mapper.ArticleMapper;
+import com.huyong.dao.mapper.TopicMapper;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.RelationBO;
 import com.huyong.dao.module.UserBO;
+import com.huyong.enums.EventTypeEnum;
 import com.huyong.enums.RelationEnum;
 import com.huyong.exception.CommonException;
 import com.huyong.utils.AuthUtils;
@@ -33,6 +38,12 @@ public class RelationService {
     private RelationMapper relationMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private EventService eventService;
+    @Resource
+    private ArticleMapper articleMapper;
+    @Resource
+    private TopicMapper topicMapper;
 
     public RelationDO convertBo2Do(RelationBO relation) {
         RelationDO relationDO = new RelationDO();
@@ -65,13 +76,6 @@ public class RelationService {
      */
     public Map<String, Boolean> getRelations(Long id, Long articleId) {
         Map<String, Boolean> relations = Maps.newHashMap();
-        if (AuthUtils.getUser() == null) {
-            relations.put("praise", false);
-            relations.put("store", false);
-            relations.put("follow", false);
-            relations.put("praiseArticle", false);
-            return relations;
-        }
         relations.put("praise", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.PRAISE.getCode()));
         relations.put("store", checkRelation(AuthUtils.getUser().getId(), articleId, RelationEnum.STORE.getCode()));
         relations.put("follow", checkRelation(AuthUtils.getUser().getId(), id, RelationEnum.FOLLOW.getCode()));
@@ -86,16 +90,9 @@ public class RelationService {
      * @return
      */
     public boolean checkRelation(Long one, Long two, Integer type) {
-        RelationDO relation = new RelationDO();
-        relation.setType(type);
-        relation.setOneId(one);
-        List<RelationDO> relationDOS = relationMapper.queryByCondition(relation);
-        if (CollectionUtils.isNotEmpty(relationDOS))  {
-            String othersId = relationDOS.get(0).getOthersId();
-            if (StringUtils.isNotBlank(othersId)) {
-                List list = JSONObject.parseObject(othersId, List.class);
-                return contains(list, two);
-            }
+        List othersId = getOthers(one, type);
+        if (CollectionUtils.isNotEmpty(othersId))  {
+            return contains(othersId, two);
         }
         return false;
     }
@@ -146,6 +143,9 @@ public class RelationService {
         if (one.equals(two)) {
             throw new CommonException("不能关注自己");
         }
+        if (ops == 0) {
+            eventService.advice(one, two, EventTypeEnum.FOLLOW.getCode(), null, null);
+        }
         //在one的关注表中操作two
         opsRelation(one, two, ops, RelationEnum.FOLLOW.getCode());
         //在two的粉丝表中操作one
@@ -155,6 +155,9 @@ public class RelationService {
     public synchronized void praise(Long one, Long two, Integer ops) {
         if (two == null) {
             throw new CommonException("userId参数为空！");
+        }
+        if (!one.equals(two) && ops == 0) {
+            eventService.advice(one, two, EventTypeEnum.PRAISE.getCode(), null, null);
         }
         //在one的点赞表中操作two
         opsRelation(one, two, ops, RelationEnum.PRAISE.getCode());
@@ -166,6 +169,13 @@ public class RelationService {
         if (null == two) {
             throw new CommonException("文章id为空！");
         }
+        final ArticleDO articleDO = articleMapper.selectByPrimary(two);
+        if (articleDO == null) {
+            return;
+        }
+        if (!one.equals(articleDO.getUserId()) && ops == 0) {
+            eventService.advice(one, articleDO.getUserId(), EventTypeEnum.PRAISE.getCode(),  two, null);
+        }
         //在one的点赞表中操作two
         opsRelation(one, two, ops, RelationEnum.PRAISE_ARTICLE.getCode());
         //在two的被点赞表中操作one
@@ -175,6 +185,13 @@ public class RelationService {
     public synchronized void praiseTopic(Long one, Long two, Integer ops) {
         if (null == two) {
             throw new CommonException("topic id为空！");
+        }
+        final TopicDO topicDO = topicMapper.selectByPrimary(two);
+        if (topicDO == null) {
+            return;
+        }
+        if (!one.equals(topicDO.getUserId()) && ops == 0) {
+            eventService.advice(one, topicDO.getUserId(), EventTypeEnum.PRAISE.getCode(),  topicDO.getArticleId(), two);
         }
         //在one的点赞表中操作two
         opsRelation(one, two, ops, RelationEnum.PRAISE_TOPIC.getCode());
@@ -282,7 +299,8 @@ public class RelationService {
     public void modifyRelation(Long userId, Long articleId, Long topicId, Integer ops, Integer type) {
         switch (type) {
             //点赞用户
-            case 1 : praise(AuthUtils.getUser().getId(), userId, ops);break;
+            case 1 :
+                praise(AuthUtils.getUser().getId(), userId, ops);break;
             //收藏文章
             case 2 : store(AuthUtils.getUser().getId(), articleId, ops);break;
             //关注用户
@@ -303,27 +321,21 @@ public class RelationService {
      */
     public List<UserBO> getFansOrFollows(Long userId, Integer type) {
         if (RelationEnum.FAN.getCode().equals(type) || RelationEnum.FOLLOW.getCode().equals(type)) {
-            RelationDO condition = new RelationDO();
-            condition.setOneId(userId);
-            condition.setType(type);
-            final List<RelationDO> relationDOS = relationMapper.queryByCondition(condition);
-            if (CollectionUtils.isNotEmpty(relationDOS)) {
-                final String othersId = relationDOS.get(0).getOthersId();
-                if (StringUtils.isNotBlank(othersId)) {
-                    List list = JSONObject.parseObject(othersId, List.class);
-                    List<UserBO> users = userMapper.getListUserByIds(list);
-                    if (AuthUtils.getUser() != null && CollectionUtils.isNotEmpty(users)) {
-                        //如果是进入的个人主页  默认是全部都是关注的
-                        if (AuthUtils.getUser().getId().equals(userId)) {
-                            for (UserBO user : users) {
-                                user.setFollow(true);
-                            }
-                            return users;
+            final List others = getOthers(userId, type);
+            if (CollectionUtils.isNotEmpty(others)) {
+                List<UserBO> users = userMapper.getListUserByIds(others);
+                if (AuthUtils.getUser() != null && CollectionUtils.isNotEmpty(users)) {
+                    //如果是进入的个人主页 且获取的是关注数据
+                    if (AuthUtils.getUser().getId().equals(userId) && type == 0) {
+                        for (UserBO user : users) {
+                            user.setFollow(true);
                         }
-                        //获取当前登录用户关注的用户
-                        condition.setOneId(AuthUtils.getUser().getId());
-                        condition.setType(RelationEnum.FOLLOW.getCode());
-                        List<UserBO> temp = userMapper.getListUserByIds(list);
+                        return users;
+                    }
+                    //获取当前登录用户关注的用户
+                    List followIds = getOthers(AuthUtils.getUser().getId(), RelationEnum.FOLLOW.getCode());
+                    if (CollectionUtils.isNotEmpty(followIds)) {
+                        List<UserBO> temp = userMapper.getListUserByIds(followIds);
                         if (CollectionUtils.isNotEmpty(temp)) {
                             for (UserBO user : users) {
                                 for (UserBO userBO : temp) {
@@ -335,10 +347,46 @@ public class RelationService {
                             }
                         }
                     }
-                    return users;
+                }
+                return users;
+            }
+        }
+        return Lists.newArrayList();
+    }
+    /**
+     * 获取others集合
+      * @param one
+     * @param type
+     * @return
+     */
+    public List getOthers(Long one, Integer type) {
+        RelationDO condition = new RelationDO();
+        condition.setOneId(one);
+        condition.setType(type);
+        final List<RelationDO> relationDOS = relationMapper.queryByCondition(condition);
+        if (CollectionUtils.isNotEmpty(relationDOS)) {
+            final String othersId = relationDOS.get(0).getOthersId();
+            if (StringUtils.isNotBlank(othersId)) {
+                final List list = JSONObject.parseObject(othersId, List.class);
+                if (CollectionUtils.isNotEmpty(list)) {
+                    return list;
                 }
             }
         }
         return Lists.newArrayList();
+    }
+
+    /**
+     * 判断一个用户是否被当前用户关注
+     * @param id
+     * @return
+     */
+    public Map<String, Object> getPraised(Long id) {
+        final List others = getOthers(id, RelationEnum.BY_PRAISE.getCode());
+        final boolean contains = contains(others, AuthUtils.getUser().getId());
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("praised", contains);
+        map.put("praiseCount", others.size());
+        return map;
     }
 }

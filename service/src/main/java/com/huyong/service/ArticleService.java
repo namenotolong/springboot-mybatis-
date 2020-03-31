@@ -5,6 +5,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.entity.RelationDO;
+import com.huyong.dao.entity.TopicDO;
 import com.huyong.dao.mapper.KindMapper;
 import com.huyong.dao.mapper.RelationMapper;
 import com.huyong.dao.mapper.TopicMapper;
@@ -21,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import javax.management.relation.Relation;
-import javax.management.relation.Role;
 
 import com.huyong.dao.mapper.ArticleMapper;
 
@@ -96,7 +95,7 @@ public class ArticleService {
      * 发布文章
      * @param articleBO
      */
-    public void publishOrModify(ArticleBO articleBO) {
+    public ArticleDO publishOrModify(ArticleBO articleBO) {
         Integer ops = articleBO.getOps();
         ArticleDO articleDO = getUpdateOrInsertCommonArticle(articleBO);
         ArticleDO admin = convertBo2Do(articleBO);
@@ -125,7 +124,7 @@ public class ArticleService {
                 articleMapper.updateByPrimary(articleDO);
             }
         }
-
+        return articleDO;
     }
 
     /**
@@ -237,11 +236,33 @@ public class ArticleService {
         condition.setStatus(StatusEnum.DELETE.getCode());
         if (admin) {
             articleMapper.updateByPrimary(condition);
+            deleteTopicsOfArticle(id);
         } else {
             final ArticleDO articleDO = articleMapper.selectByPrimary(id);
             if (null != articleDO && articleDO.getUserId().equals(AuthUtils.getUser().getId())) {
                 articleMapper.updateByPrimary(condition);
+                deleteTopicsOfArticle(id);
             }
         }
+    }
+
+    /**
+     * 删除一个文章的所有话题
+     * @param id
+     */
+    public void deleteTopicsOfArticle(Long id) {
+        TopicDO condition = new TopicDO();
+        condition.setArticleId(id);
+        TopicDO target = new TopicDO();
+        target.setStatus(StatusEnum.DELETE.getCode());
+        topicMapper.updateByCondition(target, condition);
+    }
+
+    public List<ArticleBO> getFollowsArticles() {
+        final List others = relationService.getOthers(AuthUtils.getUser().getId(), RelationEnum.FOLLOW.getCode());
+        if (CollectionUtils.isNotEmpty(others)) {
+            return articleMapper.getArticlesByUserIds(others);
+        }
+        return Lists.newArrayList();
     }
 }

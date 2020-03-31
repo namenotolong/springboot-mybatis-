@@ -18,6 +18,10 @@ public class EventDO implements Serializable {
     private static final long serialVersionUID = -8077869910633421281L;
     private Long id;
     /**
+     * 内容
+     */
+    private String content;
+    /**
      * 发起者
      */
     private Long fromUserId;
@@ -30,15 +34,19 @@ public class EventDO implements Serializable {
      */
     private Long topicId;
     /**
-     * 文章id
+     * 回复评论对应的根评论id
+     */
+    private Long rootId;
+    /**
+     * 文章id，回复为空
      */
     private Long articleId;
     /**
-     * 已读/未读
+     * 事件类型
      */
     private Integer type;
     /**
-     * 删除/正常
+     * 0 未读 1 已读
      */
     private Integer status;
     /**

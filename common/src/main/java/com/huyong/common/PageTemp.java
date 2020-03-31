@@ -1,7 +1,8 @@
 package com.huyong.common;
 
-import com.sun.tools.javac.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 描述: 分页

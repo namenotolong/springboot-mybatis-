@@ -31,6 +31,8 @@ public class TopicBO {
     private Long userId;
     @ApiModelProperty("用户")
     private UserBO user;
+    @ApiModelProperty("回复的用户")
+    private String toUserName;
     @ApiModelProperty("更新用户")
     private Long updateUserId;
     @ApiModelProperty("回复的用户")
