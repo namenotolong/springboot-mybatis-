@@ -47,4 +47,12 @@ public class EventBO {
     private Date createTime;
     @ApiModelProperty("更新时间")
     private Date updateTime;
+    @ApiModelProperty("未读数")
+    private Long unReadCount;
+    @ApiModelProperty("1离线 0上线")
+    private Integer online;
+    @ApiModelProperty("1删除 0存在")
+    private Integer present;
+    @ApiModelProperty("owner")
+    private Long owner;
 }

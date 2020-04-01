@@ -33,4 +33,19 @@ public interface EventMapper extends BaseMapper<EventDO> {
      * @return
      */
     int getEventBosByTypeCount(@Param("type") Integer type, @Param("id") Long id);
+
+    /**
+     * 获取聊天列表
+     * @param id
+     * @return
+     */
+    List<EventBO> getChats(@Param("id") Long id);
+
+    /**
+     * 获取两个用户的聊天记录
+     * @param from
+     * @param to
+     * @return
+     */
+    List<EventBO> getRecord(@Param("from") Long from,@Param("to") Long to);
 }

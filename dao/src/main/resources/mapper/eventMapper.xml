@@ -10,7 +10,7 @@
         left JOIN article c ON a.article_id = c.id
         left JOIN topic d ON a.topic_id = d.id
         where a.`type` = #{type} and a.`to_user_id` = #{id}
-        order by a.`update_time` desc
+        order by a.`create_time` desc
         limit #{offset},#{pageSize}
     </select>
     <select id="getEventBosByTypeCount" resultType="Integer">
@@ -22,5 +22,43 @@
         left JOIN article c ON a.article_id = c.id
         left JOIN topic d ON a.topic_id = d.id
         where a.`type` = #{type} and a.`to_user_id` = #{id}
+    </select>
+    <select id="getChats" resultType="eventBO">
+        SELECT
+            a.id,
+            MAX( a.create_time ) AS create_time,
+            a.from_user_id,
+            count( b.user_name ) unReadCount,
+            c.user_name,
+            c.picture,
+            b.`online`
+        FROM
+            `event` a
+            LEFT JOIN `user` b ON a.`from_user_id` = b.`id`
+            AND a.`status` = 0
+            LEFT JOIN `user` c ON a.`from_user_id` = c.`id`
+        WHERE
+            `type` = 1
+            AND a.to_user_id = #{id}
+            and a.`present` = 0
+        GROUP BY
+            a.from_user_id
+        ORDER BY
+            MAX( a.create_time ) DESC
+    </select>
+    <select id="getRecord" resultType="eventBO">
+    SELECT
+        a.*,
+        b.user_name,
+        b.picture
+    FROM
+        `event` a
+        INNER JOIN `user` b ON a.from_user_id = b.id
+    WHERE
+        ( to_user_id = #{from} OR to_user_id = #{to} )
+	AND ( from_user_id = #{from} OR from_user_id = #{to} )
+        AND `type` = 1
+    ORDER BY
+        `create_time` ASC
     </select>
 </mapper>

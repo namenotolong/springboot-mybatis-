@@ -162,8 +162,20 @@ public class EventService {
         eventMapper.updateByCondition(target, condition);
     }
 
-    public List<EventDO> getChatList() {
-        
-        return null;
+    /**
+     * 获取当前用户的聊天列表
+     * @return
+     */
+    public List<EventBO> getChatList() {
+        return eventMapper.getChats(AuthUtils.getUser().getId());
+    }
+
+    /**
+     * 获取与当前用户的聊天记录
+     * @param id
+     * @return
+     */
+    public List<EventBO> getRecord(Long id) {
+        return eventMapper.getRecord(id, AuthUtils.getUser().getId());
     }
 }

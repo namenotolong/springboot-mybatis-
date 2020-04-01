@@ -22,6 +22,10 @@ public class HistoryChatUsersBO {
     private Long id;
     @ApiModelProperty("owner")
     private Long userId;
+    @ApiModelProperty("用户名")
+    private String userName;
+    @ApiModelProperty("用户头像")
+    private String picture;
     @ApiModelProperty("记录用户id")
     private Long customer;
     @ApiModelProperty("删除 存在")
@@ -30,4 +34,6 @@ public class HistoryChatUsersBO {
     private Date createTime;
     @ApiModelProperty("修改时间")
     private Date updateTime;
+    @ApiModelProperty("未读数")
+    private Long unReadCount;
 }

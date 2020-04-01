@@ -18,6 +18,10 @@ public class EventDO implements Serializable {
     private static final long serialVersionUID = -8077869910633421281L;
     private Long id;
     /**
+     * 这条消息归属的用户，作为聊天记录的时候，一条消息应该有存两条记录，分别两个owner
+     */
+    private Long owner;
+    /**
      * 内容
      */
     private String content;
@@ -49,6 +53,10 @@ public class EventDO implements Serializable {
      * 0 未读 1 已读
      */
     private Integer status;
+    /**
+     * 1 删除 0 存在
+     */
+    private Integer present;
     /**
      * 创建时间
      */

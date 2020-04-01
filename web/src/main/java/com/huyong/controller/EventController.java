@@ -2,7 +2,6 @@ package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
 import com.huyong.common.PageTemp;
-import com.huyong.dao.entity.EventDO;
 import com.huyong.dao.module.EventBO;
 import com.huyong.service.EventService;
 import io.swagger.annotations.Api;
@@ -67,8 +66,16 @@ public class EventController {
     @GetMapping("/getChatList")
     @ApiOperation("获取用户的聊天列表")
     @CheckAuth
-    public List<EventDO> getChatList() {
+    public List<EventBO> getChatList() {
         return eventService.getChatList();
+    }
+
+    @ResponseBody
+    @GetMapping("/getRecord")
+    @ApiOperation("获取一个用户的聊天记录")
+    @CheckAuth
+    public List<EventBO> getRecord(@ApiParam("用户id") @RequestParam("id") Long id) {
+        return eventService.getRecord(id);
     }
 
 }

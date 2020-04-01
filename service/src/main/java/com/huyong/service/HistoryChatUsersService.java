@@ -2,6 +2,7 @@ package com.huyong.service;
 
 import com.huyong.dao.entity.HistoryChatUsersDO;
 import com.huyong.dao.module.HistoryChatUsersBO;
+import com.huyong.utils.AuthUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -44,5 +45,13 @@ public class HistoryChatUsersService {
             return new ArrayList<>();
         }
         return historyChatUserss.stream().map(this::convertDo2Bo).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取历史聊天用户
+     * @return
+     */
+    public List<HistoryChatUsersBO> getUsers() {
+        return historyChatUsersMapper.getUsers(AuthUtils.getUser().getId());
     }
 }
