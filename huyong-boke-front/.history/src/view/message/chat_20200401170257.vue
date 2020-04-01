@@ -28,7 +28,7 @@
             </div>
             <div v-else>
               <div v-for="item in chats" :key="item.id" class="chat-container">
-                <div class="inner" @click="checkoutUser(item)">
+                <div class="inner" @click="focusChat = item">
                   <div class="myflexBetween">
                     <div class="myflex">
                       <div>
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                     <div>
-                      <span class="grey-color" style="font-size: 1px">{{item.createTime}}</span>
+                      <span class="grey-color" style="font-size: 1px">{{item.updateTime}}</span>
                     </div>
                   </div>
                 </div>
@@ -56,45 +56,21 @@
             </div>
           </div>
           <div class="right-container">
-            <div v-show="focusChat" style="height: 100%">
-              <div class="chat-header" v-if="focusChat">
+            <div v-if="focusChat">
+              <div class="chat-header">
                 <div class="black-color">
-                  <span>{{focusChat.userName}}&nbsp;</span>
+                  <span>{{focusChat.userName}}&nbsp;&nbsp;</span>
                   <span>[离线]</span>
                 </div>
               </div>
-              <div class="chat-content" v-if="focusChat" ref="chat">
-                <div v-for="item in chatRecord" :key="item.id">
-                  <p class="date-style">{{item.createTime}}</p>
-                  <div class="message-container left-message" v-if="item.toUserId == user.id">
-                    <div>
-                      <el-avatar :size="30">
-                        <img :src="baseUrl + item.picture"/>
-                      </el-avatar>
-                    </div>
-                    <div class="message">
-                      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </div>
-                  </div>
-                  <div v-else class="right-message">
-                    <div class="message">
-                      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </div>
-                    <div>
-                      <el-avatar :size="30">
-                        <img :src="baseUrl + item.picture"/>
-                      </el-avatar>
-                    </div>
-                  </div>
-                </div>
+              <div class="chat-content">
+
               </div>
-              <div  class="input-content"  contenteditable="true" ref="box">
-              </div>
-              <div style="float: right;padding-right: 10px;padding-left: 10px">
-                <span @click="send">发送</span>
+              <div class="input-content">
+
               </div>
             </div>
-            <div class="text"  v-show="!focusChat">
+            <div class="text"  v-else>
               <span class="center-color">您还未选中联系人，快去和好友聊天吧！</span>
             </div>
           </div>
@@ -113,62 +89,21 @@ export default {
       baseUrl: '',
       loading: true,
       chats: [],
-      focusChat: null,
-      info: '',
-      chatRecord: [],
+      focusChat: null
     }
   },
   methods: {
-    //发送消息
-    send() {
-      let a = this.$refs.box.innerText;
-      if(a.trim() == '') {
-        return
-      }
-    },
-    //切换用户
-    checkoutUser(item) {
-      this.focusChat = item;
-      this.$refs.box.innerText = '';
-      this.getChatRecord();
-    },
     setUser(obj) {
       this.user = obj
     },
     //获取聊天列表
     getChatList() {
       this.loading = true;
-      this.$axios.get("/history/getUsers").then(response => {
+      this.$axios.get("/event/getChatList").then(response => {
         this.chats = response.data.data
+        console.log(this.chats)
         this.loading = false;
-        var time2 = new Date().format("yyyy-MM-dd");
-        this.chats.forEach(x => {
-          if(x.createTime > time2) {
-            x.createTime = new Date(x.createTime).format("HH:mm");
-          } else {
-            x.createTime = time2;
-          }
-        })
-      })
-    },
-    //获取聊天记录
-    getChatRecord() {
-      this.$axios.get("/event/getRecord?id=" + this.focusChat.customer).then(response => {
-        this.chatRecord = response.data.data;
-        var time2 = new Date().format("yyyy-MM-dd");
-        this.chatRecord.forEach(x => {
-          if(x.createTime > time2) {
-            x.createTime = new Date(x.createTime).format("HH:mm");
-          }
-        })
-        let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        console.log(a)
-      })
-    }
-  },
-  mounted() {
-    Date.prototype.format=function(fmt) {
+        Date.prototype.format=function(fmt) {
             var o = {
             "M+" : this.getMonth()+1, //月份
             "d+" : this.getDate(), //日
@@ -201,6 +136,18 @@ export default {
             }
             return fmt;
         }
+        var time2 = new Date().format("yyyy-MM-dd");
+        this.chats.forEach(x => {
+          if(x.updateTime > time2) {
+            x.updateTime = new Date(x.updateTime).format("HH:mm");
+          } else {
+            x.updateTime = time2;
+          }
+        })
+      })
+    },
+  },
+  mounted() {
     this.baseUrl = baseURL
     this.getChatList();
   },
@@ -210,47 +157,9 @@ export default {
 }
 </script>
 <style scoped>
-.date-style{
-  color: grey;
-  margin-left: 40%;
-  font-size: 1ch;
-}
-.left-message{
-  margin-left: 10px;
-  margin-top: 10px;
-}
-.right-message{
-  display: flex;
-  margin-right: 10px;
-  margin-top: 10px;
-  justify-content: flex-end;
-}
-.message-container{
-  display: flex;
-}
-.message{
-  margin-left: 10px;
-  margin-right: 10px;
-  max-width: 290px;
-  background-color: #60addc;
-  color: white;
-  border-radius: 5px;
-}
-.input-content{
-  height: 20%;
-  outline: none;
-  width: 90%;
-  float: left;
-  padding-left: 10px;
-  padding-top: 10px;
-  overflow: scroll;
-}
 .chat-content{
-  height: 65%;
+  height: 60%;
   width: 100%;
-  border-bottom: 1px #ebebeb solid;
-  overflow:auto;
-  padding-bottom: 20px;
 }
 .black-color{
   color: #3d3d3d;
@@ -259,7 +168,6 @@ export default {
   padding-top: 10px;
 }
 .chat-header{
-  height: 10%;
   border-bottom: 1px #ebebeb solid
 }
 .inner{
@@ -273,7 +181,7 @@ export default {
   background-color: #2e2e2e;
 }
 .chat-container{
-  height: 100%;
+  height: 100%
 }
 .grey-color{
   color: #999999
@@ -309,7 +217,6 @@ export default {
   background-color: #3d3d3d;
   height: 550px;
   width: 28%;
-  overflow: scroll;
 }
 .myflex{
   display: flex;

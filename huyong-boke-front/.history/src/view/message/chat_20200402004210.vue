@@ -162,7 +162,7 @@ export default {
           }
         })
         let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
+        //this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
         console.log(a)
       })
     }

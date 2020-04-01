@@ -63,7 +63,7 @@
                   <span>[离线]</span>
                 </div>
               </div>
-              <div class="chat-content" v-if="focusChat" ref="chat">
+              <div class="chat-content" v-if="focusChat">
                 <div v-for="item in chatRecord" :key="item.id">
                   <p class="date-style">{{item.createTime}}</p>
                   <div class="message-container left-message" v-if="item.toUserId == user.id">
@@ -76,7 +76,7 @@
                       测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </div>
                   </div>
-                  <div v-else class="right-message">
+                  <div v-else class="message-container right-message">
                     <div class="message">
                       测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </div>
@@ -161,9 +161,7 @@ export default {
             x.createTime = new Date(x.createTime).format("HH:mm");
           }
         })
-        let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        console.log(a)
+        console.log(this.chatRecord)
       })
     }
   },
@@ -220,37 +218,30 @@ export default {
   margin-top: 10px;
 }
 .right-message{
-  display: flex;
   margin-right: 10px;
   margin-top: 10px;
-  justify-content: flex-end;
 }
 .message-container{
   display: flex;
 }
 .message{
   margin-left: 10px;
-  margin-right: 10px;
   max-width: 290px;
   background-color: #60addc;
   color: white;
   border-radius: 5px;
 }
 .input-content{
-  height: 20%;
+  height: 25%;
   outline: none;
   width: 90%;
   float: left;
-  padding-left: 10px;
-  padding-top: 10px;
-  overflow: scroll;
 }
 .chat-content{
   height: 65%;
   width: 100%;
   border-bottom: 1px #ebebeb solid;
-  overflow:auto;
-  padding-bottom: 20px;
+  overflow: scroll;
 }
 .black-color{
   color: #3d3d3d;

@@ -64,6 +64,7 @@
                 </div>
               </div>
               <div class="chat-content" v-if="focusChat" ref="chat">
+                111
                 <div v-for="item in chatRecord" :key="item.id">
                   <p class="date-style">{{item.createTime}}</p>
                   <div class="message-container left-message" v-if="item.toUserId == user.id">
@@ -162,7 +163,7 @@ export default {
           }
         })
         let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
+        //this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
         console.log(a)
       })
     }
@@ -249,7 +250,7 @@ export default {
   height: 65%;
   width: 100%;
   border-bottom: 1px #ebebeb solid;
-  overflow:auto;
+  overflow: scroll;
   padding-bottom: 20px;
 }
 .black-color{

@@ -63,27 +63,16 @@
                   <span>[离线]</span>
                 </div>
               </div>
-              <div class="chat-content" v-if="focusChat" ref="chat">
+              <div class="chat-content" v-if="focusChat">
                 <div v-for="item in chatRecord" :key="item.id">
-                  <p class="date-style">{{item.createTime}}</p>
-                  <div class="message-container left-message" v-if="item.toUserId == user.id">
-                    <div>
+                  <div class="myflex">
+                    <div v-if="item.toUserId == user.id">
                       <el-avatar :size="30">
                         <img :src="baseUrl + item.picture"/>
                       </el-avatar>
                     </div>
-                    <div class="message">
-                      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </div>
-                  </div>
-                  <div v-else class="right-message">
-                    <div class="message">
-                      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </div>
                     <div>
-                      <el-avatar :size="30">
-                        <img :src="baseUrl + item.picture"/>
-                      </el-avatar>
+                      <span class="message">{{item.content}}</span>
                     </div>
                   </div>
                 </div>
@@ -141,34 +130,7 @@ export default {
       this.$axios.get("/history/getUsers").then(response => {
         this.chats = response.data.data
         this.loading = false;
-        var time2 = new Date().format("yyyy-MM-dd");
-        this.chats.forEach(x => {
-          if(x.createTime > time2) {
-            x.createTime = new Date(x.createTime).format("HH:mm");
-          } else {
-            x.createTime = time2;
-          }
-        })
-      })
-    },
-    //获取聊天记录
-    getChatRecord() {
-      this.$axios.get("/event/getRecord?id=" + this.focusChat.customer).then(response => {
-        this.chatRecord = response.data.data;
-        var time2 = new Date().format("yyyy-MM-dd");
-        this.chatRecord.forEach(x => {
-          if(x.createTime > time2) {
-            x.createTime = new Date(x.createTime).format("HH:mm");
-          }
-        })
-        let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        console.log(a)
-      })
-    }
-  },
-  mounted() {
-    Date.prototype.format=function(fmt) {
+        Date.prototype.format=function(fmt) {
             var o = {
             "M+" : this.getMonth()+1, //月份
             "d+" : this.getDate(), //日
@@ -201,6 +163,25 @@ export default {
             }
             return fmt;
         }
+        var time2 = new Date().format("yyyy-MM-dd");
+        this.chats.forEach(x => {
+          if(x.createTime > time2) {
+            x.createTime = new Date(x.createTime).format("HH:mm");
+          } else {
+            x.createTime = time2;
+          }
+        })
+      })
+    },
+    //获取聊天记录
+    getChatRecord() {
+      this.$axios.get("/event/getRecord?id=" + this.focusChat.customer).then(response => {
+        this.chatRecord = response.data.data;
+        console.log(this.chatRecord)
+      })
+    }
+  },
+  mounted() {
     this.baseUrl = baseURL
     this.getChatList();
   },
@@ -210,47 +191,19 @@ export default {
 }
 </script>
 <style scoped>
-.date-style{
-  color: grey;
-  margin-left: 40%;
-  font-size: 1ch;
-}
-.left-message{
-  margin-left: 10px;
-  margin-top: 10px;
-}
-.right-message{
-  display: flex;
-  margin-right: 10px;
-  margin-top: 10px;
-  justify-content: flex-end;
-}
-.message-container{
-  display: flex;
-}
 .message{
-  margin-left: 10px;
-  margin-right: 10px;
-  max-width: 290px;
-  background-color: #60addc;
-  color: white;
-  border-radius: 5px;
+  background-color: yellowgreen;
 }
 .input-content{
-  height: 20%;
+  height: 25%;
   outline: none;
   width: 90%;
   float: left;
-  padding-left: 10px;
-  padding-top: 10px;
-  overflow: scroll;
 }
 .chat-content{
   height: 65%;
   width: 100%;
   border-bottom: 1px #ebebeb solid;
-  overflow:auto;
-  padding-bottom: 20px;
 }
 .black-color{
   color: #3d3d3d;

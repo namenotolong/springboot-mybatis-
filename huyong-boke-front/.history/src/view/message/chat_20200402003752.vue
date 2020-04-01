@@ -161,9 +161,7 @@ export default {
             x.createTime = new Date(x.createTime).format("HH:mm");
           }
         })
-        let a = this.$refs.chat.innerText
         this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        console.log(a)
       })
     }
   },
@@ -249,7 +247,7 @@ export default {
   height: 65%;
   width: 100%;
   border-bottom: 1px #ebebeb solid;
-  overflow:auto;
+  overflow: scroll;
   padding-bottom: 20px;
 }
 .black-color{

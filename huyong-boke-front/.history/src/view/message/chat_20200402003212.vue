@@ -63,7 +63,7 @@
                   <span>[离线]</span>
                 </div>
               </div>
-              <div class="chat-content" v-if="focusChat" ref="chat">
+              <div class="chat-content" v-if="focusChat">
                 <div v-for="item in chatRecord" :key="item.id">
                   <p class="date-style">{{item.createTime}}</p>
                   <div class="message-container left-message" v-if="item.toUserId == user.id">
@@ -161,9 +161,7 @@ export default {
             x.createTime = new Date(x.createTime).format("HH:mm");
           }
         })
-        let a = this.$refs.chat.innerText
-        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight;
-        console.log(a)
+        console.log(this.chatRecord)
       })
     }
   },
@@ -249,7 +247,7 @@ export default {
   height: 65%;
   width: 100%;
   border-bottom: 1px #ebebeb solid;
-  overflow:auto;
+  overflow: scroll;
   padding-bottom: 20px;
 }
 .black-color{
