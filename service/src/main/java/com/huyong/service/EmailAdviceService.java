@@ -69,7 +69,7 @@ public class EmailAdviceService {
         if (null == code) {
             throw new CommonException("请获取验证码！");
         }
-        if (!advice.getData().equals(code)) {
+        if (!code.equals(advice.getData())) {
             throw new CommonException("验证码不正确！");
         }
         if (System.currentTimeMillis() > advice.getExpireTime()) {

@@ -36,4 +36,6 @@ public class HistoryChatUsersBO {
     private Date updateTime;
     @ApiModelProperty("未读数")
     private Long unReadCount;
+    @ApiModelProperty("o离线1上线")
+    private Integer online;
 }

@@ -5,6 +5,7 @@ import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.UserBO;
 import com.huyong.exception.AuthException;
+import com.huyong.filter.JwtFilter;
 import com.huyong.service.UserService;
 import com.huyong.utils.AuthUtils;
 import com.huyong.utils.JwtHelper;
@@ -67,25 +68,6 @@ public class AspectApiImpl implements AspectApi {
         return null;
     }
     private UserBO claims2User(Claims claims) {
-        UserBO user = new UserBO();
-        final Set<String> strings = claims.keySet();
-        strings.remove("exp");
-        strings.remove("nbf");
-        for (String field : strings) {
-            try {
-                final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field, user.getClass());
-                final Method writeMethod = propertyDescriptor.getWriteMethod();
-                if (writeMethod != null) {
-                    if ("id".equals(field)) {
-                        writeMethod.invoke(user, Long.valueOf(String.valueOf(claims.get(field))));
-                    } else {
-                        writeMethod.invoke(user, claims.get(field));
-                    }
-                }
-            } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-        return user;
+        return JwtFilter.getUserBO(claims);
     }
 }

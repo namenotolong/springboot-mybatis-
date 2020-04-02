@@ -22,4 +22,20 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @return
      */
     List<UserBO> getListUserByIds(@Param("list") List list);
+
+    /**
+     * 搜索
+     * @param key
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<UserBO> search(@Param("key") String key,@Param("offset") int offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * 获取总数
+     * @param key
+     * @return
+     */
+    int searchCount(@Param("key") String key);
 }

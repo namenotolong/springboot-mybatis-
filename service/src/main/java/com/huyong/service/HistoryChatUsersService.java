@@ -2,7 +2,10 @@ package com.huyong.service;
 
 import com.huyong.dao.entity.HistoryChatUsersDO;
 import com.huyong.dao.module.HistoryChatUsersBO;
+import com.huyong.enums.OpsEnum;
+import com.huyong.enums.StatusEnum;
 import com.huyong.utils.AuthUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -53,5 +56,27 @@ public class HistoryChatUsersService {
      */
     public List<HistoryChatUsersBO> getUsers() {
         return historyChatUsersMapper.getUsers(AuthUtils.getUser().getId());
+    }
+
+    /**
+     * 新增一个
+     * @param id
+     */
+    public void add(Long id) {
+        HistoryChatUsersDO condition = new HistoryChatUsersDO();
+        condition.setStatus(StatusEnum.PRESENT.getCode());
+        condition.setUserId(AuthUtils.getUser().getId());
+        condition.setCustomer(id);
+        final List<HistoryChatUsersDO> users = historyChatUsersMapper.queryByCondition(condition);
+        if (CollectionUtils.isEmpty(users)) {
+            historyChatUsersMapper.insert(condition);
+        }
+    }
+
+    public void remove(Long id) {
+        HistoryChatUsersDO condition = new HistoryChatUsersDO();
+        condition.setId(id);
+        condition.setStatus(StatusEnum.DELETE.getCode());
+        historyChatUsersMapper.updateByPrimary(condition);
     }
 }

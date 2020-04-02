@@ -3,12 +3,11 @@ package com.huyong.service;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.huyong.common.PageTemp;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.entity.RelationDO;
 import com.huyong.dao.entity.TopicDO;
-import com.huyong.dao.mapper.KindMapper;
-import com.huyong.dao.mapper.RelationMapper;
-import com.huyong.dao.mapper.TopicMapper;
+import com.huyong.dao.mapper.*;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.dao.module.KindBO;
 import com.huyong.dao.module.UserBO;
@@ -22,8 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-
-import com.huyong.dao.mapper.ArticleMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +44,8 @@ public class ArticleService {
     private RelationMapper relationMapper;
     @Resource
     private TopicMapper topicMapper;
+    @Resource
+    private UserMapper userMapper;
 
     private static final Logger log = LoggerFactory.getLogger(ArticleService.class);
 
@@ -264,5 +263,37 @@ public class ArticleService {
             return articleMapper.getArticlesByUserIds(others);
         }
         return Lists.newArrayList();
+    }
+
+    /**
+     * 搜索文章或者用户
+     * @param key
+     * @param pageSize
+     * @param pageSize
+     * @param type
+     * @return
+     */
+    public PageTemp<List> search(String key, Integer pageSize, Integer pageNum, Integer type) {
+        if (pageSize < 1) {
+            pageSize = 1;
+        }
+        if (pageNum < 1) {
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * pageSize;
+        if (type == null) {
+            type = ArticleTypeEnum.TEXT.getCode();
+        }
+        if (type == 2) {
+            //文章
+            List<ArticleBO> articles =  articleMapper.search(key, offset, pageSize);
+            articles.forEach(this :: addParameter);
+            return new PageTemp(articles, pageSize, pageNum, articleMapper.searchCount(key));
+        } else if (type == 1) {
+            //用户
+            List<UserBO> users =  userMapper.search(key, offset, pageSize);
+            return new PageTemp(users, pageSize, pageNum, userMapper.searchCount(key));
+        }
+        return new PageTemp<>();
     }
 }

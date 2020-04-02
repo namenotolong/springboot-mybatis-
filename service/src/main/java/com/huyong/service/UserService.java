@@ -176,6 +176,7 @@ public class UserService {
         userDO.setRole(RoleEnum.CUSTOMER.getCode());
         userDO.setStatus(StatusEnum.PRESENT.getCode());
         userDO.setPicture(CommonConstant.DEFAULT_BAR_IMG);
+        userDO.setOnline(OnlineEnum.OFFLINE.getCode());
         userMapper.insert(userDO);
     }
 
@@ -287,5 +288,18 @@ public class UserService {
             return userBO;
         }
         return new UserBO();
+    }
+
+    /**
+     * 重置密码
+     * @param userBO
+     */
+    public void reset(UserBO userBO) {
+        emailAdviceService.checkCode(userBO.getEmail(), userBO.getCode());
+        UserDO condition = new UserDO();
+        UserDO target = new UserDO();
+        condition.setEmail(userBO.getEmail());
+        target.setPassword(userBO.getPassword());
+        userMapper.updateByCondition(target, condition);
     }
 }

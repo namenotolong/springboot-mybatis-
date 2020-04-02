@@ -178,4 +178,18 @@ public class EventService {
     public List<EventBO> getRecord(Long id) {
         return eventMapper.getRecord(id, AuthUtils.getUser().getId());
     }
+
+    /**
+     * 消除聊天未读数
+     * @param id
+     */
+    public void setChatZero(Long id) {
+        EventDO condition = new EventDO();
+        EventDO target = new EventDO();
+        condition.setType(EventTypeEnum.MESSAGE.getCode());
+        target.setStatus(1);
+        condition.setFromUserId(id);
+        condition.setToUserId(AuthUtils.getUser().getId());
+        eventMapper.updateByCondition(target, condition);
+    }
 }

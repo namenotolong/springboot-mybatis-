@@ -76,4 +76,17 @@
         </foreach>
         order by a.`update_time` desc
     </select>
+    <select id="search" resultMap="getArticlesMap">
+        select <include refid="base_column_list"/>, b.*
+            from `article` a
+        left join `user` b on a.user_id = b.id
+        where (a.`content` like "%"#{key}"%" or a.`title` like "%"#{key}"%") and a.status = 0
+        order by article_update_time
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="searchCount" resultType="Integer">
+        select count(1)
+        from `article`
+        where `title` like "%"#{key}"%" and status = 0
+    </select>
 </mapper>

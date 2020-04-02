@@ -25,7 +25,6 @@ public class ResultBodyAdvice implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        AuthUtils.clear();
         if (o instanceof Result){
             return o;
         }

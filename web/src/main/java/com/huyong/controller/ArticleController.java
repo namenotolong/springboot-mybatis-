@@ -2,6 +2,7 @@ package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
 import com.huyong.annotation.ValidationParam;
+import com.huyong.common.PageTemp;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.module.ArticleBO;
 import com.huyong.service.ArticleService;
@@ -85,4 +86,13 @@ public class ArticleController {
         articleService.deleteArticle(id);
     }
 
+    @ResponseBody
+    @GetMapping("/search")
+    @ApiOperation("搜索文章或者用户")
+    public PageTemp<List> search(@ApiParam("关键字") @RequestParam("key") String key,
+                                         @ApiParam("2：文章 1：用户") @RequestParam("type") Integer type,
+                                         @ApiParam("每页显示数量")@RequestParam("pageSize") Integer pageSize,
+                                         @ApiParam("页码")@RequestParam("pageNum") Integer pageNum){
+        return articleService.search(key, pageSize, pageNum, type);
+    }
 }

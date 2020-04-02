@@ -47,4 +47,20 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @return
      */
     List<ArticleBO> getArticlesByUserIds(List others);
+
+    /**
+     * 搜索
+     * @param key
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<ArticleBO> search(@Param("key") String key,@Param("offset") int offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * 数量
+     * @param key
+     * @return
+     */
+    int searchCount(@Param("key")String key);
 }

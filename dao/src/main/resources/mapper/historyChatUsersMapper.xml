@@ -6,7 +6,8 @@
         a.*,
         b.user_name,
         b.picture,
-        count( c.id ) AS unReadCount
+        count( c.id ) AS unReadCount,
+        b.online
     FROM
         `history_chat_user` a
         INNER JOIN `user` b ON a.customer = b.id
@@ -20,6 +21,6 @@
     GROUP BY
         a.customer
     ORDER BY
-        a.create_time
+        a.create_time desc
     </select>
 </mapper>

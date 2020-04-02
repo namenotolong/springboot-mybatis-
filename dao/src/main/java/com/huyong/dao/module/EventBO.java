@@ -51,8 +51,4 @@ public class EventBO {
     private Long unReadCount;
     @ApiModelProperty("1离线 0上线")
     private Integer online;
-    @ApiModelProperty("1删除 0存在")
-    private Integer present;
-    @ApiModelProperty("owner")
-    private Long owner;
 }

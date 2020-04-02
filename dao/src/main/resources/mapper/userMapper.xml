@@ -10,4 +10,12 @@
             #{item}
         </foreach>
     </select>
+    <select id="search" resultType="userBO">
+        select id,picture,`work`,`user_name`,`school`,`gender`,`age`,`address` from `user` where `user_name` like "%"#{key}"%" or `school` like "%"#{key}"%"
+        order by create_time
+        limit #{offset}, #{pageSize}
+    </select>
+    <select id="searchCount" resultType="integer">
+        select count(1) from `user` where `user_name` like "%"#{key}"%"
+    </select>
 </mapper>

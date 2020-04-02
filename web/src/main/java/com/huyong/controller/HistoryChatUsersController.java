@@ -5,10 +5,9 @@ import com.huyong.dao.module.HistoryChatUsersBO;
 import com.huyong.service.HistoryChatUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,5 +32,20 @@ public class HistoryChatUsersController {
     @CheckAuth
     public List<HistoryChatUsersBO> getUsers() {
         return historyChatUsersService.getUsers();
+    }
+
+    @ResponseBody
+    @GetMapping("/add")
+    @ApiOperation("增加最近聊天人")
+    @CheckAuth
+    public void add(@ApiParam("用户id") @RequestParam("id") Long id) {
+        historyChatUsersService.add(id);
+    }
+    @ResponseBody
+    @GetMapping("/remove")
+    @ApiOperation("移除最近聊天人")
+    @CheckAuth
+    public void remove(@ApiParam("id") @RequestParam("id") Long id) {
+        historyChatUsersService.remove(id);
     }
 }

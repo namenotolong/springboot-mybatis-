@@ -78,4 +78,11 @@ public class EventController {
         return eventService.getRecord(id);
     }
 
+    @ResponseBody
+    @GetMapping("/setChatZero")
+    @ApiOperation("消除一个用户和当前用户的聊天未读数")
+    @CheckAuth
+    public void setChatZero(@ApiParam("消除的用户id") @RequestParam("id") Long id) {
+        eventService.setChatZero(id);
+    }
 }
