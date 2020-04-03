@@ -5,23 +5,19 @@
     </div>
     <div>
       <el-container style="height: 600px; border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: #3d3d3d">
-         <el-menu background-color="#3d3d3d"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-           <el-menu-item style="color: #303133" @click="chooseKind">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>查看所有</span></span></template>
-            </el-menu-item>
-            <el-menu-item style="color: #303133" @click="showMyFollows">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>我的关注</span></span></template>
-            </el-menu-item>
-            <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
-              <template slot="title"><i class="el-icon-monitor"></i>{{item.kindName}}</template>
-              <el-menu-item @click="chooseKind(kind.id)" :index="kind.kindName" v-for="kind in item.children" :key="kind.id">
-                <span>{{kind.kindName}}</span>
-              </el-menu-item>
-            </el-submenu>
-          </el-menu>
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+         <div class="menu">
+          <div class="menuTop">全部商品分类</div>
+          <ul>
+            <li> <a herf="javascript:;">一级标题 1</a> <span></span>
+              <div class="submenu">
+                <div class="subleft">
+                  <span>11</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
         </el-aside>
       <el-container>
           <el-main>
@@ -81,7 +77,7 @@
 import mybar from "./mybar"
 import {converObjToUrl,baseURL} from '../utils/utils'
 export default {
-  name : "myhome",
+  name : "copy",
   data() {
     return {
       kinds: [],
@@ -189,6 +185,18 @@ export default {
 }
 </script>
 <style scoped>
+
+li { list-style: none; }
+.menu .menuTop { background-color: #F10215; color: #fff; width: 140px; height: 40px; padding-left: 20px; line-height: 40px; cursor: pointer; }
+.menu ul { width: 160px; background-color: #fff; border: 2px solid #F10215; box-sizing: border-box; position: relative; }
+.menu ul li { height: 30px; padding-left: 8px; text-align: left; line-height: 30px; font-size: 13px; background: url(image/1.png) no-repeat right; z-index: 2; }
+.menu ul li a:hover { color: red; text-decoration: underline; cursor: pointer; }
+.menu ul li:hover { border: 1px solid #DDD; border-right: 0; background-image: none; }
+.menu ul li:hover .submenu { display: block; }
+.menu ul li:hover span { width: 30px; height: 30px; display: inline-block; background-color: #FFF; float: right; z-index: 100; position: relative; }
+.menu ul li .submenu { position: absolute; left: 146px; top: 0; width: 720px; height: 300px; border: 1px solid #DDD; box-shadow: 0 0 8px #DDD; -moz-box-shadow: 0 0 8px #DDD; -webkit-box-shadow: 0 0 8px #DDD; background-color: #FFF; z-index: 3; display: none; }
+.menu ul li .submenu .subleft { margin-left: 0px; width: 400px; height: 300px; float: left; padding: 5px; }
+
 .title{
   font-size: 18px;
   font-weight: 700;

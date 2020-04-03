@@ -13,7 +13,7 @@
             </el-avatar>
           </div>
           <div>
-            <el-link @click="goOwn(article.user.id)"><span style="color: black">&nbsp;&nbsp;{{article.user.userName}}&nbsp;&nbsp;</span></el-link>
+            <a @click="goOwn(article.user.id)"><span style="color: black">&nbsp;&nbsp;{{article.user.userName}}&nbsp;&nbsp;</span></a>
           </div>
           <!-- <div>
             <el-button type="danger" @click="chat">私聊</el-button>
@@ -67,7 +67,7 @@
                     <div class="common-content">
                       <div class="common-content-detail">
                         <div style="color: ##7e7e7e" @click="goOwn(item.user.id)">
-                          <el-link style="color: black">{{item.user.userName}}</el-link>
+                          <b>{{item.user.userName}}</b>
                         </div>
                         <div style="color: #969696;fontSize:50%">
                           <span>{{item.floor}}楼&nbsp;</span>
@@ -108,7 +108,7 @@
                             <div class="common-content">
                               <div class="common-content-detail">
                                 <div style="color: ##7e7e7e" @click="goOwn(reply.user.id)">
-                                  <el-link style="color: black">{{reply.user.userName}}</el-link>
+                                  <b>{{reply.user.userName}}</b>
                                 </div>
                                 <div style="color: #969696;fontSize:50%;width: 200%">
                                   <span>{{reply.updateTime}}</span>

@@ -353,13 +353,7 @@ export default {
     },
     //路由跳转
     go(view) {
-      let url = this.$route.path;
-      console.log(url)
-      if(url == '/' && view == '/') {
-        history.go(0);
-      } else if(view == '/') {
-        this.$router.push({path : view})
-      } else if(url.startsWith(view)) {
+      if(url.startsWith(view)) {
         history.go(0)
       } else{
         this.$router.push({path : view})

@@ -52,14 +52,14 @@
                 </div>
                 <div v-else>
                   <div v-for="item in some.data" :key="item.id" class="segment">
-                    <div class="content" v-if="item.user">
+                    <div class="content" >
                       <div class="title" @click="goArticle(item.id)">
                         <h4>{{item.title}}</h4>
                       </div>
                       <div class="detail">
                         <div class="article-flex">
                           <div @click="goOwn(item.user.id)">
-                            <el-avatar :size="30">
+                            <el-avatar :size="30" v-if="item.user">
                               <img :src="baseUrl + item.user.picture"/>
                             </el-avatar>
                           </div>

@@ -126,7 +126,7 @@
                     <div v-for="(item,key) in topics" :key="item.id" class="segment">
                       <div class="content" >
                         <div class="title" >
-                          <h4>{{item.content}}</h4>
+                          <h4><span style="color: blue;margin-right: 10px">@{{item.user.userName}}</span>{{item.content}}</h4>
                         </div>
                         <div class="detail">
                           <div class="user myflex">
@@ -142,7 +142,7 @@
                           <div class="myflex">
                             <span style="fontSize: 8px">{{item.updateTime}}</span>
                             <span style="margin-left: 30px" >
-                                <span v-if="user.id == item.userId">
+                                <span v-if="other.id == item.userId">
                                   <svg style="width: 20px;height:20px" t="1585368044617" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2623" width="200" height="200"><path d="M202.666667 256h-42.666667a32 32 0 0 1 0-64h704a32 32 0 0 1 0 64H266.666667v565.333333a53.333333 53.333333 0 0 0 53.333333 53.333334h384a53.333333 53.333333 0 0 0 53.333333-53.333334V352a32 32 0 0 1 64 0v469.333333c0 64.8-52.533333 117.333333-117.333333 117.333334H320c-64.8 0-117.333333-52.533333-117.333333-117.333334V256z m224-106.666667a32 32 0 0 1 0-64h170.666666a32 32 0 0 1 0 64H426.666667z m-32 288a32 32 0 0 1 64 0v256a32 32 0 0 1-64 0V437.333333z m170.666666 0a32 32 0 0 1 64 0v256a32 32 0 0 1-64 0V437.333333z" p-id="2624" fill="#d81e06"></path></svg>
                                   <span @click="deleteCommon(item.id,key)" style="color: #969696;fontSize:50%;margin-right: 10px">删除</span>
                                 </span>

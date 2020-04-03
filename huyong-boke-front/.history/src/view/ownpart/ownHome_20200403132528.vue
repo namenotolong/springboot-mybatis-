@@ -126,7 +126,7 @@
                     <div v-for="(item,key) in topics" :key="item.id" class="segment">
                       <div class="content" >
                         <div class="title" >
-                          <h4>{{item.content}}</h4>
+                          <h4><span style="color: blue;margin-right: 10px">@{{item.user.userName}}</span>{{item.content}}</h4>
                         </div>
                         <div class="detail">
                           <div class="user myflex">

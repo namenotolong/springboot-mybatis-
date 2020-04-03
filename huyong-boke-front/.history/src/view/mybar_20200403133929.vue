@@ -355,7 +355,7 @@ export default {
     go(view) {
       let url = this.$route.path;
       console.log(url)
-      if(url == '/' && view == '/') {
+      if(url == '/') {
         history.go(0);
       } else if(view == '/') {
         this.$router.push({path : view})

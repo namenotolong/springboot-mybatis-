@@ -10,10 +10,10 @@
       text-color="#fff"
       active-text-color="#ffd04b">
            <el-menu-item style="color: #303133" @click="chooseKind">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>查看所有</span></span></template>
+              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #6c6e71"></i><span>查看所有</span></span></template>
             </el-menu-item>
             <el-menu-item style="color: #303133" @click="showMyFollows">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>我的关注</span></span></template>
+              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #6c6e71"></i><span>我的关注</span></span></template>
             </el-menu-item>
             <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
               <template slot="title"><i class="el-icon-monitor"></i>{{item.kindName}}</template>

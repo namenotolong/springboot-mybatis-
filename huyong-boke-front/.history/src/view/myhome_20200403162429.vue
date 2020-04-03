@@ -5,15 +5,15 @@
     </div>
     <div>
       <el-container style="height: 600px; border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: #3d3d3d">
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
          <el-menu background-color="#3d3d3d"
       text-color="#fff"
       active-text-color="#ffd04b">
            <el-menu-item style="color: #303133" @click="chooseKind">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>查看所有</span></span></template>
+              <template slot="title"><i class="el-icon-monitor"></i><SPAM>查看所有</SPAM></template>
             </el-menu-item>
             <el-menu-item style="color: #303133" @click="showMyFollows">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>我的关注</span></span></template>
+              <template slot="title"><i class="el-icon-monitor"></i>我的关注</template>
             </el-menu-item>
             <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
               <template slot="title"><i class="el-icon-monitor"></i>{{item.kindName}}</template>

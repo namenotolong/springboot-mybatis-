@@ -5,23 +5,12 @@
     </div>
     <div>
       <el-container style="height: 600px; border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: #3d3d3d">
-         <el-menu background-color="#3d3d3d"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-           <el-menu-item style="color: #303133" @click="chooseKind">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>查看所有</span></span></template>
-            </el-menu-item>
-            <el-menu-item style="color: #303133" @click="showMyFollows">
-              <template slot="title"><span style="color: #fff"><i class="el-icon-monitor" style="color: #909399"></i><span>我的关注</span></span></template>
-            </el-menu-item>
-            <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
-              <template slot="title"><i class="el-icon-monitor"></i>{{item.kindName}}</template>
-              <el-menu-item @click="chooseKind(kind.id)" :index="kind.kindName" v-for="kind in item.children" :key="kind.id">
-                <span>{{kind.kindName}}</span>
-              </el-menu-item>
-            </el-submenu>
-          </el-menu>
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+         <div class="out-kind">
+           <div class="item">
+             <span class="kind-text">全部分类</span>
+           </div>
+         </div>
         </el-aside>
       <el-container>
           <el-main>
@@ -81,7 +70,7 @@
 import mybar from "./mybar"
 import {converObjToUrl,baseURL} from '../utils/utils'
 export default {
-  name : "myhome",
+  name : "copy",
   data() {
     return {
       kinds: [],
@@ -189,6 +178,23 @@ export default {
 }
 </script>
 <style scoped>
+.out-kind{
+  width: 100%;
+}
+.item{
+  width: 100%;
+  text-align: center;
+  height: 80px;
+  background-color: red;
+}
+.item:hover{
+  background-color: red;
+}
+.kind-text{
+  margin-top: 60px;
+}
+
+
 .title{
   font-size: 18px;
   font-weight: 700;
