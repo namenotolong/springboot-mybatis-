@@ -16,7 +16,7 @@
               <template slot="title"><span style="color: #fff"><i class="el-icon-magic-stick" style="color: #909399"></i><span>我的关注</span></span></template>
             </el-menu-item>
             <el-submenu :index="item.kindName" v-for="item in kinds" :key="item.id">
-              <template slot="title"><i :class=item.bar></i>{{item.kindName}}</template>
+              <template slot="title"><i :class="{item.bar : true}"></i>{{item.kindName}}</template>
               <el-menu-item @click="chooseKind(kind.id)" :index="kind.kindName" v-for="kind in item.children" :key="kind.id">
                 <span>{{kind.kindName}}</span>
               </el-menu-item>
