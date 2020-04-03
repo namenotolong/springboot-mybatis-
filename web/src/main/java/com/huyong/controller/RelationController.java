@@ -42,7 +42,6 @@ public class RelationController {
     @ResponseBody
     @GetMapping("/getPraised")
     @ApiOperation("获取用户id是否被当前用户关注，并携带数量")
-    @CheckAuth
     public Map<String, Object> getPraised(@ApiParam("用户id") @RequestParam("id") Long id) {
         return relationService.getPraised(id);
     }

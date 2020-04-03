@@ -54,10 +54,10 @@ public class KindService {
     @Transactional(rollbackFor = Exception.class)
     public void add() {
         final KindDO kindDO1 = new KindDO();
-        kindDO1.setKindName("编程语言");
+        kindDO1.setKindName("操作系统");
         kindDO1.setStatus(0);
         kindMapper.insert(kindDO1);
-        List<String> list = Arrays.asList("java", "c#", "c++", "PHP", "python", "c语言", "scala", "erLang", "Ruby");
+        List<String> list = Arrays.asList("windows", "linux", "mac", "嵌入式");
         List<KindDO> collect = list.stream().map(x -> {
             KindDO kindDO = new KindDO();
             kindDO.setStatus(0);
@@ -68,10 +68,10 @@ public class KindService {
         kindMapper.batchInsert(collect);
 
         final KindDO kindDO2 = new KindDO();
-        kindDO2.setKindName("web前端");
+        kindDO2.setKindName("硬件开发");
         kindDO2.setStatus(0);
         kindMapper.insert(kindDO2);
-        list = Arrays.asList("html", "css", "vue", "react", "javascript", "jquery");
+        list = Arrays.asList("自动化", "单片机", "电路设计", "驱动", "硬件", "系统集成");
         List<KindDO> collect1 = list.stream().map(x -> {
             KindDO kindDO = new KindDO();
             kindDO.setStatus(0);
@@ -82,10 +82,10 @@ public class KindService {
         kindMapper.batchInsert(collect1);
 
         final KindDO kindDO3 = new KindDO();
-        kindDO3.setKindName("数据库");
+        kindDO3.setKindName("人工智能");
         kindDO3.setStatus(0);
         kindMapper.insert(kindDO3);
-        list = Arrays.asList("mysql", "oracle", "sqlServer", "redis", "mongoDB", "hBase");
+        list = Arrays.asList("机器学期", "深度学习", "语音识别", "图像识别", "风控算法", "自然语言");
         List<KindDO> collect2 = list.stream().map(x -> {
             KindDO kindDO = new KindDO();
             kindDO.setStatus(0);
@@ -94,6 +94,20 @@ public class KindService {
             return kindDO;
         }).collect(Collectors.toList());
         kindMapper.batchInsert(collect2);
+
+        final KindDO kindDO4 = new KindDO();
+        kindDO4.setKindName("其他分类");
+        kindDO4.setStatus(0);
+        kindMapper.insert(kindDO4);
+        list = Arrays.asList("情感生活", "非技术", "求职面试", "游戏开发", "信息安全", "软件测试");
+        List<KindDO> collect3 = list.stream().map(x -> {
+            KindDO kindDO = new KindDO();
+            kindDO.setStatus(0);
+            kindDO.setKindName(x);
+            kindDO.setParentId(kindDO4.getId());
+            return kindDO;
+        }).collect(Collectors.toList());
+        kindMapper.batchInsert(collect3);
 
     }
 

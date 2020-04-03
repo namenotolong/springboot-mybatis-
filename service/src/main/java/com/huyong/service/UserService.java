@@ -177,6 +177,7 @@ public class UserService {
         userDO.setStatus(StatusEnum.PRESENT.getCode());
         userDO.setPicture(CommonConstant.DEFAULT_BAR_IMG);
         userDO.setOnline(OnlineEnum.OFFLINE.getCode());
+        userDO.setPicture("/img/default.jpg");
         userMapper.insert(userDO);
     }
 

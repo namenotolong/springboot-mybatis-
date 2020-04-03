@@ -382,9 +382,14 @@ public class RelationService {
      * @return
      */
     public Map<String, Object> getPraised(Long id) {
+        Map<String, Object> map = new HashMap<>(2);
+        if (AuthUtils.getUser() == null) {
+            map.put("praised", false);
+            map.put("praiseCount", 0);
+            return map;
+        }
         final List others = getOthers(id, RelationEnum.BY_PRAISE.getCode());
         final boolean contains = contains(others, AuthUtils.getUser().getId());
-        Map<String, Object> map = new HashMap<>(2);
         map.put("praised", contains);
         map.put("praiseCount", others.size());
         return map;
