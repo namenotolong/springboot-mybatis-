@@ -190,7 +190,6 @@ export default {
 </script>
 <style scoped>
 .title{
-  cursor:pointer;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;

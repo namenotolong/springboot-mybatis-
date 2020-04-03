@@ -1,7 +1,6 @@
 import {Message} from 'element-ui'
 import {removeStore } from '../utils/utils'
 import router from '../router';
-import axios from 'axios';
 class AxiosConfig{
    constructor() {
     this.axiosService = axios.create({

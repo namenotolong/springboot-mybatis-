@@ -35,7 +35,7 @@
                   <div class="title" @click="goView(item.id)">
                     <h4>{{item.title}}</h4>
                   </div>
-                  <div class="detail">
+                  <div class="detail" >
                     <div class="user myflex">
                       <div @click="goOwn(item.user.id)">
                         <el-avatar :size="30">
@@ -190,7 +190,6 @@ export default {
 </script>
 <style scoped>
 .title{
-  cursor:pointer;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
@@ -217,8 +216,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #8a8a8a;
-  cursor:pointer;
+  color: #8a8a8a
 }
 .detail .user:hover{
   color: black
