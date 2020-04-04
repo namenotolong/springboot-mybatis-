@@ -91,10 +91,10 @@
                   </div>
                 </div>
               </div>
-              <div  class="input-content"  contenteditable="true" ref="box" @keydown.enter.prevent="send">
+              <div  class="input-content"  contenteditable="true" ref="box">
               </div>
               <div style="float: right;padding-right: 10px;padding-left: 10px">
-                <span @click="send" style="cursor:pointer;">发送</span>
+                <span @click="send" style="cusor: pointer">发送</span>
               </div>
             </div>
             <div class="text"  v-show="!focusChat">
@@ -176,11 +176,10 @@ export default {
         let vue = this;
         this.websocket.onmessage = function(event){
           let msg = JSON.parse(event.data);
-          //如果是当前会话的用户，还要触发一次已读事件，清除消息提示
+          //如果是当前会话的用户
           if(vue.focusChat && msg.fromUserId == vue.focusChat.customer) {
             msg.picture = vue.focusChat.picture
             vue.chatRecord.push(msg)
-            this.$axios.get("/event/setChatZero?id=" + msg.fromUserId)
             //更新scroll到底部
             vue.$nextTick(() => {
                 vue.$refs.chat.scrollTop = vue.$refs.chat.scrollHeight;

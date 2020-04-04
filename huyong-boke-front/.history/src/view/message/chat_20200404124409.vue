@@ -91,7 +91,7 @@
                   </div>
                 </div>
               </div>
-              <div  class="input-content"  contenteditable="true" ref="box" @keydown.enter.prevent="send">
+              <div  class="input-content"  contenteditable="true" ref="box">
               </div>
               <div style="float: right;padding-right: 10px;padding-left: 10px">
                 <span @click="send" style="cursor:pointer;">发送</span>

@@ -201,7 +201,7 @@ export default {
   color: #969696
 }
 .myflex:hover{
-  background-color: #fafafa;
+  background-color: lightyellow;
 }
 .inner-container{
   margin-top: 30px

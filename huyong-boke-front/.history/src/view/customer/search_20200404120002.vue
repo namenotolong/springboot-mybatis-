@@ -63,8 +63,8 @@
                               <img :src="baseUrl + item.user.picture"/>
                             </el-avatar>
                           </div>
-                          <div style="margin-left: 15px;width: 300px" @click="goOwn(item.user.id)">
-                            <span style="font-size: 50%">{{item.user.userName}}</span>
+                          <div style="margin-left: 15%;width: 300px" @click="goOwn(item.user.id)">
+                            <span>{{item.user.userName}}</span>
                           </div>
                         </div>
                         <div class="article-flex">
@@ -201,7 +201,7 @@ export default {
   color: #969696
 }
 .myflex:hover{
-  background-color: #fafafa;
+  background-color: lightyellow;
 }
 .inner-container{
   margin-top: 30px
