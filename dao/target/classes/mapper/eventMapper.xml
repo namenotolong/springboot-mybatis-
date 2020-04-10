@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyong.dao.mapper.EventMapper">
+    <select id="getEventBosByTypeWithPageOrderByTime" resultType="eventBO">
+    SELECT
+        a.*, b.picture,b.user_name,c.title,d.content as replyContent
+    FROM
+        `event` a
+        INNER JOIN `user` b ON a.from_user_id = b.id
+        left JOIN article c ON a.article_id = c.id
+        left JOIN topic d ON a.topic_id = d.id
+        where a.`type` = #{type} and a.`to_user_id` = #{id}
+        order by a.`create_time` desc
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="getEventBosByTypeCount" resultType="Integer">
+    SELECT
+        count(1)
+    FROM
+        `event` a
+        INNER JOIN `user` b ON a.from_user_id = b.id
+        left JOIN article c ON a.article_id = c.id
+        left JOIN topic d ON a.topic_id = d.id
+        where a.`type` = #{type} and a.`to_user_id` = #{id}
+    </select>
+    <select id="getChats" resultType="eventBO">
+        SELECT
+            a.id,
+            MAX( a.create_time ) AS create_time,
+            a.from_user_id,
+            count( b.user_name ) unReadCount,
+            c.user_name,
+            c.picture,
+            b.`online`
+        FROM
+            `event` a
+            LEFT JOIN `user` b ON a.`from_user_id` = b.`id`
+            AND a.`status` = 0
+            LEFT JOIN `user` c ON a.`from_user_id` = c.`id`
+        WHERE
+            `type` = 1
+            AND a.to_user_id = #{id}
+            and a.`present` = 0
+        GROUP BY
+            a.from_user_id
+        ORDER BY
+            MAX( a.create_time ) DESC
+    </select>
+    <select id="getRecord" resultType="eventBO">
+    SELECT
+        a.*,
+        b.user_name,
+        b.picture
+    FROM
+        `event` a
+        INNER JOIN `user` b ON a.from_user_id = b.id
+    WHERE
+        ( to_user_id = #{from} OR to_user_id = #{to} )
+	AND ( from_user_id = #{from} OR from_user_id = #{to} )
+        AND `type` = 1
+    ORDER BY
+        `create_time` ASC
+    </select>
+    <select id="list" resultType="topicBO">
+        SELECT
+        a.type,a.create_time,a.id,
+        a.`status`,
+        a.article_id,
+        b.user_name AS userName,
+        c.user_name AS toUserName,
+        a.content,
+        d.title,
+        e.content AS common
+        FROM
+        `event` a
+        LEFT JOIN `user` b ON a.from_user_id = b.id
+        LEFT JOIN `user` c ON a.to_user_id = c.id
+        LEFT JOIN `article` d ON a.article_id = d.id
+        LEFT JOIN `topic` e ON a.topic_id = e.id
+        <where>
+            <if test="from != null and from != ''">
+                and b.user_name like "%"#{from}"%"
+            </if>
+            <if test="to != null and to != ''">
+                and c.user_name like "%"#{to}"%"
+            </if>
+            <if test="content != null and content != ''">
+                and a.content like "%"#{content}"%"
+            </if>
+            <if test="title != null and title != ''">
+                and d.title like "%"#{title}"%"
+            </if>
+            <if test="common != null and common != ''">
+                and e.common like "%"#{content}"%"
+            </if>
+            <if test="types != null">
+                and a.type in
+                <foreach collection="types" open="(" item="item" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="listCount" resultType="long">
+        SELECT
+        count(1)
+        FROM
+        `event` a
+        LEFT JOIN `user` b ON a.from_user_id = b.id
+        LEFT JOIN `user` c ON a.to_user_id = c.id
+        LEFT JOIN `article` d ON a.article_id = d.id
+        LEFT JOIN `topic` e ON a.topic_id = e.id
+        <where>
+            <if test="from != null and from != ''">
+                and b.user_name like "%"#{from}"%"
+            </if>
+            <if test="to != null and to != ''">
+                and c.user_name like "%"#{to}"%"
+            </if>
+            <if test="content != null and content != ''">
+                and a.content like "%"#{content}"%"
+            </if>
+            <if test="title != null and title != ''">
+                and d.title like "%"#{title}"%"
+            </if>
+            <if test="common != null and common != ''">
+                and e.common like "%"#{content}"%"
+            </if>
+            <if test="types != null">
+                and a.type in
+                <foreach collection="types" open="(" item="item" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <delete id="batchRemove">
+        delete from `event` where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
