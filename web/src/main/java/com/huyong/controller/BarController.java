@@ -1,11 +1,13 @@
 package com.huyong.controller;
 
+import com.huyong.dao.entity.BarDO;
 import com.huyong.dao.module.BarBO;
 import com.huyong.service.BarService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,17 +27,18 @@ public class BarController {
 
     @Resource
     private BarService barService;
+    @ApiOperation("test")
+    @GetMapping("/test")
+    @ResponseBody
+    public void test() {
+        barService.test();
+    }
+    @ApiOperation("获取所有标签")
+    @GetMapping("/getAll")
+    @ResponseBody
+    public List<BarDO> getAll() {
+        return barService.getAll();
+    }
 
-    @ResponseBody
-    @GetMapping("/getLeft")
-    @ApiOperation("获取左边导航内容")
-    public List<BarBO> getLeft() {
-        return barService.getLeft();
-    }
-    @ResponseBody
-    @GetMapping("/getRight")
-    @ApiOperation("获取右边边导航内容")
-    public List<BarBO> getRight() {
-        return barService.getRight();
-    }
+
 }

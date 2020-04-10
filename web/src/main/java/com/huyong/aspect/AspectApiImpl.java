@@ -4,6 +4,7 @@ import com.huyong.constant.AuthCheckConstant;
 import com.huyong.dao.entity.UserDO;
 import com.huyong.dao.mapper.UserMapper;
 import com.huyong.dao.module.UserBO;
+import com.huyong.enums.RoleEnum;
 import com.huyong.exception.AuthException;
 import com.huyong.filter.JwtFilter;
 import com.huyong.service.UserService;
@@ -58,9 +59,17 @@ public class AspectApiImpl implements AspectApi {
             UserBO userBO = claims2User(claims);
             List<UserDO> users = userMapper.queryByCondition(userService.convertBo2Do(userBO));
             if (CollectionUtils.isNotEmpty(users)) {
-                UserDO user = users.get(0);
+                UserBO user = userService.convertDo2Bo(users.get(0));
+                final Integer role = user.getRole();
+                if (role != null) {
+                    for (RoleEnum value : RoleEnum.values()) {
+                        if (value.getCode().equals(role)) {
+                            user.setRoleName(value.getDesc());
+                        }
+                    }
+                }
                 user.setPassword(null);
-                AuthUtils.setUser(userService.convertDo2Bo(user));
+                AuthUtils.setUser(user);
             } else {
                 throw new AuthException("身份过期，请重新登录！");
             }

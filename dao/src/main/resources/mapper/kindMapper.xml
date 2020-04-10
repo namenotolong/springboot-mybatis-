@@ -8,4 +8,10 @@
             #{item}
         </foreach>
     </select>
+    <update id="batchRemove">
+    update `kind` set status = 1 where id in
+    <foreach collection="list" item="item" open="(" close=")" separator=",">
+        #{item}
+    </foreach>
+    </update>
 </mapper>

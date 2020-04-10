@@ -41,9 +41,42 @@
             <if test="kindId != null">
                 and find_in_set(#{kindId}, a.`kind_ids`)
             </if>
+            <if test="title != null and title != ''">
+                and title like "%"#{title}"%"
+            </if>
         </where>
         order by a.`update_time` desc
         limit #{offset}, #{pageNum}
+    </select>
+    <select id="list" resultMap="getArticlesMap">
+        select <include refid="base_column_list"/>, b.*
+        from `article` a
+        inner join `user` b on a.user_id = b.id
+        <where>
+            a.`status` = 0 and b.`status` = 0
+            <if test="name != null and name != ''">
+                and b.user_name = #{name}
+            </if>
+            <if test="title != null and title != ''">
+                and title like "%"#{title}"%"
+            </if>
+        </where>
+        order by a.`update_time` desc
+        limit #{offset}, #{pageSize}
+    </select>
+    <select id="listCount" resultType="long">
+        select count(1)
+         from `article` a
+          inner join `user` b on a.user_id = b.id
+        <where>
+            a.`status` = 0 and b.`status` = 0
+            <if test="name != null and name != ''">
+                and b.user_name = #{name}
+            </if>
+            <if test="title != null and title != ''">
+                and title like "%"#{title}"%"
+            </if>
+        </where>
     </select>
     <select id="detail" resultMap="getArticlesMap">
         select <include refid="base_column_list"/>, a.`content` as `content`, b.*
@@ -88,5 +121,17 @@
         select count(1)
         from `article`
         where `title` like "%"#{key}"%" and status = 0
+    </select>
+    <update id="batchRemove">
+        update `article` set status = 1 where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <select id="getVisitCount" resultType="long">
+        SELECT SUM(visit_count) from `article`
+    </select>
+    <select id="getVisitCountLimitNumber" resultType="long">
+        select `visit_count` from `article` order by `create_time`
     </select>
 </mapper>

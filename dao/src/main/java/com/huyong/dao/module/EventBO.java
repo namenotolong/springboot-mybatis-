@@ -29,6 +29,8 @@ public class EventBO {
     private String picture;
     @ApiModelProperty("收到者")
     private Long toUserId;
+    @ApiModelProperty("收到者")
+    private String toUserName;
     @ApiModelProperty("回复评论对应的id,toUser")
     private Long topicId;
     @ApiModelProperty("回复评论对应根评论id")
@@ -39,9 +41,9 @@ public class EventBO {
     private Long articleId;
     @ApiModelProperty("回复的文章标题")
     private String title;
-    @ApiModelProperty("已读/未读")
+    @ApiModelProperty("事件类型")
     private Integer type;
-    @ApiModelProperty("删除/正常")
+    @ApiModelProperty("已读、未读")
     private Integer status;
     @ApiModelProperty("创建时间")
     private Date createTime;

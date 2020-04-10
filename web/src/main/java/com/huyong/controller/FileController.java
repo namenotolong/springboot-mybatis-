@@ -35,4 +35,11 @@ public class FileController {
     public void uploadBar(@ApiParam("用户上传头像") @RequestParam("file") MultipartFile file) {
         fileService.uploadBar(file);
     }
+    @ResponseBody
+    @PostMapping("/uploadImg")
+    @ApiOperation("管理员上传文件")
+    @CheckAuth
+    public String uploadImg(@ApiParam("用户上传头像") @RequestParam("file") MultipartFile file) {
+        return fileService.uploadImg(file);
+    }
 }

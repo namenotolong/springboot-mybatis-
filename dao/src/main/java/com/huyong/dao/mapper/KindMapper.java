@@ -22,4 +22,9 @@ public interface KindMapper extends BaseMapper<KindDO> {
      * @param kindIdList
      */
     List<KindBO> getKindsByIds(@Param("kindIdList") List<String> kindIdList);
+    /**
+     * 批量删除
+     * @param list
+     */
+    void batchRemove(@Param("list") List<Long> list);
 }

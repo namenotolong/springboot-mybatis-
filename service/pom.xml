@@ -7,7 +7,6 @@
         <artifactId>demo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.huyong</groupId>
     <artifactId>service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>service</name>
@@ -23,5 +22,4 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
     </dependencies>
-
 </project>

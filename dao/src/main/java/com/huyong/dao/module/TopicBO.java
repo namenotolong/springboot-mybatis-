@@ -23,12 +23,16 @@ public class TopicBO {
     private Long id;
     @ApiModelProperty("所属文章id")
     private Long articleId;
+    @ApiModelProperty("文章标题")
+    private String title;
     @ApiModelProperty("只有回复有，对应的文章评论id")
     private Long topicId;
     @ApiModelProperty("只有回复有，回复的topicId")
     private Long parentId;
     @ApiModelProperty("用户Id")
     private Long userId;
+    @ApiModelProperty("用户昵称")
+    private String userName;
     @ApiModelProperty("用户")
     private UserBO user;
     @ApiModelProperty("回复的用户")

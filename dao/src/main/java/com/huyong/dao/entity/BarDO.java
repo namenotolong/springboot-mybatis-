@@ -17,40 +17,5 @@ import java.util.Date;
 public class BarDO implements Serializable {
     private static final long serialVersionUID = -5229858910191478179L;
     private Long id;
-    /**
-     * 父级
-     */
-    private Long parentId;
-    /**
-     * 内容
-     */
     private String content;
-    /**
-     * 地址
-     */
-    private String url;
-    /**
-     * 图片地址
-     */
-    private String icon;
-    /**
-     * 创建用户
-     */
-    private Long userId;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-    /**
-     * 删除/存在
-     */
-    private Integer status;
-    /**
-     * 左边导航/右边导航
-     */
-    private Integer type;
 }

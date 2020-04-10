@@ -85,4 +85,60 @@
             AND a.article_id = #{id}
             ) AS temp
     </select>
+    <select id="list" resultType="topicBO">
+        SELECT
+        a.id as id,a.article_id,a.create_time,a.content,
+        b.user_name as userName,c.user_name as toUserName,d.title as title
+    FROM
+        `topic` a
+        LEFT JOIN `user` b ON a.user_id = b.id
+        LEFT JOIN USER c ON a.to_user_id = c.id
+        LEFT JOIN `article` d ON a.article_id = d.id
+        <where>
+            a.status = 0
+            <if test="from != null and from != ''">
+                and b.user_name like "%"#{from}"%"
+            </if>
+            <if test="to != null and to != ''">
+                and c.user_name like "%"#{to}"%"
+            </if>
+            <if test="content != null and content != ''">
+                and a.content like "%"#{content}"%"
+            </if>
+             <if test="title != null and title != ''">
+                and d.title like "%"#{title}"%"
+            </if>
+        </where>
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="listCount" resultType="long">
+        SELECT
+        count(1)
+    FROM
+        `topic` a
+        LEFT JOIN `user` b ON a.user_id = b.id
+        LEFT JOIN USER c ON a.to_user_id = c.id
+        LEFT JOIN `article` d ON a.article_id = d.id
+        <where>
+            a.status = 0
+            <if test="from != null and from != ''">
+                and b.user_name like "%"#{from}"%"
+            </if>
+            <if test="to != null and to != ''">
+                and c.user_name like "%"#{to}"%"
+            </if>
+            <if test="content != null and content != ''">
+                and a.content like "%"#{content}"%"
+            </if>
+            <if test="title != null and title != ''">
+                and d.title like "%"#{title}"%"
+            </if>
+        </where>
+    </select>
+    <update id="batchRemove">
+        update `topic` set status = 1 where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

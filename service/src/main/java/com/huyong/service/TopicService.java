@@ -1,6 +1,7 @@
 package com.huyong.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.entity.TopicDO;
 import com.huyong.dao.helper.Sort;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -268,5 +270,42 @@ public class TopicService {
         condition.setStatus(StatusEnum.PRESENT.getCode());
         condition.setUserId(userId);
         return topicMapper.getCommonsPageWithUser(condition, offset, pageSize);
+    }
+
+    /**
+     * 获取回复
+     * @param from
+     * @param to
+     * @param content
+     * @param title
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public Map<String, Object> list(String from, String to, String content, String title, Integer pageNumber, Integer pageSize) {
+        if (pageSize < 1) {
+            pageSize = 1;
+        }
+        if (pageNumber < 1) {
+            pageNumber = 1;
+        }
+        int offset = (pageNumber - 1) * pageSize;
+        List<TopicBO> list = topicMapper.list(from, to, content,title, offset, pageSize);
+        Long total = topicMapper.listCount(from, to, content, title);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("list", list);
+        map.put("total", total);
+        return map;
+    }
+
+    /**
+     * admin移除topic
+     * @param map
+     */
+    public void remove(Map<String, List<Long>> map) {
+        List<Long> list = map.get("id");
+        if (CollectionUtils.isNotEmpty(list)) {
+            topicMapper.batchRemove(list);
+        }
     }
 }

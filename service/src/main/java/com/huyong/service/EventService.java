@@ -1,12 +1,19 @@
 package com.huyong.service;
 
+import com.google.common.collect.Maps;
 import com.huyong.common.PageTemp;
 import com.huyong.dao.entity.EventDO;
+import com.huyong.dao.helper.Sort;
 import com.huyong.dao.module.EventBO;
+import com.huyong.dao.module.TopicBO;
 import com.huyong.enums.EventTypeEnum;
 import com.huyong.enums.StatusEnum;
 import com.huyong.enums.TypeEnum;
+import com.huyong.thread.MessageSchedule;
+import com.huyong.thread.MessageThreadPool;
+import com.huyong.thread.NamedThreadFactory;
 import com.huyong.utils.AuthUtils;
+import lombok.SneakyThrows;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +22,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.huyong.dao.mapper.EventMapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -141,7 +146,14 @@ public class EventService {
         if (pageNum < 1) {
             pageNum = 1;
         }
-        Integer offset = (pageNum - 1) * pageSize;
+        int offset = (pageNum - 1) * pageSize;
+        if (type.equals(EventTypeEnum.SYSTEM.getCode())) {
+            EventDO condition = new EventDO();
+            condition.setType(EventTypeEnum.SYSTEM.getCode());
+            List<EventDO> list = eventMapper.queryByPageWithSort(condition, offset, pageSize, new Sort("create_time", Sort.SortType.DESC));
+            int count = eventMapper.count(condition);
+            return new PageTemp<>(convertDos2Bos(list), pageSize, pageNum, count);
+        }
         List<EventBO> list = eventMapper.getEventBosByTypeWithPageOrderByTime(offset, pageSize, type, AuthUtils.getUser().getId());
         if (CollectionUtils.isNotEmpty(list)) {
             int count = eventMapper.getEventBosByTypeCount(type, AuthUtils.getUser().getId());
@@ -191,5 +203,58 @@ public class EventService {
         condition.setFromUserId(id);
         condition.setToUserId(AuthUtils.getUser().getId());
         eventMapper.updateByCondition(target, condition);
+    }
+
+    /**
+     * list
+     * @param types
+     * @param from
+     * @param to
+     * @param content
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
+    public Map<String, Object> list(List<Integer> types, String from, String to, String content,String common, String title, Integer pageSize, Integer pageNumber) {
+        if (pageSize < 1) {
+            pageSize = 1;
+        }
+        if (pageNumber < 1) {
+            pageNumber = 1;
+        }
+        int offset = (pageNumber - 1) * pageSize;
+        List<TopicBO> list = eventMapper.list(from, to, content,types,common, title, offset, pageSize);
+        Long total = eventMapper.listCount(from, to, content, types,common, title);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("list", list);
+        map.put("total", total);
+        return map;
+    }
+
+    /**
+     * remove
+     * @param map
+     */
+    public void remove(Map<String, List<Long>> map) {
+        List<Long> list = map.get("id");
+        if (CollectionUtils.isNotEmpty(list)) {
+            eventMapper.batchRemove(list);
+        }
+    }
+
+    /**
+     * 发送系统消息
+     * @param eventBO
+     */
+    public void addSystemMessage(EventBO eventBO) {
+        EventDO eventDO = convertBo2Do(eventBO);
+        Date createTime = eventDO.getCreateTime();
+        eventDO.setType(EventTypeEnum.SYSTEM.getCode());
+        long time = createTime.getTime();
+        if (time < System.currentTimeMillis()) {
+            eventMapper.insert(eventDO);
+        } else {
+            MessageSchedule.getPool().schedule(() -> eventMapper.insert(eventDO), time - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+        }
     }
 }

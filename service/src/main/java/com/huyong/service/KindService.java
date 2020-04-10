@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.huyong.dao.entity.KindDO;
 import com.huyong.dao.module.KindBO;
 import com.huyong.enums.StatusEnum;
+import com.huyong.exception.CommonException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -166,5 +168,23 @@ public class KindService {
             }
         }
         return kindBOS;
+    }
+
+    public void updateOrInsert(KindBO kindBO) {
+        KindDO kindDO = convertBo2Do(kindBO);
+        if (kindBO.getId() != null) {
+            //update
+            kindMapper.updateByPrimary(kindDO);
+        } else {
+            kindDO.setStatus(StatusEnum.PRESENT.getCode());
+            kindMapper.insert(kindDO);
+        }
+    }
+
+    public void remove(Map<String, List<Long>> map) {
+        List<Long> list = map.get("id");
+        if (CollectionUtils.isNotEmpty(list)) {
+            kindMapper.batchRemove(list);
+        }
     }
 }

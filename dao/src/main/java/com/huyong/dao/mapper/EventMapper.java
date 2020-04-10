@@ -3,6 +3,7 @@ package com.huyong.dao.mapper;
 import com.huyong.dao.entity.EventDO;
 import com.huyong.dao.helper.BaseMapper;
 import com.huyong.dao.module.EventBO;
+import com.huyong.dao.module.TopicBO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -48,4 +49,35 @@ public interface EventMapper extends BaseMapper<EventDO> {
      * @return
      */
     List<EventBO> getRecord(@Param("from") Long from,@Param("to") Long to);
+
+    /**
+     * list
+     * @param from
+     * @param to
+     * @param content
+     * @param types
+     * @param common
+     * @param title
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<TopicBO> list(@Param("from") String from,@Param("to") String to,@Param("content") String content,@Param("types") List<Integer> types,@Param("common") String common,@Param("title") String title,@Param("offset") int offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * count
+     * @param from
+     * @param to
+     * @param content
+     * @param types
+     * @param common
+     * @param title
+     * @return
+     */
+    Long listCount(@Param("from") String from,@Param("to") String to,@Param("content") String content,@Param("types") List<Integer> types,@Param("common") String common,@Param("title") String title);
+    /**
+     * batch remove
+     * @param list
+     */
+    void batchRemove(@Param("list") List<Long> list);
 }

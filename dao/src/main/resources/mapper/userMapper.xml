@@ -18,4 +18,67 @@
     <select id="searchCount" resultType="integer">
         select count(1) from `user` where `user_name` like "%"#{key}"%"
     </select>
+    <update id="batchRemove">
+        update `user` set status = 1 where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <select id="userList" resultType="userBO">
+        select * from `user`
+        <where>
+            `status` = 0
+            <if test="name != null and name != ''">
+               and `user_name` like "%"#{name}"%"
+            </if>
+            <if test="gender != null">
+                and `gender` = #{gender}
+            </if>
+            <if test="roles != null">
+                and `role` in
+                <foreach collection="roles" separator="," close=")" item="item" open="(">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="school != null and school != ''">
+                and `school` like "%"#{school}"%"
+            </if>
+            <if test="email != null and email != ''">
+                and `email` like "%"#{email}"%"
+            </if>
+            <if test="online != null">
+                and `online` = #{online}
+            </if>
+        </where>
+    <if test="offset != null and pageSize != null">
+        limit #{offset}, #{pageSize}
+    </if>
+    </select>
+    <select id="userListCount" resultType="long">
+        select count(1) from `user`
+        <where>
+            `status` = 0
+            <if test="name != null and name != ''">
+              and `user_name` like "%"#{name}"%"
+            </if>
+            <if test="gender != null">
+                and `gender` = #{gender}
+            </if>
+            <if test="roles != null">
+                and `role` in
+                <foreach collection="roles" separator="," close=")" item="item" open="(">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="school != null and school != ''">
+                and `school` like "%"#{school}"%"
+            </if>
+            <if test="email != null and email != ''">
+                and `email` like "%"#{email}"%"
+            </if>
+            <if test="online != null">
+                and `online` = #{online}
+            </if>
+        </where>
+    </select>
 </mapper>

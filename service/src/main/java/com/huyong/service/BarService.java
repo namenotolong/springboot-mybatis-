@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.huyong.dao.mapper.BarMapper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,53 +54,23 @@ public class BarService {
         return bars.stream().map(this::convertDo2Bo).collect(Collectors.toList());
     }
 
-    public List<BarBO> getLeft() {
-        List<BarBO> bars = getBars(BarTypeEnum.LEFT.getCode());
-        return CollectionUtils.isEmpty(bars) ? Lists.newArrayList() : convertToTree(bars);
+    public void test() {
+        File file = new File("/Users/weidian/Documents/huyong/huyong-boke-front/springboot-mybatis-/huyong-boke-front/input.txt");
+        try {
+            final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            List<BarDO> list = Lists.newArrayList();
+            bufferedReader.lines().forEach(x -> {
+                BarDO bar = new BarDO();
+                bar.setContent(x.trim());
+                list.add(bar);
+            });
+            barMapper.batchInsert(list);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * 变为二级菜单
-     * @return
-     */
-    public List<BarBO> convertToTree(List<BarBO> bars) {
-        List<BarBO> lists = Lists.newArrayList();
-        bars.forEach(x -> {
-            if (x.getParentId() == null) {
-                lists.add(x);
-            }
-        });
-        bars.forEach(x -> {
-            if (x.getParentId() != null) {
-                lists.forEach(y -> {
-                    if (y.getId().equals(x.getParentId())) {
-                        if (y.getChildren() == null) {
-                            y.setChildren(Lists.newArrayList());
-                        }
-                        y.getChildren().add(x);
-                    }
-                });
-            }
-        });
-        return lists;
-    }
-
-
-    public List<BarBO> getRight() {
-        List<BarBO> bars = getBars(BarTypeEnum.RIGHT.getCode());
-        return CollectionUtils.isEmpty(bars) ? Lists.newArrayList() : bars;
-    }
-
-    /**
-     * 获取导航列表
-     * @param type
-     * @return
-     */
-    private List<BarBO> getBars(Integer type) {
-        BarDO barDO = new BarDO();
-        barDO.setStatus(StatusEnum.PRESENT.getCode());
-        barDO.setType(type);
-        List<BarDO> bars = barMapper.queryByCondition(barDO);
-        return convertDos2Bos(bars);
+    public List<BarDO> getAll() {
+        return barMapper.queryByCondition(new BarDO());
     }
 }

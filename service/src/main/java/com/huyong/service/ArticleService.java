@@ -3,6 +3,7 @@ package com.huyong.service;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.huyong.common.PageTemp;
 import com.huyong.dao.entity.ArticleDO;
 import com.huyong.dao.entity.RelationDO;
@@ -24,6 +25,7 @@ import javax.annotation.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -146,7 +148,7 @@ public class ArticleService {
         if (type == null) {
             type = ArticleTypeEnum.TEXT.getCode();
         }
-        final List<ArticleBO> articles = articleMapper.getArticles(offset, pageSize, kindId, userId, type);
+        final List<ArticleBO> articles = articleMapper.getArticles(offset, pageSize, kindId, userId, type, null);
         articles.forEach(this :: addParameter);
         return articles;
     }
@@ -296,4 +298,41 @@ public class ArticleService {
         }
         return new PageTemp<>();
     }
+
+    /**
+     * 获取文章集合
+     * @param pageSize
+     * @param pageNum
+     * @param name
+     * @param title
+     * @return
+     */
+    public Map<String, Object> List(Long pageSize, Long pageNum, String name, String title) {
+        if (pageSize < 1) {
+            pageSize = 1L;
+        }
+        if (pageNum < 1) {
+            pageNum = 1L;
+        }
+        Long offset = (pageNum - 1) * pageSize;
+        List<ArticleBO> articles = articleMapper.list(offset, pageSize, name, title);
+        articles.forEach(this :: addParameter);
+        Long count = articleMapper.listCount(name, title);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("list", articles);
+        map.put("total", count);
+        return map;
+    }
+
+    /**
+     * 删除
+     * @param map
+     */
+    public void remove(Map<String, List<Long>> map) {
+        List<Long> list = map.get("id");
+        if (CollectionUtils.isNotEmpty(list)) {
+            articleMapper.batchRemove(list);
+        }
+    }
+
 }

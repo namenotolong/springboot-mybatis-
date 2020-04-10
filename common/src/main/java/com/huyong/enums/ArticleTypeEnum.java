@@ -12,7 +12,7 @@ public enum ArticleTypeEnum {
      */
     DRAFT(0, "草稿"),
     /**
-     * 右边
+     * 正文
      */
     TEXT(1, "正文"),
     ;

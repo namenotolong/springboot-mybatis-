@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: TopicController
@@ -45,6 +46,17 @@ public class TopicController {
                                     @ApiParam("页码")@RequestParam("pageNum") Integer pageNum) {
         return topicService.getUserTopics(userId, pageSize, pageNum);
     }
+    @ResponseBody
+    @GetMapping("/list")
+    @ApiOperation("/获取topic")
+    public Map<String, Object> list(@ApiParam("发送人") @RequestParam(value = "from", required = false) String from,
+                                        @ApiParam("接收人") @RequestParam(value = "to", required = false) String to,
+                                        @ApiParam("内容") @RequestParam(value = "content", required = false) String content,
+                                        @ApiParam("文章") @RequestParam(value = "title", required = false) String title,
+                                        @ApiParam("当前页") @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                        @ApiParam("每页的大小") @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        return topicService.list(from, to, content,title, pageNumber, pageSize);
+    }
 
     @ResponseBody
     @PostMapping("/publishTopic")
@@ -60,6 +72,13 @@ public class TopicController {
     @CheckAuth
     public void delete(@ApiParam("topicId") @RequestParam("topicId") Long topicId) {
         topicService.delete(topicId);
+    }
+    @ResponseBody
+    @PostMapping("/remove")
+    @ApiOperation("删除评论或者回复")
+    @CheckAuth
+    public void remove(@ApiParam("id") @RequestBody Map<String, List<Long>> map) {
+        topicService.remove(map);
     }
 
     @ResponseBody

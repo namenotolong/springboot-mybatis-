@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: ArticleController
@@ -46,6 +47,15 @@ public class ArticleController {
                                        @ApiParam("用户id") @RequestParam(value = "userId", required = false) Long userId,
                                        @ApiParam("文章类型，草稿还是正文") @RequestParam(value = "type", required = false) Integer type) {
         return articleService.getArticles(pageSize, pageNum, kindId, userId, type);
+    }
+    @ResponseBody
+    @GetMapping("/list")
+    @ApiOperation("获取文章")
+    public Map<String, Object> list(@ApiParam("每页显示数量")@RequestParam("pageSize") Long pageSize,
+                                    @ApiParam("页码")@RequestParam("pageNum") Long pageNum,
+                                    @ApiParam("用户") @RequestParam(value = "name", required = false) String name,
+                                    @ApiParam("标题") @RequestParam(value = "title", required = false) String title) {
+        return articleService.List(pageSize, pageNum, name, title);
     }
 
     @ResponseBody
@@ -84,6 +94,13 @@ public class ArticleController {
     @CheckAuth
     public void deleteArticle(@ApiParam("文章id")@RequestParam("id") Long id) {
         articleService.deleteArticle(id);
+    }
+    @ResponseBody
+    @PostMapping("/remove")
+    @ApiOperation("删除文章")
+    @CheckAuth
+    public void remove(@RequestBody @ApiParam("文章id集合")Map<String, List<Long>> map) {
+        articleService.remove(map);
     }
 
     @ResponseBody

@@ -66,7 +66,7 @@ public class EmailAdviceService {
 
     public void checkCode(String email, String code) {
         EmailAdviceDO advice = getCode(email);
-        if (null == code) {
+        if (null == advice) {
             throw new CommonException("请获取验证码！");
         }
         if (!code.equals(advice.getData())) {

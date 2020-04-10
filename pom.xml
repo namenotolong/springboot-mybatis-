@@ -20,6 +20,7 @@
 		<module>service</module>
 	</modules>
 	<properties>
+		<start-class>com.huyong.WebApplication</start-class>
 		<pagehelper.version>5.1.2</pagehelper.version>
 		<mybatis.spring.boot.version>1.3.2</mybatis.spring.boot.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -188,13 +189,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+
 
 </project>

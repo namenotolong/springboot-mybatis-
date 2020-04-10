@@ -1,7 +1,6 @@
 package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
-import com.huyong.annotation.NotBlank;
 import com.huyong.annotation.ValidationParam;
 import com.huyong.dao.module.UserBO;
 import com.huyong.service.UserService;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: UserController
@@ -80,10 +81,38 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/updateOrInsert")
-    @ApiParam("/发送验证码")
+    @ApiOperation("/发送验证码")
     @CheckAuth
     public String updateOrInsert(@ApiParam("用户信息") @ValidationParam("userName,ops") @RequestBody UserBO userBO) {
         return userService.updateOrInsert(userBO);
+    }
+
+    @ResponseBody
+    @GetMapping("/list")
+    @ApiOperation("/获取用户")
+    public Map<String, Object> userList(@ApiParam("昵称") @RequestParam(value = "name", required = false) String name,
+                                 @ApiParam("性别") @RequestParam(value = "gender", required = false) Integer gender,
+                                 @ApiParam("角色集合") @RequestParam(value = "roles", required = false) List<Integer> roles,
+                                 @ApiParam("学校") @RequestParam(value = "school", required = false) String school,
+                                 @ApiParam("电子邮件") @RequestParam(value = "email", required = false) String email,
+                                 @ApiParam("是否在线") @RequestParam(value = "online", required = false) Integer online,
+                                 @ApiParam("当前页") @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                 @ApiParam("每页的大小") @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        return userService.userList(name, gender, roles, school, email, online, pageNumber, pageSize);
+    }
+
+    @ResponseBody
+    @ApiOperation("删除用户")
+    @PostMapping("/remove")
+    public void remove(@RequestBody Map<String, List<Long>> map) {
+        userService.remove(map);
+    }
+
+    @ResponseBody
+    @ApiOperation("获取用户详情")
+    @GetMapping("/detail")
+    public UserBO detail(@ApiParam("id") @RequestParam("id") Long id) {
+        return userService.detail(id);
     }
 
 }

@@ -13,6 +13,8 @@ import com.huyong.enums.StatusEnum;
 import com.huyong.utils.SpringUtils;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -35,6 +37,8 @@ import java.util.Set;
 @Component
 @Data
 public class MyWebSocket {
+
+    Logger logger = LoggerFactory.getLogger(MyWebSocket.class);
 
     /**
      * 在线人数
@@ -149,6 +153,7 @@ public class MyWebSocket {
                 try {
                     webSocket.getSession().getBasicRemote().sendText(message);
                 } catch (IOException e) {
+                    logger.error("发送在线消息时错误，[{}]",message);
                     e.printStackTrace();
                 }
             }

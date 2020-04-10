@@ -10,6 +10,6 @@ public class CommonConstant {
     public static final int CODE_LENGTH = 4;
     public static final long CODE_EXPIRE_TIME = 5;
     public static final String DEFAULT_BAR_IMG = "/img/2.png";
-    public static final String FILE_LOCATION = "/Users/weidian/Documents/img/";
+    public static final String FILE_LOCATION = "/opt/img/";
     public static final String VISIT_FILE_LOCATION = "/img/";
 }

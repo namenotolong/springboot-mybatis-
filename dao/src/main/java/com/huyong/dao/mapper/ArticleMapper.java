@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: ArticleDO对应的Mapper
@@ -23,9 +24,20 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @param kindId
      * @param userId
      * @param type
+     * @param title
      * @return
      */
-    List<ArticleBO> getArticles(@Param("offset") Long offset, @Param("pageNum") Long pageNum, @Param("kindId") Integer kindId, @Param("userId") Long userId,@Param("type") Integer type);
+    List<ArticleBO> getArticles(@Param("offset") Long offset, @Param("pageNum") Long pageNum, @Param("kindId") Integer kindId, @Param("userId") Long userId,@Param("type") Integer type, @Param("title") String title);
+
+    /**
+     * 数量
+     * @param kindId
+     * @param userId
+     * @param type
+     * @param title
+     * @return
+     */
+    Long getArticlesCount(@Param("kindId") Integer kindId, @Param("userId") Long userId,@Param("type") Integer type, @Param("title") String title);
 
     /**
      * 获取文章详细信息
@@ -63,4 +75,37 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @return
      */
     int searchCount(@Param("key")String key);
+
+    /**
+     * 批量查找
+     * @param offset
+     * @param pageSize
+     * @param name
+     * @param title
+     * @return
+     */
+    List<ArticleBO> list(@Param("offset") Long offset,@Param("pageSize") Long pageSize,@Param("name") String name,@Param("title") String title);
+
+    /**
+     * count
+     * @param name
+     * @param title
+     * @return
+     */
+    Long listCount(@Param("name") String name,@Param("title") String title);
+
+    /**
+     * 批量删除
+     * @param list
+     */
+    void batchRemove(List<Long> list);
+
+    Long getVisitCount();
+
+    /**
+     * 获取最近count天的记录
+     * @param count
+     * @return
+     */
+    List<Long> getVisitCountLimitNumber(int count);
 }

@@ -62,14 +62,32 @@ public class FileService {
 
     @Transactional(rollbackFor = Exception.class)
     public void uploadBar(MultipartFile file) {
+        //命名为id + 事件戳
+        String fileName = AuthUtils.getUser().getId() + "+" + System.currentTimeMillis() + ".jpg";
+        upload(file, fileName);
+        //更改用户头像
+        UserDO condition = new UserDO();
+        condition.setId(AuthUtils.getUser().getId());
+        condition.setPicture(CommonConstant.VISIT_FILE_LOCATION + fileName);
+        userMapper.updateByPrimary(condition);
+    }
+
+    /**
+     * 管理员上传图片
+     * @param file
+     * @return
+     */
+    public String uploadImg(MultipartFile file) {
+        String fileName = System.currentTimeMillis() + ".jpg";
+        upload(file, fileName);
+        return CommonConstant.VISIT_FILE_LOCATION + fileName;
+    }
+
+    private void upload(MultipartFile file, String fileName) {
         if (file.isEmpty()) {
             throw new CommonException("上传文件为空！");
         }
-        UserBO user = AuthUtils.getUser();
-        Long id = user.getId();
-        //命名为id + 事件戳
-        String fileName = id + "+" + System.currentTimeMillis() + ".jpg";
-        File dest = new File(CommonConstant.FILE_LOCATION  + fileName);
+        File dest = new File(CommonConstant.FILE_LOCATION + fileName);
         try {
             file.transferTo(dest);
         } catch (IOException e) {
@@ -80,12 +98,7 @@ public class FileService {
         log.setRef(FileRefEnum.BAR.getCode());
         log.setType(FileTypeEnum.JPG.getCode());
         log.setUrl(CommonConstant.VISIT_FILE_LOCATION + fileName);
-        log.setRefId(id);
+        log.setRefId(AuthUtils.getUser().getId());
         fileMapper.insert(log);
-        //更改用户头像
-        UserDO condition = new UserDO();
-        condition.setId(id);
-        condition.setPicture(CommonConstant.VISIT_FILE_LOCATION + fileName);
-        userMapper.updateByPrimary(condition);
     }
 }

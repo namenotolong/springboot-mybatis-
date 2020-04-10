@@ -33,19 +33,6 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
             throws IOException, ServletException {
-
-       /* final HttpServletRequest request = (HttpServletRequest) req;
-        //等到请求头信息authorization信息
-        final String authHeader = request.getHeader("authorization");
-        if (StringUtils.isNotEmpty(authHeader)) {
-            if (authHeader.startsWith(AuthCheckConstant.START)) {
-                String token = authHeader.substring(AuthCheckConstant.START.length());
-                final Claims claims = JwtHelper.parseJWT(token);
-                if (claims != null) {
-                    AuthUtils.setUser(claims2User(claims));
-                }
-            }
-        }*/
         chain.doFilter(req, res);
         AuthUtils.clear();
     }

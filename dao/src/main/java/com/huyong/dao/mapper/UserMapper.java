@@ -38,4 +38,36 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @return
      */
     int searchCount(@Param("key") String key);
+
+    /**
+     * 批量删除
+     * @param list
+     */
+    void batchRemove(@Param("list") List<Long> list);
+
+    /**
+     * 获取用户集合
+     * @param name
+     * @param gender
+     * @param roles
+     * @param school
+     * @param email
+     * @param online
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<UserBO> userList(@Param("name") String name,@Param("gender") Integer gender,@Param("roles") List<Integer> roles,@Param("school") String school,@Param("email") String email,@Param("online") Integer online,@Param("offset") Integer offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * 获取数量
+     * @param name
+     * @param gender
+     * @param roles
+     * @param school
+     * @param email
+     * @param online
+     * @return
+     */
+    Long userListCount(@Param("name") String name,@Param("gender") Integer gender,@Param("roles") List<Integer> roles,@Param("school") String school,@Param("email") String email,@Param("online") Integer online);
 }

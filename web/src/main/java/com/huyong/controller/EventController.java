@@ -1,6 +1,7 @@
 package com.huyong.controller;
 
 import com.huyong.annotation.CheckAuth;
+import com.huyong.annotation.ValidationParam;
 import com.huyong.common.PageTemp;
 import com.huyong.dao.module.EventBO;
 import com.huyong.service.EventService;
@@ -53,6 +54,28 @@ public class EventController {
                                        @ApiParam("页码")@RequestParam("pageNum") Integer pageNum) {
         return eventService.getEvents(type, pageSize, pageNum);
     }
+    @ResponseBody
+    @GetMapping("/list")
+    @ApiOperation("获取具体事件")
+    @CheckAuth
+    public Map<String, Object> getEvents(@ApiParam("type事件类型") @RequestParam(value = "types", required = false) List<Integer> types,
+                                       @ApiParam("from")@RequestParam(value = "from", required = false) String from,
+                                       @ApiParam("to")@RequestParam(value = "to", required = false) String to,
+                                       @ApiParam("content")@RequestParam(value = "content", required = false) String content,
+                                       @ApiParam("common")@RequestParam(value = "common", required = false) String common,
+                                       @ApiParam("title")@RequestParam(value = "title", required = false) String title,
+                                       @ApiParam("每页显示数量")@RequestParam("pageSize") Integer pageSize,
+                                       @ApiParam("页码")@RequestParam("pageNumber") Integer pageNumber) {
+        return eventService.list(types, from, to, content,common, title, pageSize, pageNumber);
+    }
+
+    @ResponseBody
+    @PostMapping("/remove")
+    @ApiOperation("删除event")
+    @CheckAuth
+    public void remove(@ApiParam("id") @RequestBody Map<String, List<Long>> map) {
+        eventService.remove(map);
+    }
 
     @ResponseBody
     @PostMapping("/setZero")
@@ -84,5 +107,13 @@ public class EventController {
     @CheckAuth
     public void setChatZero(@ApiParam("消除的用户id") @RequestParam("id") Long id) {
         eventService.setChatZero(id);
+    }
+
+    @ResponseBody
+    @PostMapping("/insertSystem")
+    @ApiOperation("添加系统消息")
+    @CheckAuth
+    public void addSystemMessage(@RequestBody @ValidationParam("createTime,content") EventBO eventBO) {
+        eventService.addSystemMessage(eventBO);
     }
 }

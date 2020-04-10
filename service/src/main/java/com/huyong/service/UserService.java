@@ -1,5 +1,6 @@
 package com.huyong.service;
 
+import com.google.common.collect.Maps;
 import com.huyong.constant.AuthCheckConstant;
 import com.huyong.constant.CommonConstant;
 import com.huyong.dao.entity.UserDO;
@@ -17,6 +18,7 @@ import com.huyong.dao.mapper.UserMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +87,14 @@ public class UserService {
                 result.setSex(value.getDesc());
             }
         }
+        final Integer role = user.getRole();
+        if (role != null) {
+            for (RoleEnum value : RoleEnum.values()) {
+                if (value.getCode().equals(role)) {
+                    result.setRoleName(value.getDesc());
+                }
+            }
+        }
         result.setIntroduction(user.getIntroduction());
         result.setSchool(user.getSchool());
         result.setWork(user.getWork());
@@ -150,8 +160,9 @@ public class UserService {
             throw new AuthException("账户或密码错误！");
         }
         final UserDO customer = userDOS.get(0);
-        user = convertDo2Bo(customer);
-        String token = JwtHelper.createJWT(customer.getId(), customer.getUserName(), customer.getEmail(), customer.getRole());
+        final Integer role = customer.getRole();
+        user = convertDo2BoOnlySee(customer);
+        String token = JwtHelper.createJWT(customer.getId(), customer.getUserName(), customer.getEmail(), role);
         user.setToken(AuthCheckConstant.START + token);
         return user;
     }
@@ -267,6 +278,7 @@ public class UserService {
             if (!unique) {
                 throw new CommonException("更改昵称已被他人使用");
             }
+            userBO.setStatus(StatusEnum.PRESENT.getCode());
             userMapper.insert(convertBo2Do(userBO));
             return null;
         }
@@ -302,5 +314,56 @@ public class UserService {
         condition.setEmail(userBO.getEmail());
         target.setPassword(userBO.getPassword());
         userMapper.updateByCondition(target, condition);
+    }
+
+    /**
+     * 批量查询用户
+     * @param name
+     * @param gender
+     * @param roles
+     * @param school
+     * @param email
+     * @param online
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public Map<String, Object> userList(String name, Integer gender, List<Integer> roles, String school, String email, Integer online, Integer pageNumber, Integer pageSize) {
+        Map<String, Object> map = Maps.newHashMap();
+        Integer offset = null;
+        if (null != pageNumber && null != pageSize) {
+            if (pageSize < 1) {
+                pageSize = 1;
+            }
+            if (pageNumber < 1) {
+                pageNumber = 1;
+            }
+            offset = (pageNumber - 1) * pageSize;
+        }
+        List<UserBO> list = userMapper.userList(name, gender, roles, school, email, online, offset, pageSize);
+        Long total = userMapper.userListCount(name, gender, roles, school, email, online);
+        map.put("list", list);
+        map.put("total", total);
+        return map;
+    }
+
+    /**
+     * 删除用户
+     * @param ids
+     */
+    public void remove(Map<String, List<Long>> ids) {
+        List<Long> list = ids.get("id");
+        if (CollectionUtils.isNotEmpty(list)) {
+            userMapper.batchRemove(list);
+        }
+    }
+
+    /**
+     * 获取用户详情
+     * @param id
+     * @return
+     */
+    public UserBO detail(Long id) {
+        return convertDo2Bo(userMapper.selectByPrimary(id));
     }
 }

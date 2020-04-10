@@ -38,4 +38,32 @@ public interface TopicMapper extends BaseMapper<TopicDO> {
      * @return
      */
     Long getTopicCount(@Param("id") Long id);
+
+    /**
+     * list
+     * @param from
+     * @param to
+     * @param content
+     * @param title
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<TopicBO> list(@Param("from") String from,@Param("to") String to,@Param("content") String content, @Param("title") String title, @Param("offset") Integer offset,@Param("pageSize") Integer pageSize);
+
+    /**
+     * listCount
+     * @param from
+     * @param to
+     * @param content
+     * @param title
+     * @return
+     */
+    Long listCount(@Param("from") String from,@Param("to") String to,@Param("content") String content,@Param("title") String title);
+
+    /**
+     * batch remove
+     * @param list
+     */
+    void batchRemove(@Param("list") List<Long> list);
 }

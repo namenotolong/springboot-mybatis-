@@ -33,6 +33,7 @@ public class UserBO {
     private String code;
     @ApiModelProperty("用户/管理员")
     private Integer role;
+    private String roleName;
     @ApiModelProperty("性别")
     private Integer gender;
     @ApiModelProperty("性别")

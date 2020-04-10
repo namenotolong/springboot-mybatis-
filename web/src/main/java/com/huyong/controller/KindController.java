@@ -1,17 +1,17 @@
 package com.huyong.controller;
 
+import com.huyong.annotation.CheckAuth;
+import com.huyong.annotation.ValidationParam;
 import com.huyong.dao.module.KindBO;
 import com.huyong.service.KindService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: KindController
@@ -40,4 +40,19 @@ public class KindController {
     public List<KindBO> getKinds() {
         return kindService.getKinds();
     }
+
+    @ApiOperation("更新或者添加")
+    @PostMapping("/updateOrInsert")
+    @CheckAuth
+    @ResponseBody
+    public void updateOrInsert(@RequestBody @ValidationParam("kindName") KindBO kindBO) {
+        kindService.updateOrInsert(kindBO);
+    }
+    @ResponseBody
+    @ApiOperation("删除")
+    @PostMapping("/remove")
+    public void remove(@RequestBody Map<String, List<Long>> map) {
+        kindService.remove(map);
+    }
+
 }
