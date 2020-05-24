@@ -1,9 +1,11 @@
-package com.huyong.dao.entity;
+package com.huyong.dao.module;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import com.huyong.dao.helper.annotation.Table;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,11 +16,9 @@ import java.util.Date;
  */
 @Data
 @Table(tableName = "user")
-public class UserDO implements Serializable {
-    private static final long serialVersionUID = 70919679543102411L;
+@ApiModel("用户")
+public class UserBO {
     private Long id;
-    /**
-     * 用户名
-     */
+    @ApiModelProperty("用户名")
     private String name;
 }

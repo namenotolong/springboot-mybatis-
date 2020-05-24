@@ -1,6 +1,6 @@
 package com.huyong.utils;
 
-import com.huyong.dao.model.UserBO;
+import com.huyong.dao.module.UserBO;
 
 
 /**

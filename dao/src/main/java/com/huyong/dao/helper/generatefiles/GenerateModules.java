@@ -20,6 +20,9 @@ public class GenerateModules extends AbstractGenerate {
         generate.generate();
         final File file = new File(root + Constant.DAO_ENTITY_PATH);
         final File order = new File(root + Constant.DAO_MODULE_PATH);
+        if (!order.exists()) {
+            order.mkdirs();
+        }
         final File[] files = file.listFiles();
         if (files != null && files.length > 0) {
             try {
@@ -27,7 +30,15 @@ public class GenerateModules extends AbstractGenerate {
                     final String name = listFile.getName();
                     if (name.endsWith(".java")) {
                         BufferedReader bufferedReader = new BufferedReader(new FileReader(listFile));
-                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(order + "/" + listFile.getName().replace("DO", "BO")));
+                        final String s = order + File.separator + listFile.getName().replace("DO", "BO");
+                        final File file1 = new File(s);
+                        if (!file1.exists()) {
+                            final boolean newFile = file1.createNewFile();
+                            if (!newFile) {
+                                throw new RuntimeException("创建文件失败！");
+                            }
+                        }
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file1));
                         String len;
                         String newName = name.replace("DO", "BO").split("\\.")[0];
                         String introduction = null;
