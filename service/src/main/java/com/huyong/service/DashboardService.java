@@ -70,6 +70,9 @@ public class DashboardService {
         List<Long> grid = getGrid();
         for (int i = 0; i < arr.length; i++) {
             Long visit = grid.get(i);
+            if(visit == null) {
+                visit = 0L;
+            }
             List<Map<String, Long>> list = Lists.newArrayList();
             for (int j = 0; j < count; j++) {
                 Map<String, Long> item = Maps.newHashMap();

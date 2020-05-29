@@ -1,11 +1,8 @@
 package com.huyong.filter;
 
-import com.huyong.constant.AuthCheckConstant;
 import com.huyong.dao.module.UserBO;
 import com.huyong.utils.AuthUtils;
-import com.huyong.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -13,7 +10,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
